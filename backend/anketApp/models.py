@@ -4,7 +4,7 @@ from hardskillApp.models import HardSkill
 
 
 class StudentForm(FormBase):
-    hard_skills_id = models.ForeignKey(HardSkill, on_delete=models.RESTRICT)
+    hard_skills_id = models.ManyToManyField(HardSkill)
     establishment = models.CharField(max_length=1024)
     start_study_date = models.DateField()
     end_study_date = models.DateField()
@@ -15,8 +15,8 @@ class StudentForm(FormBase):
 
 
 class MentorForm(FormBase):
+    hard_skills_id = models.ManyToManyField(HardSkill)
     job_position = models.CharField(max_length=1024)
-    hard_skills_id = models.ForeignKey(HardSkill, on_delete=models.RESTRICT)
 
     def __str__(self):
         return f'{self.surname} {self.name} {self.patronymic}'
