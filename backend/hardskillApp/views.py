@@ -4,6 +4,6 @@ from .models import HardSkill
 from .serializers import HardSkillSerializer
 
 
-class HardSkillListView(viewsets.ModelViewSet):
+class HardSkillListViewSet(viewsets.ModelViewSet):
     queryset = HardSkill.objects.all()
     serializer_class = HardSkillSerializer
