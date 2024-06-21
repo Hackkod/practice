@@ -20,8 +20,8 @@ class FormBase(TimeStampedModel):
     patronymic = models.CharField(max_length=1024)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField()
-    softskills = models.TextField(blank=True)
-    otherinfo = models.TextField(blank=True)
+    soft_skills = models.TextField(blank=True)
+    other_info = models.TextField(blank=True)
 
     class Meta:
         abstract = True
