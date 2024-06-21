@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hardskillApp',
     'anketApp',
+    'eventApp',
     'django.contrib.postgres',
     'rest_framework'
 ]
