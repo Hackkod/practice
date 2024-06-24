@@ -25,11 +25,12 @@ class StudentFormSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentForm
-        extra_kwargs = {'hard_skills_id': {'write_only': True}}
+        extra_kwargs = {'hard_skills_id': {'write_only': True},
+                        'course': {'read_only': True}}
         fields = output_fields + [
             'establishment',
-            'start_study_date',
-            'end_study_date',
+            'start_study_year',
+            'end_study_year',
             'course',
         ]
 
