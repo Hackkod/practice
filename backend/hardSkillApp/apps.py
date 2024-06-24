@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class HardskillAppConfig(AppConfig):
+class HardSkillAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'hardskillApp'
+    name = 'hardSkillApp'

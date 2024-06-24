@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import StudentForm, MentorForm
-from hardskillApp.serializers import HardSkillSerializer
+from .models import StudentAnket, MentorAnket
+from hardSkillApp.serializers import HardSkillSerializer
 
 
 output_fields = [
@@ -16,7 +16,7 @@ output_fields = [
         ]
 
 
-class StudentFormSerializer(serializers.ModelSerializer):
+class StudentAnketSerializer(serializers.ModelSerializer):
     hard_skills_ids = HardSkillSerializer(
         many=True,
         read_only=True,
@@ -24,7 +24,7 @@ class StudentFormSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = StudentForm
+        model = StudentAnket
         extra_kwargs = {'hard_skills_id': {'write_only': True},
                         'course': {'read_only': True}}
         fields = output_fields + [
@@ -35,7 +35,7 @@ class StudentFormSerializer(serializers.ModelSerializer):
         ]
 
 
-class MentorFormSerializer(serializers.ModelSerializer):
+class MentorAnketSerializer(serializers.ModelSerializer):
     hard_skills_ids = HardSkillSerializer(
         many=True,
         read_only=True,
@@ -43,6 +43,6 @@ class MentorFormSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = MentorForm
+        model = MentorAnket
         extra_kwargs = {'hard_skills_id': {'write_only': True}}
         fields = output_fields + ['job_position']

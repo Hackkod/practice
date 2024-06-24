@@ -1,8 +1,8 @@
 from rest_framework import routers
-from .views import StudentFormViewSet, MentorFormViewSet
+from .views import StudentAnketViewSet, MentorAnketViewSet
 
 router = routers.DefaultRouter()
-router.register(r'students', StudentFormViewSet)
-router.register(r'mentors', MentorFormViewSet)
+router.register(r'students', StudentAnketViewSet)
+router.register(r'mentors', MentorAnketViewSet)
 
 urlpatterns = router.urls

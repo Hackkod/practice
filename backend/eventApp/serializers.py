@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import PracticeOrInternship, Work
-from anketApp.serializers import MentorFormSerializer, StudentFormSerializer
+from anketApp.serializers import MentorAnketSerializer, StudentAnketSerializer
 
 
 output_fields = [
@@ -17,11 +17,11 @@ output_fields = [
 
 
 class PracticeOrInternshipSerializer(serializers.ModelSerializer):
-    mentor_full = MentorFormSerializer(
+    mentor_full = MentorAnketSerializer(
         read_only=True,
         source='mentor',
     )
-    student_full = StudentFormSerializer(
+    student_full = StudentAnketSerializer(
         read_only=True,
         source='student',
     )
@@ -36,11 +36,11 @@ class PracticeOrInternshipSerializer(serializers.ModelSerializer):
 
 
 class WorkSerializer(serializers.ModelSerializer):
-    mentor_full = MentorFormSerializer(
+    mentor_full = MentorAnketSerializer(
         read_only=True,
         source='mentor',
     )
-    student_full = StudentFormSerializer(
+    student_full = StudentAnketSerializer(
         read_only=True,
         source='student',
     )

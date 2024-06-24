@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import StudentForm, MentorForm
-from .serializers import StudentFormSerializer, MentorFormSerializer
+from .models import StudentAnket, MentorAnket
+from .serializers import StudentAnketSerializer, MentorAnketSerializer
 
 
-class StudentFormViewSet(viewsets.ModelViewSet):
-    queryset = StudentForm.objects.all()
-    serializer_class = StudentFormSerializer
+class StudentAnketViewSet(viewsets.ModelViewSet):
+    queryset = StudentAnket.objects.all()
+    serializer_class = StudentAnketSerializer
 
 
-class MentorFormViewSet(viewsets.ModelViewSet):
-    queryset = MentorForm.objects.all()
-    serializer_class = MentorFormSerializer
+class MentorAnketViewSet(viewsets.ModelViewSet):
+    queryset = MentorAnket.objects.all()
+    serializer_class = MentorAnketSerializer

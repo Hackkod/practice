@@ -9,7 +9,7 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
-class FormBase(TimeStampedModel):
+class AnketBase(TimeStampedModel):
     GENDER_CHOICES = [
         ('M', 'Male'),
         ('F', 'Female')

@@ -3,19 +3,26 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 
-from utils.models import FormBase
-from hardskillApp.models import HardSkill
+from utils.models import AnketBase
+from hardSkillApp.models import HardSkill
 
 
-class StudentForm(FormBase):
-    hard_skills_id = models.ManyToManyField(HardSkill)
-    establishment = models.CharField(max_length=1024)
+class StudentAnket(AnketBase):
+    hard_skills_id = models.ManyToManyField(
+        HardSkill,
+        related_name='sa_hard_skills_id',
+    )
+    establishment = models.CharField(
+        max_length=1024,
+    )
     start_study_year = models.IntegerField(
         validators=[MinValueValidator(2000), MaxValueValidator(2100)],
-        default=None)
+        default=None
+    )
     end_study_year = models.IntegerField(
         validators=[MinValueValidator(2000), MaxValueValidator(2100)],
-        default=None)
+        default=None
+    )
     course = models.IntegerField()
 
     def save(self, *args, **kwargs):
@@ -34,13 +41,21 @@ class StudentForm(FormBase):
             self.course = curr_date.year - start_year + 1
         super().save(*args, **kwargs)
 
+    def valid(self):
+        pass
+
     def __str__(self):
         return f'{self.surname} {self.name} {self.patronymic}'
 
 
-class MentorForm(FormBase):
-    hard_skills_id = models.ManyToManyField(HardSkill)
-    job_position = models.CharField(max_length=1024)
+class MentorAnket(AnketBase):
+    hard_skills_id = models.ManyToManyField(
+        HardSkill,
+        related_name='ma_hard_skills_id',
+    )
+    job_position = models.CharField(
+        max_length=1024
+    )
 
     def __str__(self):
         return f'{self.surname} {self.name} {self.patronymic}'

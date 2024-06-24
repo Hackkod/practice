@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/anketApp/', include('anketApp.urls')),
     path('api/eventApp/', include('eventApp.urls')),
-    path('api/hardskillApp/', include('hardskillApp.urls')),
+    path('api/hardSkillApp/', include('hardSkillApp.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
     path('api-auth/', include('rest_framework.urls')),

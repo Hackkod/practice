@@ -2,5 +2,5 @@ from django.contrib import admin
 from .models import *
 
 
-admin.site.register(StudentForm)
-admin.site.register(MentorForm)
+admin.site.register(StudentAnket)
+admin.site.register(MentorAnket)
