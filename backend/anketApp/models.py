@@ -21,6 +21,8 @@ class StudentForm(FormBase):
     def save(self, *args, **kwargs):
         start_year = self.start_study_year
         end_year = self.end_study_year
+        if end_year < start_year:
+            raise ValidationError('Старт обучения не может быть после его конца')
         if start_year and end_year and (end_year - start_year) < 4:
             raise ValidationError('Срок обучения должен составлять не менее 4-х лет')
         curr_date = datetime.date.today()
