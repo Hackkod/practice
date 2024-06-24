@@ -3,6 +3,19 @@ from .models import PracticeOrInternship, Work
 from anketApp.serializers import MentorFormSerializer, StudentFormSerializer
 
 
+output_fields = [
+            'name',
+            'start_date',
+            'end_date',
+            'description',
+            'student',
+            'student_full',
+            'mentor',
+            'mentor_full',
+            'type',
+        ]
+
+
 class PracticeOrInternshipSerializer(serializers.ModelSerializer):
     mentor_full = MentorFormSerializer(
         read_only=True,
@@ -19,17 +32,7 @@ class PracticeOrInternshipSerializer(serializers.ModelSerializer):
             'mentor': {'write_only': True},
             'student': {'write_only': True}
         }
-        fields = [
-            'name',
-            'start_date',
-            'end_date',
-            'description',
-            'student',
-            'student_full',
-            'mentor',
-            'mentor_full',
-            'type',
-        ]
+        fields = output_fields
 
 
 class WorkSerializer(serializers.ModelSerializer):
@@ -48,15 +51,4 @@ class WorkSerializer(serializers.ModelSerializer):
             'mentor': {'write_only': True},
             'student': {'write_only': True}
         }
-        fields = [
-            'name',
-            'start_date',
-            'end_date',
-            'description',
-            'student',
-            'student_full',
-            'mentor',
-            'mentor_full',
-            'type',
-            'position'
-        ]
+        fields = output_fields + ['position']
