@@ -15,6 +15,7 @@ output_fields = [
             'hard_skills_id',
             'hard_skills_ids',
             'other_info',
+            'profile_photo'
         ]
 
 
