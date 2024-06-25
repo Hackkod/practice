@@ -5,6 +5,7 @@ from hardSkillApp.serializers import HardSkillSerializer
 
 
 output_fields = [
+            'id',
             'surname',
             'name',
             'patronymic',
