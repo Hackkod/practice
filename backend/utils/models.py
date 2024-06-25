@@ -41,6 +41,9 @@ class AnketBase(TimeStampedModel):
     other_info = models.TextField(
         blank=True
     )
+    profile_photo = models.ImageField(
+        upload_to='images/%Y/%m/%d/'
+    )
 
     class Meta:
         abstract = True
