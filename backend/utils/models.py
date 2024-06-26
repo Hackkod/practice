@@ -42,7 +42,8 @@ class AnketBase(TimeStampedModel):
         blank=True
     )
     profile_photo = models.ImageField(
-        upload_to='images/%Y/%m/%d/'
+        upload_to='images/%Y/%m/%d/',
+        default='images/default_user.jpg'
     )
 
     class Meta:
