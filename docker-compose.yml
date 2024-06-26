@@ -1,0 +1,55 @@
+version: '3.9'
+services:
+  web:
+    build:
+      context: ./backend
+    command: /app/wait-for-it.sh db 5432 -- python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - my-rabbitmq
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: ksb
+      POSTGRES_USER: ksb
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  my-rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  celery-worker:
+    build:
+      context: ./backend
+    command: /app/wait-for-it.sh db 5432 -- celery -A studRegSys worker --pool=solo -E -l info
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - web
+      - redis
+      - my-rabbitmq
+
+  celery-beat:
+    build:
+      context: ./backend
+    command: /app/wait-for-it.sh db 5432 -- celery -A studRegSys beat -l info
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - web
+      - redis
+      - my-rabbitmq

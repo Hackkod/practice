@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-sl)%8ld$ojre_lh6kx@6m7_^&7--2$m##6y&)*vgiulny69^(!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -104,6 +104,8 @@ DATABASES = {
         'NAME': 'ksb',
         'USER': 'ksb',
         'PASSWORD': 'admin',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -189,6 +191,6 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'amqp://guest:guest@my-rabbitmq:5672//'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
