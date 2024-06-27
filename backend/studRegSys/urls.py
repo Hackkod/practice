@@ -8,9 +8,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/anketApp/', include('anketApp.urls')),
-    path('api/eventApp/', include('eventApp.urls')),
-    path('api/hardSkillApp/', include('hardSkillApp.urls')),
+    path('api/anket_app/', include('anket_app.urls')),
+    path('api/event_app/', include('event_app.urls')),
+    path('api/hard_skill_app/', include('hard_skill_app.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
     path('api-auth/', include('rest_framework.urls')),

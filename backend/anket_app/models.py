@@ -1,14 +1,14 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from utils.models import AnketBase
-from hardSkillApp.models import HardSkill
+from models.ankets import AnketBase
+from hard_skill_app.models import HardSkill
 
 
 class StudentAnket(AnketBase):
     hard_skills_id = models.ManyToManyField(
         HardSkill,
-        related_name='sa_hard_skills_id',
+        related_name='student_anket_hard_skills_id',
     )
     establishment = models.CharField(
         max_length=1024,
@@ -30,7 +30,7 @@ class StudentAnket(AnketBase):
 class MentorAnket(AnketBase):
     hard_skills_id = models.ManyToManyField(
         HardSkill,
-        related_name='ma_hard_skills_id',
+        related_name='mentor_anket_hard_skills_id',
     )
     job_position = models.CharField(
         max_length=1024

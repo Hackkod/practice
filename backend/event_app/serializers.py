@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import PracticeOrInternship, Work
-from anketApp.serializers import MentorAnketSerializer, StudentAnketSerializer
+from .models import Study, Work
+from anket_app.serializers import MentorAnketSerializer, StudentAnketSerializer
 
 
 output_fields = [
@@ -17,7 +17,7 @@ output_fields = [
         ]
 
 
-class PracticeOrInternshipSerializer(serializers.ModelSerializer):
+class StudySerializer(serializers.ModelSerializer):
     mentor_full = MentorAnketSerializer(
         read_only=True,
         source='mentor',
@@ -28,7 +28,7 @@ class PracticeOrInternshipSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = PracticeOrInternship
+        model = Study
         extra_kwargs = {
             'mentor': {'write_only': True},
             'student': {'write_only': True}

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import StudentAnket, MentorAnket
-from hardSkillApp.serializers import HardSkillSerializer
+from hard_skill_app.serializers import HardSkillSerializer
 
 
 output_fields = [
