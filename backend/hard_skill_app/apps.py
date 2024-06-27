@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AnketappConfig(AppConfig):
+class HardSkillAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'anketApp'
+    name = 'hard_skill_app'

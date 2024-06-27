@@ -10,7 +10,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'every': {
-        'task': 'anketApp.tasks.update_course',
+        'task': 'anket_app.tasks.update_course',
         'schedule': 60.0,
     }
 }

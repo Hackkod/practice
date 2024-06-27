@@ -1,39 +1,47 @@
 from django.db import models
-from utils.models import EventBase
-from anketApp.models import StudentAnket, MentorAnket
+from models.events import EventBase
+from anket_app.models import StudentAnket, MentorAnket
 
 
-class PracticeOrInternship(EventBase):
-    PRACTICE_OR_INTERNSHIP_CHOICES = [
-        ('PRACTICE', 'Practice'),
-        ('INTERNSHIP', 'Internship')
-    ]
+practice = 'PRACTICE'
+internship = 'INTERNSHIP'
 
+STUDY_TYPE_CHOICES = [
+    (practice, 'Practice'),
+    (internship, 'Internship')
+]
+
+
+class Study(EventBase):
     student = models.ForeignKey(
         StudentAnket,
         on_delete=models.CASCADE,
-        related_name='pi_student'
+        related_name='study_student'
     )
     mentor = models.ForeignKey(
         MentorAnket,
         on_delete=models.CASCADE,
-        related_name='pi_mentor'
+        related_name='study_mentor'
     )
     type = models.CharField(
         max_length=20,
-        choices=PRACTICE_OR_INTERNSHIP_CHOICES
+        choices=STUDY_TYPE_CHOICES
     )
 
     def __str__(self):
         return f'{self.name}: {self.student}'
 
 
-class Work(EventBase):
-    WORK_TYPE_CHOICES = [
-        ('AGREEMENT', 'Agreement'),
-        ('STAFF', 'Staff')
-    ]
+agreement = 'AGREEMENT'
+staff = 'STAFF'
 
+WORK_TYPE_CHOICES = [
+    (agreement, 'Agreement'),
+    (staff, 'Staff')
+]
+
+
+class Work(EventBase):
     student = models.ForeignKey(
         StudentAnket,
         on_delete=models.CASCADE,
