@@ -1,6 +1,6 @@
 <template>
-  <div class="work-form">
-    <h3>{{ work ? 'Редактирование работы' : 'Создание новой работы' }}</h3>
+  <div class="study-form">
+    <h3>{{ study ? 'Редактирование обучения' : 'Создание нового обучения' }}</h3>
     <form @submit.prevent="save">
       <div>
         <label>Заголовок:</label>
@@ -25,13 +25,9 @@
       <div>
         <label>Тип:</label>
         <select v-model="form.type" required>
-          <option value="AGREEMENT">Agreement</option>
-          <option value="STAFF">Staff</option>
+          <option value="PRACTICE">Practice</option>
+          <option value="INTERNSHIP">Internship</option>
         </select>
-      </div>
-      <div>
-        <label>Позиция:</label>
-        <textarea v-model="form.position"></textarea>
       </div>
       <div>
         <label>Дата начала:</label>
@@ -55,24 +51,23 @@
 import axios from "@/plugins/axios";
 
 export default {
-  name: 'WorkForm',
+  name: 'StudyForm',
   props: {
-    work: Object,
+    study: Object,
   },
   data() {
     return {
-      form: this.work ? { ...this.work } : {
+      students: [],
+      mentors: [],
+      form: this.study ? { ...this.study } : {
         name: '',
         student: null,
         mentor: null,
-        type: 'AGREEMENT',
-        position: '',
+        type: 'PRACTICE',
         start_date: '',
         end_date: '',
         description: '',
       },
-      students: [],
-      mentors: []
     };
   },
   created() {
@@ -104,7 +99,7 @@ export default {
 </script>
 
 <style scoped>
-.work-form {
+.study-form {
   border: 1px solid #ccc;
   padding: 20px;
   margin: 20px 0;
