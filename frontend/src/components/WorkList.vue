@@ -5,9 +5,10 @@
       <div><strong>Заголовок</strong> {{ work.name }}</div>
       <div><strong>Студент</strong> {{ work.student_full.name }}</div>
       <div><strong>Наставник</strong> {{ work.mentor_full.name }}</div>
-      <div><strong>Дата начала</strong> {{ work.start_date }}</div>
-      <div><strong>Дата конца</strong> {{ work.end_date }}</div>
+      <div><strong>Позиция</strong> {{ work.position }}</div>
       <div><strong>Тип</strong> {{ work.type }}</div>
+      <div><strong>Дата начала</strong> {{ work.start_date }}</div>
+      <div><strong>Дата окончания</strong> {{ work.end_date }}</div>
       <div><strong>Описание</strong> {{ work.description }}</div>
       <button @click="editWork(work)">Редактировать</button>
       <button @click="confirmDelete(work)">Удалить</button>
@@ -58,7 +59,7 @@ export default {
       }
     },
     confirmDelete(work) {
-      if (confirm(`Вы уверены, что хотите удалить ${work.name}?`)) {
+      if (confirm(`Вы уверены, что хотите удалить работу ${work.name}?`)) {
         this.deleteWork(work);
       }
     },
