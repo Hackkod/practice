@@ -1,12 +1,17 @@
 <template>
   <div>
-    <h1>Login</h1>
     <form @submit.prevent="handleLogin">
-      <input v-model="username" type="text" placeholder="Username" />
-      <input v-model="password" type="password" placeholder="Password" />
-      <button type="submit">Login</button>
+      <div>
+        <label class="test" for="username">Username:</label>
+        <input type="text" v-model="username" id="username" required />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" v-model="password" id="password" required />
+      </div>
+      <v-btn type="submit">Login</v-btn>
+      <p v-if="error">{{ error }}</p>
     </form>
-    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
@@ -27,13 +32,15 @@ export default {
       try {
         const token = await login(this.username, this.password);
         if (token) {
-          this.$router.push({name: 'Students'});
+          this.$router.push({ name: 'Students' });
         }
       } catch (error) {
-        this.error = 'Invalid username or password';
-        console.error('Error details:', error);
+        console.error('Ошибка:', error);
       }
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
