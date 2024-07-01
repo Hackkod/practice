@@ -167,6 +167,9 @@ li {
 .active {
   color: #32312e;
   background-color: #e9e3ff;
+  font-size: 24px;
+  font-weight: 500;
+  transition: background-color 0.5s;
 }
 
 a {
