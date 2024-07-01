@@ -5,6 +5,7 @@ import Mentors from '../views/MentorsPage.vue'
 import Studies from '../views/StudyPage.vue'
 import Works from '../views/WorkPage.vue'
 import { getToken } from "@/services/auth";
+import MainLayout from "@/views/MainLayout.vue";
 
 const routes = [
   {
@@ -15,32 +16,51 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: {requiresAuth: false}
+    meta: { requiresAuth: false }
   },
   {
-    path: '/students',
-    name: 'Students',
-    component: Students,
-    meta: {requiresAuth: true}
-  },
-  {
-    path: '/mentors',
-    name: 'Mentors',
-    component: Mentors,
-    meta: {requiresAuth: true}
-  },
-  {
-    path: '/studies',
-    name: 'Studies',
-    component: Studies,
-    meta: {requiresAuth: true}
-  },
-  {
-    path: '/works',
-    name: 'Works',
-    component: Works,
-    meta: {requiresAuth: true}
-  },
+    path: '/',
+    component: MainLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '/students',
+        name: 'Students',
+        component: Students,
+        meta: {
+          requiresAuth: true,
+          pageName: 'Студенты'
+        }
+      },
+      {
+        path: '/mentors',
+        name: 'Mentors',
+        component: Mentors,
+        meta: {
+          requiresAuth: true,
+          pageName: 'Наставники'
+        }
+      },
+      {
+        path: '/studies',
+        name: 'Studies',
+        component: Studies,
+        meta: {
+          requiresAuth: true,
+          pageName: 'Стажировки и практики'
+        }
+      },
+      {
+        path: '/works',
+        name: 'Works',
+        component: Works,
+        meta: {
+          requiresAuth: true,
+          pageName: 'Работа'
+        }
+      },
+    ]
+  }
 ]
 
 const router = createRouter({
