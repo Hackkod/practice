@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/LoginPage.vue'
 import Students from '../views/StudentsPage.vue'
 import Mentors from '../views/MentorsPage.vue'
-import Study from '../views/StudyPage.vue'
-import Work from '../views/WorkPage.vue'
+import Studies from '../views/StudyPage.vue'
+import Works from '../views/WorkPage.vue'
 import { getToken } from "@/services/auth";
 
 const routes = [
@@ -30,15 +30,15 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: '/study',
-    name: 'Study',
-    component: Study,
+    path: '/studies',
+    name: 'Studies',
+    component: Studies,
     meta: {requiresAuth: true}
   },
   {
-    path: '/work',
-    name: 'Work',
-    component: Work,
+    path: '/works',
+    name: 'Works',
+    component: Works,
     meta: {requiresAuth: true}
   },
 ]

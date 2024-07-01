@@ -58,11 +58,10 @@ export default {
       try {
         const token = await login(this.username, this.password);
         if (token) {
-          this.$router.push({name: 'Students'});
+          this.$router.push({ name: 'Students' });
         }
       } catch (error) {
-        this.error = 'Invalid username or password';
-        console.error('Error details:', error);
+        console.error('Ошибка:', error);
       }
     }
   }
