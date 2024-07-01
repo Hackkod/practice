@@ -1,8 +1,8 @@
 <template>
   <div class="main-layout">
-    <LeftSideBar></LeftSideBar>
+    <LeftSideBar />
     <div class="content">
-      <HeaderComponent :pageName="pageName" />
+      <HeaderComponent />
       <router-view></router-view>
     </div>
   </div>
@@ -15,11 +15,6 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 export default {
   name: "MainLayout",
   components: {HeaderComponent, LeftSideBar},
-  computed: {
-    pageName() {
-      return this.$route.meta.pageName || '';
-    }
-  }
 }
 </script>
 

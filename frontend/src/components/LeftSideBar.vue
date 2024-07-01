@@ -17,7 +17,7 @@
               <li v-for="(item, index) in menuItems" :key="index">
                 <div
                     class="nav-item"
-                    :class="{ active: activeIndex === index }"
+                    :class="{ active: activeIndexPage === index }"
                     @click="setActive(index)">
                   <v-icon>{{ item.icon }}</v-icon>
                   <a>{{ item.name }}</a>
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       students: [],
-      activeIndex: 0,
+      activeIndexPage: this.$route.meta.activeIndex || 0,
       menuItems: [
         { name: 'Студенты', icon: 'mdi-school', route: '/students' },
         { name: 'Наставники', icon: 'mdi-account-details', route: '/mentors' },
@@ -69,7 +69,7 @@ export default {
       }
     },
     setActive(index) {
-      this.activeIndex = index;
+      this.activeIndexPage = index;
       const selectedRoute = this.menuItems[index].route;
       this.$router.push({ path: selectedRoute });
     },
