@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'hard_skill_app',
     'anket_app',
     'event_app',
+    'user_app',
 
     'django.contrib.postgres',
     'rest_framework',
