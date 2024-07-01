@@ -11,6 +11,7 @@ export const login = async (username, password) => {
         }
     } catch (error) {
         console.error('Ошибка при авторизации', error);
+        throw error;
     }
 };
 
