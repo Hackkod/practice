@@ -1,20 +1,30 @@
 <template>
-  <div>
-    <button @click="handleLogout">Logout</button>
-  </div>
+  <LeftSideBar></LeftSideBar>
 </template>
 
 <script>
-import { logout } from '@/services/auth'
+import axios from "@/plugins/axios";
+import LeftSideBar from "@/components/LeftSideBar.vue";
 
 export default {
   name: 'HomeView',
-  components: { },
+  components: {LeftSideBar},
+  created() {
+    this.fetchStudents()
+  },
   methods: {
-    handleLogout() {
-      logout();
-      this.$router.push({name: 'Login'})
-    }
+    async fetchStudents() {
+      try {
+        const response = await axios.get('anket_app/students/')
+        this.students = response.data
+      } catch (e) {
+        alert('Ошибка')
+      }
+    },
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
