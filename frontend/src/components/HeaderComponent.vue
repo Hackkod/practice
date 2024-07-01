@@ -1,12 +1,12 @@
 <template>
   <div class="page-main-container">
     <div class="page-name-container">
-      <span class="page-name">{{ pageName }}</span>
+      <span class="page-name">{{ this.$route.meta.pageName }}</span>
     </div>
     <div class="page-table-functional-row">
       <div class="page-table-switchers">
         <div
-            v-for="(tab, index) in tabs"
+            v-for="(tab, index) in this.$route.meta.tabs"
             :key="index"
             :class="['tab', { active: activeTab === index }]"
             @click="activeTab = index"
@@ -32,20 +32,10 @@
 <script>
 export default {
   name: "HeaderComponent",
-  props: {
-    pageName: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
       students: [],
       activeTab: 0,
-      tabs: [
-        {name: 'Карта'},
-        {name: 'Таблица'}
-      ]
     }
   },
 }
