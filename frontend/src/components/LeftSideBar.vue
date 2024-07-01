@@ -49,10 +49,10 @@ export default {
       students: [],
       activeIndex: 0,
       menuItems: [
-        { name: 'Студенты', icon: 'mdi-school' },
-        { name: 'Наставники', icon: 'mdi-account-details' },
-        { name: 'Стажировки и практики', icon: 'mdi-account-tie' },
-        { name: 'Работа', icon: 'mdi-badge-account-horizontal' }
+        { name: 'Студенты', icon: 'mdi-school', route: '/students' },
+        { name: 'Наставники', icon: 'mdi-account-details', route: '/mentors' },
+        { name: 'Стажировки и практики', icon: 'mdi-account-tie', route: '/studies' },
+        { name: 'Работа', icon: 'mdi-badge-account-horizontal', route: '/works' }
       ],
     }
   },
@@ -70,6 +70,8 @@ export default {
     },
     setActive(index) {
       this.activeIndex = index;
+      const selectedRoute = this.menuItems[index].route;
+      this.$router.push({ path: selectedRoute });
     },
     handleLogout() {
       logout();
