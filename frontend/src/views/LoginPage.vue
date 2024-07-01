@@ -61,7 +61,8 @@ export default {
           this.$router.push({ name: 'Students' });
         }
       } catch (error) {
-        console.error('Ошибка:', error);
+        this.error = 'Invalid username or password';
+        console.error('Error details:', error);
       }
     }
   }
