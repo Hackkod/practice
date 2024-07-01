@@ -1,18 +1,34 @@
 <template>
-  <div>
-    <div>Записи работы</div>
-    <div class="work" v-for="work in works" :key="work.id">
-      <div><strong>Заголовок</strong> {{ work.name }}</div>
-      <div><strong>Студент</strong> {{ work.student_full.name }}</div>
-      <div><strong>Наставник</strong> {{ work.mentor_full.name }}</div>
-      <div><strong>Позиция</strong> {{ work.position }}</div>
-      <div><strong>Тип</strong> {{ work.type }}</div>
-      <div><strong>Дата начала</strong> {{ work.start_date }}</div>
-      <div><strong>Дата окончания</strong> {{ work.end_date }}</div>
-      <div><strong>Описание</strong> {{ work.description }}</div>
-      <button @click="editWork(work)">Редактировать</button>
-      <button @click="confirmDelete(work)">Удалить</button>
-    </div>
+  <div class="work-list">
+    <table class="work-table">
+      <thead>
+      <tr class="table-headers">
+        <th>Заголовок</th>
+        <th>Студент</th>
+        <th>Наставник</th>
+        <th>Тип</th>
+        <th>Дата начала/окончания</th>
+        <th>Действия</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="work in works" :key="work.id">
+        <td>{{ work.name }}</td>
+        <td>{{ work.student_full.name }}</td>
+        <td>{{ work.mentor_full.name }}</td>
+        <td>{{ work.type }}</td>
+        <td>{{ work.start_date }} - {{ work.end_date }}</td>
+        <td class="actions-column">
+          <button @click="editWork(work)" class="table-btn ">
+            <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="20" height="20">
+          </button>
+          <button @click="confirmDelete(work)" class="table-btn">
+            <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="20" height="20">
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
     <work-form v-if="showForm" :work="selectedWork" @close="closeForm" @save="saveWork"/>
   </div>
 </template>
@@ -68,5 +84,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.work-list {
+  background-image: linear-gradient(#faf8ff, #faf8ff);
+  background-size: calc(100% - 40px) calc(100% - 60px);
+  background-position: center;
+}
 
+.work-table {
+  backdrop-filter: blur(20px);
+  width: 100%;
+  padding: 20px;
+  border-collapse: separate;
+  border-spacing: 0 20px;
+
+  tr {
+    background-color: #fff;
+    box-shadow: 0 4px 20px 0 #f2f1f3;
+  }
+
+  .table-headers {
+    background-color: #F9F9F9;
+  }
+
+  th, td {
+    color: #32312e;
+    padding: 12px 8px;
+    text-align: left;
+    border: none;
+
+    white-space: nowrap;
+  }
+
+  th:first-child, td:first-child {
+    border-radius: 20px 0 0 20px;
+    padding-left: 20px;
+  }
+  th:last-child, td:last-child {
+    border-radius: 0 20px 20px 0;
+  }
+
+  th {
+    background-color: #F9F9F9;
+  }
+
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .actions-column {
+    display: flex;
+    justify-content: space-around;
+    max-width: 90px;
+  }
+}
 </style>
