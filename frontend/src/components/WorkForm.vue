@@ -119,6 +119,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  font-size: 20px;
 
   label {
     display: block;
@@ -126,7 +127,7 @@ h3 {
   }
 
   input, select, textarea {
-    width: 240px;
+    width: 270px;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 10px;

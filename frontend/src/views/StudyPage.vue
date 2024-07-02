@@ -1,6 +1,6 @@
 <template>
   <study-create-btn @studyAdded="addStudyToList"/>
-  <study-list :studies="studies"/>
+  <study-list :studies="studies" @updateStudies="fetchStudies"/>
 </template>
 
 <script>
