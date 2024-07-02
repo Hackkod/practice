@@ -25,7 +25,7 @@
         <input class="page-input-filter" type="text" placeholder="Поиск">
       </div>
     </div>
-    <div class="page-divider" />
+    <div class="page-divider"></div>
   </div>
 </template>
 
@@ -46,60 +46,71 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .page-name-container {
-  margin-top: 70px;
-  margin-left: 40px;
-  font-size: 48px;
+  margin-top: 40px;
+  margin-left: 20px;
+  font-size: 36px;
   font-weight: 700;
   color: #32312e;
+}
+
+.page-table-functional-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .page-table-switchers {
   display: flex;
   flex-direction: row;
-  grid-gap: 20px;
+  gap: 10px;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 18px;
   color: #bbb;
-  margin-top: 40px;
-  margin-left: 40px;
-}
-
-.active {
-  color: #32312e;
+  margin-top: 20px;
+  margin-left: 20px;
+  position: relative;
 }
 
 .tab {
-  padding-right: 20px;
+  padding-right: 15px;
   cursor: pointer;
 }
 
 .tab.active {
   font-weight: bold;
   border-bottom: 4px solid #bdabff;
+  z-index: 1;
+  position: relative;
+}
+
+.active {
+  color: #32312e;
 }
 
 .page-divider {
-  width: 94.8%;
   height: 3px;
   background-color: #bbb;
-  align-self: center;
-}
-
-.page-table-functional-row {
-  display: flex;
-  flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  //align-self: center;
+  //margin: 0 20px 0 20px;
 }
 
 .page-input-filter {
   background: url("@/assets/img/SearchIcon.png") no-repeat calc(100% - 15px) center;
+  background-size: 27px 27px;
   border: 3px solid #eee;
   border-radius: 10px;
-  width: 320px;
-  height: 45px;
-  font-size: 24px;
+  width: 220px;
+  height: 40px;
+  font-size: 18px;
   font-weight: 400;
   color: #32312e;
   padding: 0 15px;
@@ -115,11 +126,12 @@ export default {
 
 .page-select-field {
   background: url("@/assets/img/FilterIcon.png") no-repeat calc(100% - 15px) center;
+  background-size: 27px 27px;
   border: 3px solid #eee;
   border-radius: 10px;
-  width: 320px;
-  height: 45px;
-  font-size: 24px;
+  width: 220px;
+  height: 40px;
+  font-size: 18px;
   font-weight: 400;
   color: #bbb;
   padding: 0 15px;
@@ -130,8 +142,10 @@ export default {
 }
 
 .page-add-btn {
-  width: 45px;
-  height: 45px;
+  background-size: cover;
+  display: flex;
+  width: 40px;
+  height: 40px;
   background-image: url("@/assets/img/AddIcon.png");
   background-color: #f0ecff;
   border-radius: 8px;
@@ -140,9 +154,11 @@ export default {
 .page-func-inputs {
   display: flex;
   flex-direction: row;
-  grid-gap: 15px;
+  grid-gap: 10px;
   margin-top: 15px;
   margin-left: auto;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
+
 </style>

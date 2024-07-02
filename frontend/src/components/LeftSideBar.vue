@@ -1,39 +1,37 @@
 <template>
-  <div>
-    <div class="left-side">
-      <div class="left-side-navbar">
-        <div class="left-side-account">
-          <div class="left-side-profile-img-container">
-            <img class="left-side-profile-img"
-                 src="https://icdn.lenta.ru/images/2024/03/15/12/20240315121325156/square_1280_2b052867d958834bd4788b91709d3fe4.jpg"
-                 alt="">
-          </div>
-          <div class="left-side-profile-info-container">
-            <span class="left-side-profile-name">Хасбулла</span>
-            <span class="left-side-profile-position">Администратор</span>
-          </div>
-          <div class="left-side-profile-menu-container">
-            <ul class="menu">
-              <li v-for="(item, index) in menuItems" :key="index">
-                <div
-                    class="nav-item"
-                    :class="{ active: activeIndexPage === index }"
-                    @click="setActive(index)">
-                  <v-icon>{{ item.icon }}</v-icon>
-                  <a>{{ item.name }}</a>
-                </div>
-              </li>
-            </ul>
-          </div>
+  <div class="left-side">
+    <div class="left-side-navbar">
+      <div class="left-side-account">
+        <div class="left-side-profile-img-container">
+          <img class="left-side-profile-img"
+               src="https://icdn.lenta.ru/images/2024/03/15/12/20240315121325156/square_1280_2b052867d958834bd4788b91709d3fe4.jpg"
+               alt="">
         </div>
-        <div class="left-side-divider" />
-        <div class="left-side-exit-container">
-          <v-icon>mdi-exit-to-app</v-icon>
-          <button class="left-side-exit-btn" @click="handleLogout">Выйти</button>
+        <div class="left-side-profile-info-container">
+          <span class="left-side-profile-name">Хасбулла</span>
+          <span class="left-side-profile-position">Администратор</span>
+        </div>
+        <div class="left-side-profile-menu-container">
+          <ul class="menu">
+            <li v-for="(item, index) in menuItems" :key="index">
+              <div
+                  class="nav-item"
+                  :class="{ active: activeIndexPage === index }"
+                  @click="setActive(index)">
+                <v-icon>{{ item.icon }}</v-icon>
+                <a>{{ item.name }}</a>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="left-side-navbar-border" />
+      <div class="left-side-divider" />
+      <div class="left-side-exit-container">
+        <v-icon>mdi-exit-to-app</v-icon>
+        <button class="left-side-exit-btn" @click="handleLogout">Выйти</button>
+      </div>
     </div>
+    <div class="left-side-navbar-border" />
   </div>
 </template>
 
@@ -89,16 +87,16 @@ export default {
 }
 
 .left-side-navbar {
-  width: 368px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 }
 
 .left-side-navbar-border {
-  width: 2px;
-  background-color: #e9e3ff;
-  filter: blur(4px);
+  border: 2px solid #e9e3ff;
+  filter: blur(6px);
 }
 
 .left-side-account {
@@ -108,10 +106,10 @@ export default {
 }
 
 .left-side-profile-img-container {
-  margin-top: 70px;
+  margin-top: 20%;
   border-radius: 50%;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   overflow: hidden;
 }
 
@@ -136,53 +134,57 @@ export default {
 
 .left-side-profile-position {
   margin-top: 5px;
-  font-size: 20px;
+  font-size: 16px;
   color: #bbb;
 }
 
 .left-side-profile-menu-container {
-  margin-top: 60px;
+  margin-top: 40px;
+  width: 100%;
 }
 
 .menu {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 li {
-  margin-bottom: 20px
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .nav-item {
   display: flex;
   flex-direction: row;
   align-items: center;
-  align-content: space-between;
-  width: 280px;
-  font-size: 24px;
+  width: 220px;
+  font-size: 18px;
   font-weight: 400;
   color: #bbb;
-  padding: 20px 30px 20px 30px;
+  padding: 15px 20px;
   border-radius: 10px;
   cursor: pointer;
 }
 
-.active {
+.nav-item a {
+  margin-left: 15px;
+}
+
+.nav-item.active {
   color: #32312e;
   background-color: #e9e3ff;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
   transition: background-color 0.5s;
 }
 
-a {
-  margin-left: 25px;
-}
-
 .left-side-divider {
-  width: 270px;
+  width: calc(100% - 40px);
   height: 3px;
   background-color: #bbb;
-  margin-top: 70px;
+  margin-top: auto;
   padding: 1.5px;
 }
 
@@ -190,16 +192,139 @@ a {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 230px;
-  margin-top: 40px;
-  font-size: 24px;
+  width: 200px;
+  margin-top: 20px;
+  font-size: 18px;
   color: #bbb;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .left-side-exit-btn {
   font-weight: 400;
-  margin-left: 25px;
+  margin-left: 15px;
 }
+
+@media (max-width: 1024px) {
+  .left-side-navbar {
+    width: 220px;
+  }
+
+  .left-side-profile-img-container {
+    height: 60px;
+    width: 60px;
+  }
+
+  .left-side-profile-name {
+    font-size: 20px;
+  }
+
+  .left-side-profile-position {
+    font-size: 14px;
+  }
+
+  .nav-item {
+    width: 180px;
+    font-size: 16px;
+  }
+
+  .nav-item.active {
+    width: 180px;
+    font-size: 16px;
+  }
+
+  .left-side-divider {
+    width: calc(100% - 20px);
+    margin-top: 30px;
+  }
+
+  .left-side-exit-container {
+    padding: 0 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-side-navbar {
+    width: 200px;
+  }
+
+  .left-side-profile-img-container {
+    height: 50px;
+    width: 50px;
+  }
+
+  .left-side-profile-name {
+    font-size: 18px;
+  }
+
+  .left-side-profile-position {
+    font-size: 12px;
+  }
+
+  .nav-item {
+    width: 160px;
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .nav-item.active {
+    width: 160px;
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .left-side-divider {
+    width: calc(100% - 20px);
+    margin-top: 20px;
+  }
+
+  .left-side-exit-container {
+    width: 180px;
+    font-size: 14px;
+    padding: 0 23px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-side-navbar {
+    width: 180px;
+  }
+
+  .left-side-profile-img-container {
+    height: 40px;
+    width: 40px;
+  }
+
+  .left-side-profile-name {
+    font-size: 16px;
+  }
+
+  .left-side-profile-position {
+    font-size: 10px;
+  }
+
+  .nav-item {
+    width: 140px;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .nav-item.active {
+    width: 140px;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .left-side-divider {
+    width: calc(100% - 10px);
+    margin-top: 15px;
+  }
+
+  .left-side-exit-container {
+    width: 160px;
+    font-size: 12px;
+    padding: 0 18px;
+  }
+}
+
 </style>
