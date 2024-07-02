@@ -8,10 +8,10 @@ import { getToken } from "@/services/auth";
 import MainLayout from "@/views/MainLayout.vue";
 
 const routes = [
-  // {
-  //   path: '/',
-  //   redirect: '/login',
-  // },
+  {
+    path: '/',
+    redirect: '/login',
+  },
   {
     path: '/login',
     name: 'Login',
