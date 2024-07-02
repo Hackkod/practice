@@ -109,7 +109,7 @@ export default {
 h3 {
   color: #32312e;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -117,17 +117,17 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 15px;
   font-size: 20px;
 
   label {
     display: block;
+    padding-top: 8px;
     color: #4a4a4a;
   }
 
   input, select, textarea {
-    width: 270px;
+    width: 320px;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 10px;

@@ -8,7 +8,7 @@
         <th>Наставник</th>
         <th>Тип</th>
         <th>Дата начала/окончания</th>
-        <th>Действия</th>
+        <th class="actions-column">Действия</th>
       </tr>
       </thead>
       <tbody>
@@ -19,12 +19,14 @@
         <td>{{ study.type }}</td>
         <td>{{ study.start_date }} - {{ study.end_date }}</td>
         <td class="actions-column">
-          <button @click="editStudy(study)" class="table-btn ">
-            <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="30" height="30">
-          </button>
-          <button @click="confirmDelete(study)" class="table-btn">
-            <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="30" height="30">
-          </button>
+          <div class="actions-btns">
+            <button @click="editStudy(study)" class="table-btn ">
+              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="30" height="30">
+            </button>
+            <button @click="confirmDelete(study)" class="table-btn">
+              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="30" height="30">
+            </button>
+          </div>
         </td>
       </tr>
       </tbody>
@@ -120,12 +122,11 @@ th {
 }
 
 tr:hover {
-  background-color: #f1f1f1;
+  background-color: #faf8ff;
 }
 
-.actions-column {
+.actions-btns {
   display: flex;
-  justify-content: space-around;
-  max-width: 90px;
+  grid-gap: 40px;
 }
 </style>
