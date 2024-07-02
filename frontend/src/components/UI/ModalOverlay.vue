@@ -68,9 +68,9 @@ button[type="submit"] {
 }
 
 button[type="button"] {
-  background: #f0ecff;
-  color: #ccc;
-  border-color: #ccc;
+  background: #ffecec;
+  color: #ffabab;
+  border-color: #ffabab;
 }
 
 button:hover {

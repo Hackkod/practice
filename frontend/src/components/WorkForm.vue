@@ -105,7 +105,6 @@ export default {
 </script>
 
 <style scoped>
-
 h3 {
   color: #32312e;
   font-size: 24px;
