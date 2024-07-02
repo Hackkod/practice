@@ -59,17 +59,19 @@ export default {
     closeForm() {
       this.showForm = false;
     },
-    async saveWork(work) {
+    async saveWork(updatedWork) {
       try {
-        await axios.put(`event_app/works/${work.id}/`, work);
+        await axios.put(`event_app/works/${updatedWork.id}/`, updatedWork);
+        this.$emit('updateWorks');
       } catch (e) {
-        alert('Ошибка при изменении работы')
+        alert('Ошибка при изменении работы');
       }
-      this.closeForm()
+      this.closeForm();
     },
     async deleteWork(work) {
       try {
         await axios.delete(`event_app/works/${work.id}/`);
+        this.$emit('updateWorks');
       } catch (e) {
         alert('Ошибка при удалении работы')
       }
@@ -95,7 +97,7 @@ export default {
   width: 100%;
   padding: 20px;
   border-collapse: separate;
-  border-spacing: 0 20px;
+  border-spacing: 0 16px;
 
   tr {
     background-color: #fff;
@@ -103,7 +105,7 @@ export default {
   }
 
   .table-headers {
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
   }
 
   th, td {
@@ -124,7 +126,7 @@ export default {
   }
 
   th {
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
   }
 
   tr:hover {
