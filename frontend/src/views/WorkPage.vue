@@ -1,4 +1,5 @@
 <template>
+  <left-side-bar></left-side-bar>
   <work-create-btn @workAdded="addWorkToList"/>
   <work-list :works="works" @updateWorks="fetchWorks"/>
 </template>
@@ -7,9 +8,10 @@
 import axios from "@/plugins/axios";
 import WorkList from "@/components/WorkList.vue";
 import WorkCreateBtn from "@/components/WorkCreateBtn.vue";
+import LeftSideBar from "@/components/LeftSideBar.vue";
 
 export default {
-  components: {WorkCreateBtn, WorkList},
+  components: {LeftSideBar, WorkCreateBtn, WorkList},
   data() {
     return {
       works: [],
