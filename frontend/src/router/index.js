@@ -29,12 +29,7 @@ const routes = [
         component: Students,
         meta: {
           requiresAuth: true,
-          pageName: 'Студенты',
           activeIndex: 0,
-          tabs: [
-            { name: 'Карта' },
-            { name: 'Таблица' }
-          ],
         }
       },
       {
@@ -43,12 +38,7 @@ const routes = [
         component: Mentors,
         meta: {
           requiresAuth: true,
-          pageName: 'Наставники',
           activeIndex: 1,
-          tabs: [
-            { name: 'Карта' },
-            { name: 'Таблица' }
-          ],
         }
       },
       {
@@ -57,11 +47,7 @@ const routes = [
         component: Studies,
         meta: {
           requiresAuth: true,
-          pageName: 'Стажировки и практики',
           activeIndex: 2,
-          tabs: [
-            { name: 'Таблица' }
-          ],
         }
       },
       {
@@ -70,11 +56,7 @@ const routes = [
         component: Works,
         meta: {
           requiresAuth: true,
-          pageName: 'Работа',
           activeIndex: 3,
-          tabs: [
-            { name: 'Таблица' }
-          ],
         }
       },
     ]

@@ -17,21 +17,24 @@
         <img
             :src="require('@/assets/img/EditIcon.svg')"
             alt="Иконка редактирования"
-            width="32"
-            height="32">
+            width="26"
+            height="26">
       </button>
       <button class="card-delete-btn">
         <img
+            @click="confirmDelete(studentID)"
             :src="require('@/assets/img/DeleteIcon.svg')"
             alt="Иконка удаления"
-            width="32"
-            height="32">
+            width="26"
+            height="26">
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "@/plugins/axios";
+
 export default {
   name: "StudentCard",
   components: { },
@@ -59,6 +62,25 @@ export default {
     studentProfilePhoto: {
       type: String,
       required: true
+    },
+    studentID: {
+      type: Number,
+      required: true
+    },
+  },
+  methods: {
+    async deleteStudent(id) {
+      try {
+        await axios.delete(`anket_app/students/${id}/`)
+        this.$emit('updateStudents');
+      } catch (e) {
+        alert('Ошибка при удалении студента')
+      }
+    },
+    confirmDelete(id) {
+      if (confirm(`Вы уверены, что хотите удалить студента ${this.studentSurname + ' ' + this.studentName}?`)) {
+        this.deleteStudent(id);
+      }
     }
   },
   computed: {
@@ -71,7 +93,7 @@ export default {
     },
     truncateEstablishment() {
       const establish = this.studentEstablishment
-      return establish.length > 14 ? establish.slice(0, 14) + '...' : establish;
+      return establish.length > 12 ? establish.slice(0, 12) + '...' : establish;
     }
   },
 }
@@ -79,8 +101,8 @@ export default {
 
 <style scoped lang="scss">
   .student-info-container {
-    width: 340px;
-    height: 190px;
+    width: 285px;
+    height: 150px;
     border-radius: 10px;
     box-shadow: 0 4px 20px 0 #f2f1f3;
     background: #fff;
@@ -94,10 +116,10 @@ export default {
 
   .student-info-img-container {
     border-radius: 50%;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     overflow: hidden;
-    margin: 25px 0 0 25px;
+    margin: 20px 0 0 20px;
   }
 
   .student-info-img {
@@ -109,19 +131,19 @@ export default {
   .student-info-name-est {
     display: flex;
     flex-direction: column;
-    margin-left: 25px;
+    margin-left: 20px;
     margin-top: 20px;
   }
 
   .student-name {
     font-weight: 500;
-    font-size: 24px;
+    font-size: 20px;
     color: #344ca2;
   }
 
   .student-establishment, .student-course {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     color: #bbb;
   }
 
@@ -129,8 +151,8 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: right;
-    margin-top: 8px;
-    margin-right: 25px;
+    margin-top: 5px;
+    margin-right: 20px;
     grid-gap: 20px;
   }
 </style>
