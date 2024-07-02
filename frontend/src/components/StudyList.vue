@@ -1,17 +1,34 @@
 <template>
   <div>
-    <div>Записи работы</div>
-    <div class="study" v-for="study in studies" :key="study.id">
-      <div><strong>Заголовок</strong> {{ study.name }}</div>
-      <div><strong>Студент</strong> {{ study.student_full.name }}</div>
-      <div><strong>Наставник</strong> {{ study.mentor_full.name }}</div>
-      <div><strong>Тип</strong> {{ study.type }}</div>
-      <div><strong>Дата начала</strong> {{ study.start_date }}</div>
-      <div><strong>Дата окончания</strong> {{ study.end_date }}</div>
-      <div><strong>Описание</strong> {{ study.description }}</div>
-      <button @click="editStudy(study)">Редактировать</button>
-      <button @click="confirmDelete(study)">Удалить</button>
-    </div>
+    <table-overlay>
+      <thead>
+      <tr class="table-headers">
+        <th>Заголовок</th>
+        <th>Студент</th>
+        <th>Наставник</th>
+        <th>Тип</th>
+        <th>Дата начала/окончания</th>
+        <th>Действия</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="study in studies" :key="study.id">
+        <td>{{ study.name }}</td>
+        <td>{{ study.student_full.name }}</td>
+        <td>{{ study.mentor_full.name }}</td>
+        <td>{{ study.type }}</td>
+        <td>{{ study.start_date }} - {{ study.end_date }}</td>
+        <td class="actions-column">
+          <button @click="editStudy(study)" class="table-btn ">
+            <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="30" height="30">
+          </button>
+          <button @click="confirmDelete(study)" class="table-btn">
+            <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="30" height="30">
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table-overlay>
     <study-form v-if="showForm" :study="selectedStudy" @close="closeForm" @save="saveStudy"/>
   </div>
 </template>
@@ -19,6 +36,7 @@
 <script>
 import StudyForm from "@/components/StudyForm.vue";
 import axios from "@/plugins/axios";
+import TableOverlay from "@/components/UI/TableOverlay.vue";
 
 export default {
   name: 'StudyList',
@@ -26,6 +44,7 @@ export default {
     studies: Array,
   },
   components: {
+    TableOverlay,
     StudyForm,
   },
   data() {
@@ -42,19 +61,21 @@ export default {
     closeForm() {
       this.showForm = false;
     },
-    async saveStudy(study) {
+    async saveStudy(updatedStudy) {
       try {
-        await axios.put(`event_app/studies/${study.id}/`, study);
+        await axios.put(`event_app/studies/${updatedStudy.id}/`, updatedStudy);
+        this.$emit('updateStudies');
       } catch (e) {
-        alert('Ошибка при изменении обучения')
+        alert('Ошибка при изменении работы');
       }
-      this.closeForm()
+      this.closeForm();
     },
     async deleteStudy(study) {
       try {
         await axios.delete(`event_app/studies/${study.id}/`);
+        this.$emit('updateStudies');
       } catch (e) {
-        alert('Ошибка при удалении обучения')
+        alert('Ошибка при удалении работы')
       }
     },
     confirmDelete(study) {
@@ -67,5 +88,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+tr {
+  background-color: #fff;
+  box-shadow: 0 4px 20px 0 #f2f1f3;
+  font-size: 20px;
+}
 
+.table-headers {
+  background-color: #f9f9f9;
+}
+
+th, td {
+  color: #32312e;
+  padding: 12px 8px;
+  text-align: left;
+  border: none;
+  white-space: nowrap;
+}
+
+th:first-child, td:first-child {
+  border-radius: 20px 0 0 20px;
+  padding-left: 20px;
+}
+th:last-child, td:last-child {
+  border-radius: 0 20px 20px 0;
+}
+
+th {
+  background-color: #f9f9f9;
+  font-size: 24px;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+.actions-column {
+  display: flex;
+  justify-content: space-around;
+  max-width: 90px;
+}
 </style>

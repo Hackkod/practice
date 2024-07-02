@@ -24,7 +24,7 @@ export default {
         const response = await axios.get('event_app/works/');
         this.works = response.data;
       } catch (e) {
-          alert('Ошибка при получении списка работ')
+        alert('Ошибка при получении списка работ')
       }
     },
     addWorkToList(work) {
