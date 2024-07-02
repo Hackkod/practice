@@ -1,25 +1,36 @@
 <template>
-  <div class="page-content">
-    <MentorCard
-        v-for="mentor in mentors" :key="mentor.id"
-        :mentorProfilePhoto="mentor.profile_photo"
-        :mentorPosition="mentor.job_position"
-        :mentorPatronymic="mentor.patronymic"
-        :mentorSurname="mentor.surname"
-        :mentorName="mentor.name"
-    />
+  <div>
+    <HeaderComponent title="Наставники" :tabs="tabs" />
+    <div class="page-content">
+      <MentorCard
+          @updateMentors="fetchMentors"
+          v-for="mentor in mentors" :key="mentor.id"
+          :mentorProfilePhoto="mentor.profile_photo"
+          :mentorPosition="mentor.job_position"
+          :mentorPatronymic="mentor.patronymic"
+          :mentorSurname="mentor.surname"
+          :mentorName="mentor.name"
+          :mentorID="mentor.id"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import MentorCard from "@/components/MentorCard.vue";
 import axios from "@/plugins/axios";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 export default {
-  components: {MentorCard},
+  components: {HeaderComponent, MentorCard},
   data() {
     return {
       mentors: [],
+      activeTab: 0,
+      tabs: [
+        { name: 'Карта' },
+        { name: 'Таблица' }
+      ],
     }
   },
   created() {
@@ -30,7 +41,6 @@ export default {
       try {
         const response = await axios.get('anket_app/mentors/')
         this.mentors = response.data
-        console.log(this.mentors)
       } catch (e) {
         alert('Ошибка')
       }
@@ -41,10 +51,10 @@ export default {
 
 <style lang="scss" scoped>
   .page-content {
-    margin: 40px 0 0 40px;
+    margin: 20px 0 0 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 18px;
     justify-content: flex-start;
   }
 </style>

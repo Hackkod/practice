@@ -1,18 +1,24 @@
 <template>
-  <study-create-btn @studyAdded="addStudyToList"/>
-  <study-list :studies="studies" @updateStudies="fetchStudies"/>
+  <div>
+    <HeaderComponent title="Стажировки и практики" :tabs="tabs" />
+    <study-list :studies="studies" @updateStudies="fetchStudies"/>
+  </div>
 </template>
 
 <script>
 import axios from "@/plugins/axios";
 import StudyList from "@/components/StudyList.vue";
-import StudyCreateBtn from "@/components/StudyCreateBtn.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 export default {
-  components: {StudyCreateBtn, StudyList},
+  components: {HeaderComponent, StudyList},
   data() {
     return {
       studies: [],
+      activeTab: 0,
+      tabs: [
+        { name: 'Таблица' }
+      ],
     }
   },
   created() {
