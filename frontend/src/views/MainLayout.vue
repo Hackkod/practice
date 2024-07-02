@@ -3,7 +3,9 @@
     <LeftSideBar />
     <div class="content">
       <HeaderComponent />
-      <router-view></router-view>
+      <div class="main-content">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -19,12 +21,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .main-layout {
-    display: flex;
-    flex-direction: row;
-  }
+.main-layout {
+  display: flex;
+  height: 100vh;
+}
 
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.main-content{
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+@media (max-height: 768px) {
   .content {
-    width: 100%;
+    width: calc(100% - 280px);
   }
+}
 </style>
