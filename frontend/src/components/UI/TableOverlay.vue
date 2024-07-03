@@ -27,17 +27,17 @@ export default {
     border-spacing: 0 14px;
   }
 
-  :deep tr {
+  :deep(tr) {
     background-color: #fff;
     box-shadow: 0 4px 20px 0 #f2f1f3;
     font-size: 16px;
   }
 
-  :deep tr:hover {
+  :deep(tr:hover) {
     background-color: #faf8ff;
   }
 
-  :deep th {
+  :deep(th) {
     color: #32312e;
     padding: 12px 8px;
     text-align: left;
@@ -47,16 +47,16 @@ export default {
     font-size: 18px;
   }
 
-  :deep th:first-child {
+  :deep(th:first-child) {
     border-radius: 20px 0 0 20px;
     padding-left: 20px;
   }
 
-  :deep th:last-child {
+  :deep(th:last-child) {
     border-radius: 0 20px 20px 0;
   }
 
-  :deep td {
+  :deep(td) {
     color: #32312e;
     padding: 12px 8px;
     text-align: left;
@@ -64,20 +64,20 @@ export default {
     white-space: nowrap;
   }
 
-  :deep td:first-child {
+  :deep(td:first-child) {
     border-radius: 20px 0 0 20px;
     padding-left: 20px;
   }
 
-  :deep td:last-child {
+  :deep(td:last-child) {
     border-radius: 0 20px 20px 0;
   }
 
-  :deep .table-btns {
+  :deep(.table-btns) {
     display: flex;
     grid-gap: 35px;
 
-    :deep button {
+    :deep(button) {
       display: flex;
       align-items: center;
     }
