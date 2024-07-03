@@ -1,12 +1,12 @@
 <template>
   <div class="modal-overlay" @click.self="close">
-    <div class="modal-content">
+    <form @submit.prevent="save" class="modal-content">
       <slot></slot>
       <div class="form-btns">
-        <button type="submit" @click="submit">Сохранить</button>
+        <button type="submit">Сохранить</button>
         <button type="button" @click="close">Отмена</button>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -17,8 +17,12 @@ export default {
     close() {
       this.$emit('close');
     },
-    submit() {
-      this.$emit('submit');
+    submit(event) {
+      if (event.target.checkValidity()) {
+        this.$emit('submit', this.form);
+      } else {
+        alert('Пожалуйста, заполните все обязательные поля.');
+      }
     }
   }
 }
