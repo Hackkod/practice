@@ -14,6 +14,7 @@
           :studentID="student.id"
       />
     </div>
+    <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudents" />
   </div>
 </template>
 
@@ -21,10 +22,11 @@
 import axios from "@/plugins/axios";
 import StudentCard from "@/components/StudentCard.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import PaginatorTable from "@/components/PaginatorTable.vue";
 
 export default {
   name: 'HomeView',
-  components: {HeaderComponent, StudentCard},
+  components: {PaginatorTable, HeaderComponent, StudentCard},
   data() {
     return {
       students: [],
@@ -33,16 +35,21 @@ export default {
         { name: 'Карта' },
         { name: 'Таблица' }
       ],
+      next: null,
+      previous: null,
+      currentPage: 1,
     }
   },
   created() {
     this.fetchStudents()
   },
   methods: {
-    async fetchStudents() {
+    async fetchStudents(url = `anket_app/students/?page=${this.currentPage}`) {
       try {
-        const response = await axios.get('anket_app/students/')
-        this.students = response.data
+        const response = await axios.get(url)
+        this.students = response.data.results;
+        this.next = response.data.next;
+        this.previous = response.data.previous;
       } catch (e) {
         alert('Ошибка')
       }

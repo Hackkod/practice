@@ -4,15 +4,17 @@
     <div class="content">
       <router-view></router-view>
     </div>
+    <paginator-table />
   </div>
 </template>
 
 <script>
 import LeftSideBar from "@/components/LeftSideBar.vue";
+import PaginatorTable from "@/components/PaginatorTable.vue";
 
 export default {
   name: "MainLayout",
-  components: {LeftSideBar},
+  components: {PaginatorTable, LeftSideBar},
 }
 </script>
 
