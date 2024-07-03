@@ -56,6 +56,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 AUTH_USER_MODEL = 'user_app.User'
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 12,
+
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],

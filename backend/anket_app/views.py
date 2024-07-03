@@ -4,11 +4,19 @@ import datetime
 
 from .models import StudentAnket, MentorAnket
 from .serializers import StudentAnketSerializer, MentorAnketSerializer
+from rest_framework.pagination import PageNumberPagination
+
+
+class StudentMentorPagination(PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class StudentAnketViewSet(viewsets.ModelViewSet):
     queryset = StudentAnket.objects.all()
     serializer_class = StudentAnketSerializer
+    pagination_class = StudentMentorPagination
 
     def perform_create(self, serializer):
         self.validate_study_years(serializer.validated_data)
@@ -42,3 +50,4 @@ class StudentAnketViewSet(viewsets.ModelViewSet):
 class MentorAnketViewSet(viewsets.ModelViewSet):
     queryset = MentorAnket.objects.all()
     serializer_class = MentorAnketSerializer
+    pagination_class = StudentMentorPagination

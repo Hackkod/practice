@@ -76,7 +76,7 @@ export default {
     async fetchStudents() {
       try {
         const response = await axios.get('anket_app/students/');
-        this.students = response.data;
+        this.students = response.data.results;
       } catch (e) {
         alert('Ошибка при загрузке списка студентов');
       }
@@ -84,7 +84,7 @@ export default {
     async fetchMentors() {
       try {
         const response = await axios.get('anket_app/mentors/');
-        this.mentors = response.data;
+        this.mentors = response.data.results;
       } catch (e) {
         alert('Ошибка при загрузке списка наставников');
       }

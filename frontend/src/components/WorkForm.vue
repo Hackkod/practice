@@ -79,7 +79,7 @@ export default {
     async fetchStudents() {
       try {
         const response = await axios.get('anket_app/students/');
-        this.students = response.data;
+        this.students = response.data.results;
         if (!this.work && this.students.length) {
           this.form.student = this.students[0].id;
         }
@@ -90,7 +90,7 @@ export default {
     async fetchMentors() {
       try {
         const response = await axios.get('anket_app/mentors/');
-        this.mentors = response.data;
+        this.mentors = response.data.results;
         if (!this.work && this.mentors.length) {
           this.form.mentor = this.mentors[0].id;
         }

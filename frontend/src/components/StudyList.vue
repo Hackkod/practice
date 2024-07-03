@@ -93,7 +93,7 @@ export default {
 tr {
   background-color: #fff;
   box-shadow: 0 4px 20px 0 #f2f1f3;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .table-headers {
@@ -118,7 +118,7 @@ th:last-child, td:last-child {
 
 th {
   background-color: #f9f9f9;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 tr:hover {
@@ -127,6 +127,11 @@ tr:hover {
 
 .actions-btns {
   display: flex;
-  grid-gap: 40px;
+  grid-gap: 35px;
+}
+
+button {
+  display: flex;
+  align-items: center;
 }
 </style>

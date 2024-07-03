@@ -13,6 +13,7 @@
           :mentorID="mentor.id"
       />
     </div>
+    <PaginatorTable :next="next" :previous="previous" @changePage="fetchMentors" />
   </div>
 </template>
 
@@ -20,9 +21,10 @@
 import MentorCard from "@/components/MentorCard.vue";
 import axios from "@/plugins/axios";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import PaginatorTable from "@/components/PaginatorTable.vue";
 
 export default {
-  components: {HeaderComponent, MentorCard},
+  components: {PaginatorTable, HeaderComponent, MentorCard},
   data() {
     return {
       mentors: [],
@@ -31,16 +33,21 @@ export default {
         { name: 'Карта' },
         { name: 'Таблица' }
       ],
+      next: null,
+      previous: null,
+      currentPage: 1,
     }
   },
   created() {
     this.fetchMentors()
   },
   methods: {
-    async fetchMentors() {
+    async fetchMentors(url = `anket_app/mentors/?page=${this.currentPage}`) {
       try {
-        const response = await axios.get('anket_app/mentors/')
-        this.mentors = response.data
+        const response = await axios.get(url)
+        this.mentors = response.data.results;
+        this.next = response.data.next;
+        this.previous = response.data.previous;
       } catch (e) {
         alert('Ошибка')
       }
