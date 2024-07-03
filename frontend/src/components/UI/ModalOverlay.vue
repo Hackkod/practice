@@ -80,4 +80,45 @@ button[type="button"] {
 button:hover {
   opacity: 0.9;
 }
+
+:deep .form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+:deep label {
+  display: block;
+  padding-top: 6px;
+  color: #4a4a4a;
+}
+
+:deep input {
+  width: 230px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #32312e;
+}
+
+:deep select {
+  width: 230px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #32312e;
+}
+
+:deep textarea {
+  width: 230px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #32312e;
+}
 </style>
