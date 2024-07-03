@@ -1,8 +1,8 @@
 <template>
   <div>
     <HeaderComponent title="Работа" :tabs="tabs" @openForm="createWork" />
-    <work-list :works="works" @updateWorks="fetchWorks"/>
-    <work-form v-if="showForm" @close="closeForm" @save="saveWork"/>
+    <WorkList :works="works" @updateWorks="fetchWorks"/>
+    <WorkForm v-if="showForm" @close="closeForm" @save="saveWork"/>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchWorks" />
   </div>
 </template>

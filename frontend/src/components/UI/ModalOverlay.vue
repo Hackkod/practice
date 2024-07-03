@@ -46,7 +46,6 @@ export default {
   background: #f0f4ff;
   padding: 20px 25px;
   border-radius: 20px;
-  width: 430px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -93,6 +92,7 @@ button:hover {
   display: block;
   padding-top: 6px;
   color: #4a4a4a;
+  margin-right: 20px;
 }
 
 :deep(input) {
