@@ -53,7 +53,6 @@ export default {
         this.works = response.data.results;
         this.next = response.data.next;
         this.previous = response.data.previous;
-        console.log(this.works)
       } catch (e) {
         alert('Ошибка при получении списка работ')
       }

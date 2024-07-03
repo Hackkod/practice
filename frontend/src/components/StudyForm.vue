@@ -1,6 +1,6 @@
 <template>
   <modal-overlay @close="close" @submit="save">
-    <h3>{{ study ? 'Редактирование обучения' : 'Создание нового обучения' }}</h3>
+    <modal-header>{{ study ? 'Редактирование обучения' : 'Создание нового обучения' }}</modal-header>
     <div class="form-group">
       <label>Заголовок:</label>
       <input v-model="form.name" required>
@@ -45,11 +45,9 @@
 
 <script>
 import axios from "@/plugins/axios";
-import ModalOverlay from "@/components/UI/ModalOverlay.vue";
 
 export default {
   name: 'StudyForm',
-  components: {ModalOverlay},
   props: {
     study: Object,
   },
@@ -77,6 +75,9 @@ export default {
       try {
         const response = await axios.get('anket_app/students/');
         this.students = response.data.results;
+        if (!this.study && this.students.length) {
+          this.form.student = this.students[0].id;
+        }
       } catch (e) {
         alert('Ошибка при загрузке списка студентов');
       }
@@ -85,6 +86,9 @@ export default {
       try {
         const response = await axios.get('anket_app/mentors/');
         this.mentors = response.data.results;
+        if (!this.study && this.mentors.length) {
+          this.form.mentor = this.mentors[0].id;
+        }
       } catch (e) {
         alert('Ошибка при загрузке списка наставников');
       }
@@ -100,33 +104,5 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  color: #32312e;
-  font-size: 24px;
-  margin-bottom: 30px;
-  text-align: center;
-}
 
-.form-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  font-size: 20px;
-
-  label {
-    display: block;
-    padding-top: 8px;
-    color: #4a4a4a;
-  }
-
-  input, select, textarea {
-    width: 320px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #ffffff;
-    color: #32312e;
-  }
-}
 </style>

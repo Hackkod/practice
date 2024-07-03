@@ -1,7 +1,8 @@
 <template>
   <div>
-    <HeaderComponent title="Стажировки и практики" :tabs="tabs" />
+    <HeaderComponent title="Стажировки и практики" :tabs="tabs" @openForm="createStudy" />
     <study-list :studies="studies" @updateStudies="fetchStudies"/>
+    <study-form v-if="showForm" @close="closeForm" @save="saveStudy"/>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudies" />
   </div>
 </template>
@@ -11,13 +12,14 @@ import axios from "@/plugins/axios";
 import StudyList from "@/components/StudyList.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PaginatorTable from "@/components/PaginatorTable.vue";
+import StudyForm from "@/components/StudyForm.vue";
 
 export default {
-  components: {PaginatorTable, HeaderComponent, StudyList},
+  components: {StudyForm, PaginatorTable, HeaderComponent, StudyList},
   data() {
     return {
       studies: [],
-      activeTab: 0,
+      showForm: false,
       tabs: [
         { name: 'Таблица' }
       ],
@@ -30,6 +32,21 @@ export default {
     this.fetchStudies();
   },
   methods: {
+    createStudy() {
+      this.showForm = true;
+    },
+    closeForm() {
+      this.showForm = false;
+    },
+    async saveStudy(newStudy) {
+      try {
+        await axios.post(`event_app/studies/`, newStudy);
+        await this.fetchStudies();
+        this.closeForm();
+      } catch (e) {
+        alert('Ошибка при создании обучения');
+      }
+    },
     async fetchStudies(url = `event_app/studies/?page=${this.currentPage}`) {
       try {
         const response = await axios.get(url);

@@ -81,7 +81,7 @@ button:hover {
   opacity: 0.9;
 }
 
-:deep .form-group {
+:deep(.form-group) {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -89,13 +89,13 @@ button:hover {
   font-size: 16px;
 }
 
-:deep label {
+:deep(label) {
   display: block;
   padding-top: 6px;
   color: #4a4a4a;
 }
 
-:deep input {
+:deep(input) {
   width: 230px;
   padding: 4px;
   border: 1px solid #ccc;
@@ -104,7 +104,7 @@ button:hover {
   color: #32312e;
 }
 
-:deep select {
+:deep(select) {
   width: 230px;
   padding: 4px;
   border: 1px solid #ccc;
@@ -113,7 +113,7 @@ button:hover {
   color: #32312e;
 }
 
-:deep textarea {
+:deep(textarea) {
   width: 230px;
   padding: 4px;
   border: 1px solid #ccc;

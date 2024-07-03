@@ -20,10 +20,10 @@
         <td>{{ work.start_date }} - {{ work.end_date }}</td>
         <td>
           <div class="table-btns">
-            <button @click="editWork(work)" class="table-btn ">
+            <button @click="editWork(work)">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
-            <button @click="confirmDelete(work)" class="table-btn">
+            <button @click="confirmDelete(work)">
               <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>
