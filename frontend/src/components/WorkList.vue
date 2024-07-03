@@ -21,10 +21,10 @@
         <td>
           <div class="actions-btns">
             <button @click="editWork(work)" class="table-btn ">
-              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="30" height="30">
+              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
             <button @click="confirmDelete(work)" class="table-btn">
-              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="30" height="30">
+              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>
         </td>
@@ -93,7 +93,7 @@ export default {
   tr {
     background-color: #fff;
     box-shadow: 0 4px 20px 0 #f2f1f3;
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .table-headers {
@@ -118,7 +118,7 @@ export default {
 
   th {
     background-color: #f9f9f9;
-    font-size: 24px;
+    font-size: 18px;
   }
 
   tr:hover {
@@ -127,6 +127,11 @@ export default {
 
   .actions-btns {
     display: flex;
-    grid-gap: 40px;
+    grid-gap: 35px;
+
+    button {
+      display: flex;
+      align-items: center;
+    }
   }
 </style>
