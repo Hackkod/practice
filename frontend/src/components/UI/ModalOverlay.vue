@@ -40,24 +40,24 @@ export default {
 
 .modal-content {
   background: #f0f4ff;
-  padding: 40px;
+  padding: 20px 25px;
   border-radius: 20px;
-  width: 600px;
+  width: 430px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-btns {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 button {
   width: 47%;
-  padding: 10px;
-  font-size: 20px;
+  padding: 8px;
+  font-size: 16px;
   border: 3px solid;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
 }
 

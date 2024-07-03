@@ -107,8 +107,8 @@ export default {
 <style scoped>
 h3 {
   color: #32312e;
-  font-size: 24px;
-  margin-bottom: 30px;
+  font-size: 20px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -117,17 +117,17 @@ h3 {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 15px;
-  font-size: 20px;
+  font-size: 16px;
 
   label {
     display: block;
-    padding-top: 8px;
+    padding-top: 6px;
     color: #4a4a4a;
   }
 
   input, select, textarea {
-    width: 320px;
-    padding: 6px;
+    width: 230px;
+    padding: 4px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background: #ffffff;

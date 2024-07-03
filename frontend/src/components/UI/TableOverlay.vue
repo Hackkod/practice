@@ -22,8 +22,8 @@ export default {
   .work-table {
     backdrop-filter: blur(20px);
     width: 100%;
-    padding: 20px;
+    padding: 0 20px;
     border-collapse: separate;
-    border-spacing: 0 16px;
+    border-spacing: 0 14px;
   }
 </style>
