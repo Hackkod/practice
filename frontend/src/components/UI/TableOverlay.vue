@@ -28,9 +28,10 @@ export default {
   }
 
   :deep(tr) {
+    border-radius: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 20px 0 #f2f1f3;
     font-size: 16px;
+    box-shadow: 0 4px 20px 0 #f2f1f3;
   }
 
   :deep(tr:hover) {

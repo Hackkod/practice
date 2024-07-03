@@ -1,8 +1,8 @@
 <template>
   <div>
     <HeaderComponent title="Стажировки и практики" :tabs="tabs" @openForm="createStudy" />
-    <study-list :studies="studies" @updateStudies="fetchStudies"/>
-    <study-form v-if="showForm" @close="closeForm" @save="saveStudy"/>
+    <studyList :studies="studies" @updateStudies="fetchStudies"/>
+    <studyForm v-if="showForm" @close="closeForm" @save="saveStudy"/>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudies" />
   </div>
 </template>
