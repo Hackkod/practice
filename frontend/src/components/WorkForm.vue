@@ -1,49 +1,49 @@
 <template>
   <modal-overlay @close="close" @submit="save">
     <modal-header>{{ work ? 'Редактирование работы' : 'Создание новой работы' }}</modal-header>
-    <modal-form-group>
-      <modal-label>Заголовок:</modal-label>
-      <modal-input v-model="form.name" required/>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Студент:</modal-label>
-      <modal-select v-model="form.student" required>
+    <div class="form-group">
+      <label>Заголовок:</label>
+      <input v-model="form.name" required/>
+    </div>
+    <div class="form-group">
+      <label>Студент:</label>
+      <select v-model="form.student" required>
         <option v-for="student in students" :key="student.id" :value="student.id">
           {{ student.name }}
         </option>
-      </modal-select>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Наставник:</modal-label>
-      <modal-select v-model="form.mentor" required>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Наставник:</label>
+      <select v-model="form.mentor" required>
         <option v-for="mentor in mentors" :key="mentor.id" :value="mentor.id">
           {{ mentor.name }}
         </option>
-      </modal-select>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Тип:</modal-label>
-      <modal-select v-model="form.type" required>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Тип:</label>
+      <select v-model="form.type" required>
         <option value="AGREEMENT">Agreement</option>
         <option value="STAFF">Staff</option>
-      </modal-select>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Позиция:</modal-label>
-      <modal-input v-model="form.position" required/>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Дата начала:</modal-label>
-      <modal-input v-model="form.start_date" type="date" required/>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Дата окончания:</modal-label>
-      <modal-input v-model="form.end_date" type="date" required/>
-    </modal-form-group>
-    <modal-form-group>
-      <modal-label>Описание:</modal-label>
-      <modal-textarea v-model="form.description"/>
-    </modal-form-group>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Позиция:</label>
+      <input v-model="form.position" required/>
+    </div>
+    <div class="form-group">
+      <label>Дата начала:</label>
+      <input v-model="form.start_date" type="date" required/>
+    </div>
+    <div class="form-group">
+      <label>Дата окончания:</label>
+      <input v-model="form.end_date" type="date" required/>
+    </div>
+    <div class="form-group">
+      <label>Описание:</label>
+      <textarea v-model="form.description"/>
+    </div>
   </modal-overlay>
 </template>
 

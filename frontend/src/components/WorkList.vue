@@ -2,7 +2,7 @@
   <div>
     <table-overlay>
       <thead>
-      <tr class="table-headers">
+      <tr>
         <th>Заголовок</th>
         <th>Студент</th>
         <th>Наставник</th>
@@ -19,7 +19,7 @@
         <td>{{ work.type }}</td>
         <td>{{ work.start_date }} - {{ work.end_date }}</td>
         <td>
-          <div class="actions-btns">
+          <div class="table-btns">
             <button @click="editWork(work)" class="table-btn ">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
@@ -88,48 +88,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  tr {
-    background-color: #fff;
-    box-shadow: 0 4px 20px 0 #f2f1f3;
-    font-size: 16px;
-  }
 
-  .table-headers {
-    background-color: #f9f9f9;
-  }
-
-  th, td {
-    color: #32312e;
-    padding: 12px 8px;
-    text-align: left;
-    border: none;
-    white-space: nowrap;
-  }
-
-  th:first-child, td:first-child {
-    border-radius: 20px 0 0 20px;
-    padding-left: 20px;
-  }
-  th:last-child, td:last-child {
-    border-radius: 0 20px 20px 0;
-  }
-
-  th {
-    background-color: #f9f9f9;
-    font-size: 18px;
-  }
-
-  tr:hover {
-    background-color: #faf8ff;
-  }
-
-  .actions-btns {
-    display: flex;
-    grid-gap: 35px;
-
-    button {
-      display: flex;
-      align-items: center;
-    }
-  }
 </style>
