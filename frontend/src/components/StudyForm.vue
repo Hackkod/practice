@@ -45,7 +45,7 @@
 
 <script>
 import axios from "@/plugins/axios";
-import ModalOverlay from "@/components/UI/ModalOverlay.vue";
+import ModalOverlay from "@/components/UI/modal/ModalOverlay.vue";
 
 export default {
   name: 'StudyForm',

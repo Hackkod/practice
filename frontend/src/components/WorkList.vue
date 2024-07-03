@@ -38,7 +38,6 @@
 <script>
 import WorkForm from "@/components/WorkForm.vue";
 import axios from "@/plugins/axios";
-import TableOverlay from "@/components/UI/TableOverlay.vue";
 
 export default {
   name: 'WorkList',
@@ -46,7 +45,6 @@ export default {
     works: Array,
   },
   components: {
-    TableOverlay,
     WorkForm,
   },
   data() {

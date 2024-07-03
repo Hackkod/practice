@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'TableOverlay',
+  name: 'table-overlay',
 }
 </script>
 

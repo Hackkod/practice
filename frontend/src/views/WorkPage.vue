@@ -37,10 +37,10 @@ export default {
       try {
         await axios.post(`event_app/works/`, newWork);
         await this.fetchWorks();
+        this.closeForm();
       } catch (e) {
         alert('Ошибка при создании работы');
       }
-      this.closeForm();
     },
     async fetchWorks() {
       try {
