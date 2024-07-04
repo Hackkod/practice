@@ -1,9 +1,28 @@
 <template>
   <div>
-    <HeaderComponent title="Работа" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createWork" />
-    <WorkList :works="works" @updateWorks="fetchWorks"/>
-    <WorkForm v-if="showForm" @close="closeForm" @save="saveWork"/>
-    <PaginatorTable :next="next" :previous="previous" @changePage="fetchWorks" />
+    <HeaderComponent
+        title="Работа"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        :typeOptions="typeOptions"
+        @tabChange="setActiveTab"
+        @openForm="createWork"
+        @updateFilters="updateFilters"
+    />
+    <WorkList
+        :works="works"
+        @updateWorks="fetchWorks"
+    />
+    <WorkForm
+        v-if="showForm"
+        @close="closeForm"
+        @save="saveWork"
+    />
+    <PaginatorTable
+        :next="next"
+        :previous="previous"
+        @changePage="fetchWorks"
+    />
   </div>
 </template>
 
@@ -15,7 +34,11 @@ import WorkForm from "@/components/WorkForm.vue";
 import PaginatorTable from "@/components/PaginatorTable.vue";
 
 export default {
-  components: {PaginatorTable, WorkForm, HeaderComponent, WorkList},
+  components: {
+    PaginatorTable,
+    WorkForm,
+    HeaderComponent,
+    WorkList},
   data() {
     return {
       works: [],
@@ -27,6 +50,16 @@ export default {
       next: null,
       previous: null,
       currentPage: 1,
+      filters: {
+        searchQuery: '',
+        startDate: '',
+        endDate: '',
+        selectedType: ''
+      },
+      typeOptions: [
+        { value: 'AGREEMENT', label: 'Agreement' },
+        { value: 'STAFF', label: 'Staff' }
+      ]
     }
   },
   created() {
@@ -50,7 +83,15 @@ export default {
     },
     async fetchWorks(url = `event_app/works/?page=${this.currentPage}`) {
       try {
-        const response = await axios.get(url);
+        const { searchQuery, startDate, endDate, selectedType } = this.filters;
+        const response = await axios.get(url, {
+          params: {
+            search: searchQuery,
+            start_date: startDate,
+            end_date: endDate,
+            type: selectedType
+          }
+        });
         this.works = response.data.results;
         this.next = response.data.next;
         this.previous = response.data.previous;
@@ -61,18 +102,10 @@ export default {
     setActiveTab(index) {
       this.activeTab = index;
     },
-    // async nextPage(){
-    //   if (this.next) {
-    //     this.currentPage += 1;
-    //     await this.fetchWorks(this.next);
-    //   }
-    // },
-    // async previousPage(){
-    //   if (this.previous) {
-    //     this.currentPage -= 1;
-    //     await this.fetchWorks(this.previous);
-    //   }
-    // },
+    updateFilters(newFilters) {
+      this.filters = newFilters;
+      this.fetchWorks();
+    }
   }
 }
 </script>

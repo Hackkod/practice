@@ -1,6 +1,17 @@
 <template>
   <div>
-    <HeaderComponent title="Наставники" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createMentor" />
+    <HeaderComponent
+        title="Наставники"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        @tabChange="setActiveTab"
+        @openForm="createMentor"
+       :filterOptions="filterOptions"
+       :showEventFilters="false"
+       :showAnketFilters="true"
+       :showCourseFilter="false"
+       @updateFilters="updateFilters"
+    />
     <div :class="{'page-content': activeTab === 0}">
       <template v-if="activeTab === 0">
         <MentorCard
@@ -18,8 +29,17 @@
         />
       </template>
     </div>
-    <PaginatorTable :next="next" :previous="previous" @changePage="fetchMentors" />
-    <MentorForm :mentor="selectedMentor" v-if="showForm" @close="closeForm" @save="saveMentor" />
+    <PaginatorTable
+        :next="next"
+        :previous="previous"
+        @changePage="fetchMentors"
+    />
+    <MentorForm
+        :mentor="selectedMentor"
+        v-if="showForm"
+        @close="closeForm"
+        @save="saveMentor"
+    />
   </div>
 </template>
 
@@ -32,7 +52,13 @@ import PaginatorTable from "@/components/PaginatorTable.vue";
 import MentorList from "@/components/MentorList.vue";
 
 export default {
-  components: {MentorList, PaginatorTable, MentorForm, HeaderComponent, MentorCard},
+  components: {
+    MentorList,
+    PaginatorTable,
+    MentorForm,
+    HeaderComponent,
+    MentorCard
+  },
   data() {
     return {
       mentors: [],
@@ -47,9 +73,17 @@ export default {
       next: null,
       previous: null,
       currentPage: 1,
+      filterOptions: {
+        hardSkills: []
+      },
+      filters: {
+        searchQuery: '',
+        selectedHardSkill: null
+      }
     }
   },
   created() {
+    this.fetchHardSkills();
     this.fetchMentors()
   },
   methods: {
@@ -94,7 +128,18 @@ export default {
     },
     async fetchMentors(url=`anket_app/mentors/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
       try {
-        const response = await axios.get(url)
+        const { searchQuery, selectedHardSkill } = this.filters;
+        let params = {
+          search: searchQuery
+        };
+
+        if (selectedHardSkill) {
+          params.hard_skills_id = selectedHardSkill;
+        }
+
+        const response = await axios.get(url, {
+          params
+        });
         this.mentors = response.data.results
         this.next = response.data.next
         this.previous = response.data.previous
@@ -102,11 +147,23 @@ export default {
         alert('Ошибка')
       }
     },
+    async fetchHardSkills() {
+      try {
+        const response = await axios.get('hard_skill_app/hard_skills/');
+        this.filterOptions.hardSkills = response.data.results;
+      } catch (e) {
+        alert('Ошибка при получении списка навыков');
+      }
+    },
     setActiveTab(index) {
       this.activeTab = index;
       this.itemsPerPage = index === 0 ? 12 : 6;
       this.fetchMentors();
     },
+    updateFilters(newFilters) {
+      this.filters = newFilters;
+      this.fetchMentors();
+    }
   },
 }
 </script>

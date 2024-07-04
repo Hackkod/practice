@@ -1,9 +1,28 @@
 <template>
   <div>
-    <HeaderComponent title="Стажировки и практики" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createStudy" />
-    <studyList :studies="studies" @updateStudies="fetchStudies"/>
-    <studyForm v-if="showForm" @close="closeForm" @save="saveStudy"/>
-    <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudies" />
+    <HeaderComponent
+        title="Стажировки и практики"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        :typeOptions="typeOptions"
+        @tabChange="setActiveTab"
+        @openForm="createStudy"
+        @updateFilters="updateFilters"
+    />
+    <studyList
+        :studies="studies"
+        @updateStudies="fetchStudies"
+    />
+    <studyForm
+        v-if="showForm"
+        @close="closeForm"
+        @save="saveStudy"
+    />
+    <PaginatorTable
+        :next="next"
+        :previous="previous"
+        @changePage="fetchStudies"
+    />
   </div>
 </template>
 
@@ -15,7 +34,12 @@ import PaginatorTable from "@/components/PaginatorTable.vue";
 import StudyForm from "@/components/StudyForm.vue";
 
 export default {
-  components: {StudyForm, PaginatorTable, HeaderComponent, StudyList},
+  components: {
+    StudyForm,
+    PaginatorTable,
+    HeaderComponent,
+    StudyList
+  },
   data() {
     return {
       studies: [],
@@ -27,6 +51,16 @@ export default {
       next: null,
       previous: null,
       currentPage: 1,
+      filters: {
+        searchQuery: '',
+        startDate: '',
+        endDate: '',
+        selectedType: ''
+      },
+      typeOptions: [
+        { value: 'PRACTICE', label: 'Practice' },
+        { value: 'INTERNSHIP', label: 'Internship' }
+      ]
     }
   },
   created() {
@@ -50,7 +84,15 @@ export default {
     },
     async fetchStudies(url = `event_app/studies/?page=${this.currentPage}`) {
       try {
-        const response = await axios.get(url);
+        const { searchQuery, startDate, endDate, selectedType } = this.filters;
+        const response = await axios.get(url, {
+          params: {
+            search: searchQuery,
+            start_date: startDate,
+            end_date: endDate,
+            type: selectedType
+          }
+        });
         this.studies = response.data.results;
         this.next = response.data.next;
         this.previous = response.data.previous;
@@ -61,8 +103,9 @@ export default {
     setActiveTab(index) {
       this.activeTab = index;
     },
-    addStudyToList(study) {
-      this.studies.push(study);
+    updateFilters(newFilters) {
+      this.filters = newFilters;
+      this.fetchStudies();
     }
   }
 }
