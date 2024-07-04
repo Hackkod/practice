@@ -9,7 +9,7 @@
       <label>Студент:</label>
       <select v-model="form.student" required>
         <option v-for="student in students" :key="student.id" :value="student.id">
-          {{ student.name }}
+          {{ truncatedName(student) }}
         </option>
       </select>
     </div>
@@ -17,7 +17,7 @@
       <label>Наставник:</label>
       <select v-model="form.mentor" required>
         <option v-for="mentor in mentors" :key="mentor.id" :value="mentor.id">
-          {{ mentor.name }}
+          {{ truncatedName(mentor) }}
         </option>
       </select>
     </div>
@@ -75,6 +75,23 @@ export default {
     this.fetchStudents();
     this.fetchMentors();
   },
+  watch: {
+    work: {
+      immediate: true,
+      handler(newWork) {
+        if (newWork) {
+          this.form.name = newWork.name;
+          this.form.student = newWork.student_full.id;
+          this.form.mentor = newWork.mentor_full.id;
+          this.form.type = newWork.type;
+          this.form.position = newWork.position;
+          this.form.start_date = newWork.start_date;
+          this.form.end_date = newWork.end_date;
+          this.form.description = newWork.description;
+        }
+      }
+    }
+  },
   methods: {
     async fetchStudents() {
       try {
@@ -100,6 +117,13 @@ export default {
     },
     async save() {
       this.$emit('save', this.form);
+    },
+    truncatedName(person){
+      const fullName =
+          person.surname + ' ' +
+          person.name[0] + '.' +
+          person.patronymic[0] + '.'
+      return fullName.length > 13 ? fullName.slice(0, 13) + '..' : fullName;
     },
     close() {
       this.$emit('close');

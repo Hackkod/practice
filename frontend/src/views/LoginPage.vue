@@ -5,11 +5,11 @@
     <div class="form-container">
       <div class="col col-1">
         <div class="image-layer">
-          <img :src="require('@/assets/img/Floor.png')" class="form-image-floor" alt="floor">
-          <img :src="require('@/assets/img/Cabinet.png')" class="form-image cabinet" alt="cabinet">
-          <img :src="require('@/assets/img/Plants.png')" class="form-image plants" alt="plants">
-          <img :src="require('@/assets/img/Folder.png')" class="form-image folder" alt="folder">
-          <img :src="require('@/assets/img/Resumes.png')" class="form-image resumes" alt="resumes">
+          <img :src="require('@/assets/img/Floor.svg')" class="form-image-floor" alt="floor">
+          <img :src="require('@/assets/img/Cabinet.svg')" class="form-image cabinet" alt="cabinet">
+          <img :src="require('@/assets/img/Plants.svg')" class="form-image plants" alt="plants">
+          <img :src="require('@/assets/img/Folder.svg')" class="form-image folder" alt="folder">
+          <img :src="require('@/assets/img/Resumes.svg')" class="form-image resumes" alt="resumes">
         </div>
       </div>
 
@@ -230,7 +230,7 @@ export default {
   margin: 10px 0;
   color: #fff;
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 0 rgba(189, 171, 255, 0.2);
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: 10px;
