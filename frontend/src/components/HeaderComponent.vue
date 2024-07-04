@@ -9,7 +9,7 @@
             v-for="(tab, index) in tabs"
             :key="index"
             :class="['tab', { active: activeTab === index }]"
-            @click="activeTab = index"
+            @click="$emit('tabChange', index)"
         >
           {{ tab.name }}
         </div>
@@ -40,11 +40,15 @@ export default {
     tabs: {
       type: Array,
       required: true
+    },
+    activeTab: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      activeTab: 0,
+
     }
   },
   methods: {

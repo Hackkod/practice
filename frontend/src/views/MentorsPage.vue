@@ -1,13 +1,22 @@
 <template>
   <div>
-    <HeaderComponent title="Наставники" :tabs="tabs" @openForm="createMentor" />
-    <div class="page-content">
-      <MentorCard
-          @updateMentors="fetchMentors"
-          @editMentor="editMentor"
-          v-for="mentor in mentors" :key="mentor.id"
-          :mentor="mentor"
-      />
+    <HeaderComponent title="Наставники" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createMentor" />
+    <div :class="{'page-content': activeTab === 0}">
+      <template v-if="activeTab === 0">
+        <MentorCard
+            @updateMentors="fetchMentors"
+            @editMentor="editMentor"
+            v-for="mentor in mentors" :key="mentor.id"
+            :mentor="mentor"
+        />
+      </template>
+      <template v-else-if="activeTab === 1">
+        <MentorList
+            :mentors="mentors"
+            @updateMentors="fetchMentors"
+            @editMentor="editMentor"
+        />
+      </template>
     </div>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchMentors" />
     <MentorForm :mentor="selectedMentor" v-if="showForm" @close="closeForm" @save="saveMentor" />
@@ -20,15 +29,17 @@ import axios from "@/plugins/axios";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import MentorForm from "@/components/MentorForm.vue";
 import PaginatorTable from "@/components/PaginatorTable.vue";
+import MentorList from "@/components/MentorList.vue";
 
 export default {
-  components: {PaginatorTable, MentorForm, HeaderComponent, MentorCard},
+  components: {MentorList, PaginatorTable, MentorForm, HeaderComponent, MentorCard},
   data() {
     return {
       mentors: [],
       showForm: false,
       selectedMentor: null,
       activeTab: 0,
+      itemsPerPage: 12,
       tabs: [
         { name: 'Карта' },
         { name: 'Таблица' }
@@ -81,7 +92,7 @@ export default {
       }
       this.closeForm();
     },
-    async fetchMentors(url=`anket_app/mentors/?page=${this.currentPage}`) {
+    async fetchMentors(url=`anket_app/mentors/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
       try {
         const response = await axios.get(url)
         this.mentors = response.data.results
@@ -90,7 +101,12 @@ export default {
       } catch (e) {
         alert('Ошибка')
       }
-    }
+    },
+    setActiveTab(index) {
+      this.activeTab = index;
+      this.itemsPerPage = index === 0 ? 12 : 6;
+      this.fetchMentors();
+    },
   },
 }
 </script>

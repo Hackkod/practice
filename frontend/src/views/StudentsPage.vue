@@ -1,16 +1,25 @@
 <template>
   <div>
-    <HeaderComponent title="Студенты" :tabs="tabs" @openForm="createStudent" />
-    <div class="page-content">
-      <StudentCard
-          @updateStudents="fetchStudents"
-          @editStudent="editStudent"
-          v-for="student in students" :key="student.id"
-          :student="student"
-      />
+    <HeaderComponent title="Студенты" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createStudent" />
+    <div :class="{'page-content': activeTab === 0}">
+      <template v-if="activeTab === 0">
+        <StudentCard
+            @updateStudents="fetchStudents"
+            @editStudent="editStudent"
+            v-for="student in students" :key="student.id"
+            :student="student"
+        />
+      </template>
+      <template v-else-if="activeTab === 1">
+        <StudentList
+            :students="students"
+            @updateStudents="fetchStudents"
+            @editStudent="editStudent"
+        />
+      </template>
     </div>
+    <StudentForm :student="selectedStudent" v-if="showForm" @close="closeForm" @save="saveStudent" />
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudents" />
-    <studentForm :student="selectedStudent" v-if="showForm" @close="closeForm" @save="saveStudent" />
   </div>
 </template>
 
@@ -20,16 +29,18 @@ import StudentCard from "@/components/StudentCard.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import StudentForm from "@/components/StudentForm.vue";
 import PaginatorTable from "@/components/PaginatorTable.vue";
+import StudentList from "@/components/StudentList.vue";
 
 export default {
   name: 'HomeView',
-  components: {PaginatorTable, StudentForm, HeaderComponent, StudentCard},
+  components: {StudentList, PaginatorTable, StudentForm, HeaderComponent, StudentCard},
   data() {
     return {
       students: [],
       showForm: false,
       selectedStudent: null,
       activeTab: 0,
+      itemsPerPage: 12,
       tabs: [
         { name: 'Карта' },
         { name: 'Таблица' }
@@ -82,7 +93,7 @@ export default {
       }
       this.closeForm();
     },
-    async fetchStudents(url=`anket_app/students/?page=${this.currentPage}`) {
+    async fetchStudents(url=`anket_app/students/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
       try {
         const response = await axios.get(url)
         this.students = response.data.results
@@ -91,6 +102,11 @@ export default {
       } catch (e) {
         alert('Ошибка')
       }
+    },
+    setActiveTab(index) {
+      this.activeTab = index;
+      this.itemsPerPage = index === 0 ? 12 : 6;
+      this.fetchStudents();
     },
   }
 }

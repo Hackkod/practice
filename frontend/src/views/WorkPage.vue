@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderComponent title="Работа" :tabs="tabs" @openForm="createWork" />
+    <HeaderComponent title="Работа" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createWork" />
     <WorkList :works="works" @updateWorks="fetchWorks"/>
     <WorkForm v-if="showForm" @close="closeForm" @save="saveWork"/>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchWorks" />
@@ -20,6 +20,7 @@ export default {
     return {
       works: [],
       showForm: false,
+      activeTab: 0,
       tabs: [
         { name: 'Таблица' }
       ],
@@ -56,6 +57,9 @@ export default {
       } catch (e) {
         alert('Ошибка при получении списка работ')
       }
+    },
+    setActiveTab(index) {
+      this.activeTab = index;
     },
     // async nextPage(){
     //   if (this.next) {
