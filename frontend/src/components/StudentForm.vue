@@ -1,64 +1,77 @@
 <template>
-  <modal-overlay @close="close" @submit="save">
-    <modal-header>{{ student ? 'Редактирование студента' : 'Создание нового студента' }}</modal-header>
+  <modal-overlay @close="close" @submit="save" :readonly="readonly">
+    <modal-header>{{ readonly ? 'Просмотр студента' : studentId ? 'Редактирование студента' : 'Создание нового студента' }}</modal-header>
     <div class="form-content">
       <div class="first-column">
         <div class="form-group">
           <label>Фамилия:</label>
-          <input v-model="form.surname" required>
+          <input v-model="form.surname" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Имя:</label>
-          <input v-model="form.name" required>
+          <input v-model="form.name" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Отчество:</label>
-          <input v-model="form.patronymic" required>
+          <input v-model="form.patronymic" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Пол:</label>
-          <select v-model="form.gender" required>
+          <input v-if="readonly" v-model="form.gender" required :readonly="readonly">
+          <select v-else v-model="form.gender" required>
             <option value="M">Male</option>
             <option value="F">Female</option>
           </select>
         </div>
         <div class="form-group">
           <label>Дата рождения:</label>
-          <input v-model="form.birth_date" type="date" required>
+          <input v-model="form.birth_date" type="date" required :readonly="readonly">
         </div>
         <div class="form-group">
-          <label>Софт скиллы:</label>
-          <textarea v-model="form.soft_skills"></textarea>
+          <label>Учебное учреждение:</label>
+          <input v-model="form.establishment" required :readonly="readonly">
         </div>
         <div class="form-group">
-          <label>Хард скиллы:</label>
-          <select multiple v-model="form.hard_skills_id" required>
-            <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
-              {{ hard_skill.skill_name }}
-            </option>
-          </select>
+          <label>Дата начала обучения:</label>
+          <input v-model="form.start_study_year" type="number" required :readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label>Дата окончания обучения:</label>
+          <input v-model="form.end_study_year" type="number" required :readonly="readonly">
         </div>
       </div>
       <div class="second-column">
         <div class="form-group">
-          <label>Дополнительная информация:</label>
-          <textarea v-model="form.other_info"></textarea>
-        </div>
-        <div class="form-group">
           <label>Фотография студента:</label>
-          <input type="file" @change="handleFileChange" name="profile_photo">
+          <div v-if="readonly" class="student-info-img-container-main">
+            <div class="student-info-img-container">
+              <img class="student-info-img"
+                   :src="form.profile_photo"
+                   alt="">
+            </div>
+          </div>
+          <input v-else type="file" @change="handleFileChange" name="profile_photo">
         </div>
         <div class="form-group">
-          <label>Учебное учреждение:</label>
-          <input v-model="form.establishment" required>
+          <label>Дополнительная информация:</label>
+          <textarea v-model="form.other_info" :readonly="readonly"/>
         </div>
         <div class="form-group">
-          <label>Дата начала обучения:</label>
-          <input v-model="form.start_study_year" type="number" required>
+          <label>Софт скиллы:</label>
+          <textarea v-model="form.soft_skills" :readonly="readonly"/>
         </div>
         <div class="form-group">
-          <label>Дата окончания обучения:</label>
-          <input v-model="form.end_study_year" type="number" required>
+          <label>Хард скиллы:</label>
+          <div class="hard-skill-list" v-if="readonly">
+            <span v-for="skill in hard_skill_ids" :key="skill.id">
+                {{ skill.skill_name }}
+            </span>
+          </div>
+          <select v-else multiple v-model="form.hard_skills_id" required :disabled="readonly">
+            <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
+              {{ hard_skill.skill_name }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -73,11 +86,12 @@ export default {
   name: "StudentForm",
   components: {ModalOverlay},
   props: {
-    student: Object,
+    studentId: Number,
+    readonly: Boolean
   },
   data() {
     return {
-      form: this.student ? { ...this.student } : {
+      form: {
         name: '',
         surname: '',
         patronymic: '',
@@ -95,9 +109,22 @@ export default {
     };
   },
   created() {
-    this.fetchHardSkillIds()
+    if (!this.readonly)
+      this.fetchHardSkillIds()
+    if (this.studentId)
+      this.fetchStudentDetails(this.studentId)
   },
   methods: {
+    async fetchStudentDetails(id) {
+      try {
+        const response = await axios.get(`anket_app/students/${id}/`);
+        if (this.readonly)
+          this.hard_skill_ids = response.data.hard_skills_ids
+        this.form = { ...response.data }
+      } catch (e) {
+        alert('Ошибка при загрузке данных студента');
+      }
+    },
     async fetchHardSkillIds() {
       try {
         const response = await axios.get('hard_skill_app/hard_skills/');
@@ -140,5 +167,37 @@ export default {
   display: flex;
   flex-direction: row;
   grid-gap: 30px;
+}
+
+.hard-skill-list {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #32312e;
+  outline: none;
+}
+
+.student-info-img-container {
+  height: 160px;
+  width: 160px;
+  overflow: hidden;
+}
+
+.student-info-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  align-items: center;
+}
+
+.student-info-img-container-main {
+  display: flex;
+  justify-content: left;
+  width: 230px;
+  outline: none;
 }
 </style>

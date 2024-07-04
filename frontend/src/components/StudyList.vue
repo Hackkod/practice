@@ -12,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="study in studies" :key="study.id">
+      <tr class="row-content" v-for="study in studies" :key="study.id" @click="viewStudy(study)">
         <td>{{ study.name }}</td>
         <td>{{ study.student_full.name }}</td>
         <td>{{ study.mentor_full.name }}</td>
@@ -20,10 +20,10 @@
         <td>{{ study.start_date }} - {{ study.end_date }}</td>
         <td>
           <div class="table-btns">
-            <button @click="editStudy(study)">
+            <button @click.stop="editStudy(study)">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
-            <button @click="confirmDelete(study)">
+            <button @click.stop="confirmDelete(study)">
               <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>
@@ -31,7 +31,7 @@
       </tr>
       </tbody>
     </table-overlay>
-    <study-form v-if="showForm" :study="selectedStudy" @close="closeForm" @save="saveStudy"/>
+    <study-form v-if="showForm" :studyId="selectedStudy" :readonly="readonly" @close="closeForm" @save="saveStudy"/>
   </div>
 </template>
 
@@ -51,15 +51,24 @@ export default {
     return {
       showForm: false,
       selectedStudy: null,
+      readonly: false,
     }
   },
   methods: {
     editStudy(study) {
-      this.selectedStudy = study;
+      this.selectedStudy = study.id;
       this.showForm = true;
+      this.readonly = false
     },
     closeForm() {
       this.showForm = false;
+      this.readonly = false
+      this.selectedStudy = null
+    },
+    viewStudy(study) {
+      this.selectedStudy = study.id
+      this.readonly = true
+      this.showForm = true
     },
     async saveStudy(updatedStudy) {
       try {

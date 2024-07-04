@@ -83,4 +83,8 @@ export default {
       align-items: center;
     }
   }
+
+  :deep(.row-content) {
+    cursor: pointer;
+  }
 </style>

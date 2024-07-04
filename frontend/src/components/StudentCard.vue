@@ -1,5 +1,5 @@
 <template>
-  <div class="student-info-container">
+  <div class="student-info-container" @click="this.$emit('viewStudent', student)">
     <div class="student-info-main">
       <div class="student-info-img-container">
         <img class="student-info-img"
@@ -13,14 +13,14 @@
       </div>
     </div>
     <div class="student-info-actions">
-      <button class="card-edit-btn" @click="editStudent(student)" >
+      <button class="card-edit-btn" @click.stop="editStudent(student)" >
         <img
             :src="require('@/assets/img/EditIcon.svg')"
             alt="Иконка редактирования"
             width="26"
             height="26">
       </button>
-      <button class="card-delete-btn" @click="confirmDelete(student.id)" >
+      <button class="card-delete-btn" @click.stop="confirmDelete(student.id)" >
         <img
             :src="require('@/assets/img/DeleteIcon.svg')"
             alt="Иконка удаления"
@@ -89,6 +89,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 20px 0 #f2f1f3;
   background: #fff;
+  cursor: pointer;
 }
 
 .student-info-main {

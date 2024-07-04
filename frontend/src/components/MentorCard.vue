@@ -1,5 +1,5 @@
 <template>
-  <div class="mentor-info-container">
+  <div class="mentor-info-container" @click="this.$emit('viewMentor', mentor)">
     <div class="mentor-info-main">
       <div class="mentor-info-img-container">
         <img class="mentor-info-img"
@@ -12,14 +12,14 @@
       </div>
     </div>
     <div class="mentor-info-actions">
-      <button class="card-edit-btn" @click="editMentor(mentor)" >
+      <button class="card-edit-btn" @click.stop="editMentor(mentor)" >
         <img
             :src="require('@/assets/img/EditIcon.svg')"
             alt="Иконка редактирования"
             width="26"
             height="26">
       </button>
-      <button class="card-delete-btn" @click="confirmDelete(mentor.id)">
+      <button class="card-delete-btn" @click.stop="confirmDelete(mentor.id)">
         <img
             :src="require('@/assets/img/DeleteIcon.svg')"
             alt="Иконка удаления"
@@ -88,6 +88,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 20px 0 #f2f1f3;
   background: #fff;
+  cursor: pointer;
 }
 
 .mentor-info-main {

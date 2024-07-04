@@ -12,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="work in works" :key="work.id">
+      <tr class="row-content" v-for="work in works" :key="work.id" @click="viewWork(work)">
         <td>{{ work.name }}</td>
         <td>{{ work.student_full.name }}</td>
         <td>{{ work.mentor_full.name }}</td>
@@ -20,10 +20,10 @@
         <td>{{ work.start_date }} - {{ work.end_date }}</td>
         <td>
           <div class="table-btns">
-            <button @click="editWork(work)">
+            <button @click.stop="editWork(work)">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
-            <button @click="confirmDelete(work)">
+            <button @click.stop="confirmDelete(work)">
               <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>
@@ -31,7 +31,7 @@
       </tr>
       </tbody>
     </table-overlay>
-    <work-form v-if="showForm" :work="selectedWork" @close="closeForm" @save="saveWork"/>
+    <work-form v-if="showForm" :workId="selectedWork" :readonly="readonly" @close="closeForm" @save="saveWork"/>
   </div>
 </template>
 
@@ -51,15 +51,24 @@ export default {
     return {
       showForm: false,
       selectedWork: null,
+      readonly: false,
     }
   },
   methods: {
     editWork(work) {
-      this.selectedWork = work;
+      this.selectedWork = work.id;
       this.showForm = true;
+      this.readonly = false
     },
     closeForm() {
       this.showForm = false;
+      this.readonly = false
+      this.selectedWork = null
+    },
+    viewWork(work) {
+      this.selectedWork = work.id
+      this.readonly = true
+      this.showForm = true
     },
     async saveWork(updatedWork) {
       try {

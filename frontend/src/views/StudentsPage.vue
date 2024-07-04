@@ -15,6 +15,7 @@
     <div :class="{'page-content': activeTab === 0}">
       <template v-if="activeTab === 0">
         <StudentCard
+          @viewStudent="viewStudent"
           @updateStudents="fetchStudents"
           @editStudent="editStudent"
           v-for="student in students" :key="student.id"
@@ -30,7 +31,8 @@
       </template>
     </div>
     <StudentForm
-        :student="selectedStudent"
+        :studentId="selectedStudent"
+        :readonly="readonly"
         v-if="showForm"
         @close="closeForm"
         @save="saveStudent"
@@ -64,6 +66,7 @@ export default {
     return {
       students: [],
       showForm: false,
+      readonly: false,
       selectedStudent: null,
       activeTab: 0,
       itemsPerPage: 12,
@@ -92,14 +95,22 @@ export default {
     createStudent() {
       this.selectedStudent = null
       this.showForm = true
+      this.readonly = false
     },
     editStudent(student) {
-      this.selectedStudent = student
+      this.selectedStudent = student.id
       this.showForm = true
+      this.readonly = false
     },
     closeForm() {
       this.showForm = false
       this.selectedStudent = null
+      this.readonly = false
+    },
+    viewStudent(student) {
+      this.selectedStudent = student.id
+      this.readonly = true
+      this.showForm = true
     },
     async saveStudent(student) {
       try {

@@ -15,6 +15,7 @@
     <div :class="{'page-content': activeTab === 0}">
       <template v-if="activeTab === 0">
         <MentorCard
+            @viewMentor="viewMentor"
             @updateMentors="fetchMentors"
             @editMentor="editMentor"
             v-for="mentor in mentors" :key="mentor.id"
@@ -35,7 +36,8 @@
         @changePage="fetchMentors"
     />
     <MentorForm
-        :mentor="selectedMentor"
+        :mentorId="selectedMentor"
+        :readonly="readonly"
         v-if="showForm"
         @close="closeForm"
         @save="saveMentor"
@@ -63,6 +65,7 @@ export default {
     return {
       mentors: [],
       showForm: false,
+      readonly: false,
       selectedMentor: null,
       activeTab: 0,
       itemsPerPage: 12,
@@ -90,14 +93,22 @@ export default {
     createMentor() {
       this.selectedMentor = null
       this.showForm = true
+      this.readonly = false
     },
     editMentor(mentor) {
-      this.selectedMentor = mentor
+      this.selectedMentor = mentor.id
       this.showForm = true
+      this.readonly = false
     },
     closeForm() {
       this.showForm = false
       this.selectedMentor = null
+      this.readonly = false
+    },
+    viewMentor(mentor) {
+      this.selectedMentor = mentor.id
+      this.readonly = true
+      this.showForm = true
     },
     async saveMentor(mentor) {
       try {

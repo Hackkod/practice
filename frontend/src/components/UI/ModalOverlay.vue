@@ -2,9 +2,9 @@
   <div class="modal-overlay" @click.self="close">
     <form @submit.prevent="save" class="modal-content">
       <slot></slot>
-      <div class="form-btns">
-        <button type="submit">Сохранить</button>
+      <div v-if="!readonly" class="form-btns">
         <button type="button" @click="close">Отмена</button>
+        <button type="submit">Сохранить</button>
       </div>
     </form>
   </div>
@@ -13,6 +13,9 @@
 <script>
 export default {
   name: 'ModalOverlay',
+  props: {
+    readonly: Boolean
+  },
   methods: {
     close() {
       this.$emit('close');
@@ -102,6 +105,7 @@ button:hover {
   border-radius: 10px;
   background: #ffffff;
   color: #32312e;
+  outline: none;
 }
 
 :deep(select) {
@@ -120,5 +124,6 @@ button:hover {
   border-radius: 10px;
   background: #ffffff;
   color: #32312e;
+  outline: none;
 }
 </style>
