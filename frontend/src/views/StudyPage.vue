@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderComponent title="Стажировки и практики" :tabs="tabs" @openForm="createStudy" />
+    <HeaderComponent title="Стажировки и практики" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createStudy" />
     <studyList :studies="studies" @updateStudies="fetchStudies"/>
     <studyForm v-if="showForm" @close="closeForm" @save="saveStudy"/>
     <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudies" />
@@ -20,6 +20,7 @@ export default {
     return {
       studies: [],
       showForm: false,
+      activeTab: 0,
       tabs: [
         { name: 'Таблица' }
       ],
@@ -56,6 +57,9 @@ export default {
       } catch (e) {
         alert('Ошибка при получении списка обучений')
       }
+    },
+    setActiveTab(index) {
+      this.activeTab = index;
     },
     addStudyToList(study) {
       this.studies.push(study);
