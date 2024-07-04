@@ -1,25 +1,45 @@
 <template>
   <div>
-    <HeaderComponent title="Студенты" :tabs="tabs" :activeTab="activeTab" @tabChange="setActiveTab" @openForm="createStudent" />
+    <HeaderComponent
+        title="Студенты"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        @tabChange="setActiveTab"
+        @openForm="createStudent"
+       :filterOptions="filterOptions"
+       :showEventFilters="false"
+       :showAnketFilters="true"
+       :showCourseFilter="true"
+       @updateFilters="updateFilters"
+    />
     <div :class="{'page-content': activeTab === 0}">
       <template v-if="activeTab === 0">
         <StudentCard
-            @updateStudents="fetchStudents"
-            @editStudent="editStudent"
-            v-for="student in students" :key="student.id"
-            :student="student"
+          @updateStudents="fetchStudents"
+          @editStudent="editStudent"
+          v-for="student in students" :key="student.id"
+          :student="student"
         />
       </template>
       <template v-else-if="activeTab === 1">
         <StudentList
-            :students="students"
-            @updateStudents="fetchStudents"
-            @editStudent="editStudent"
+          :students="students"
+          @updateStudents="fetchStudents"
+          @editStudent="editStudent"
         />
       </template>
     </div>
-    <StudentForm :student="selectedStudent" v-if="showForm" @close="closeForm" @save="saveStudent" />
-    <PaginatorTable :next="next" :previous="previous" @changePage="fetchStudents" />
+    <StudentForm
+        :student="selectedStudent"
+        v-if="showForm"
+        @close="closeForm"
+        @save="saveStudent"
+    />
+    <PaginatorTable
+        :next="next"
+        :previous="previous"
+        @changePage="fetchStudents"
+    />
   </div>
 </template>
 
@@ -33,7 +53,13 @@ import StudentList from "@/components/StudentList.vue";
 
 export default {
   name: 'HomeView',
-  components: {StudentList, PaginatorTable, StudentForm, HeaderComponent, StudentCard},
+  components: {
+    StudentList,
+    PaginatorTable,
+    StudentForm,
+    HeaderComponent,
+    StudentCard
+  },
   data() {
     return {
       students: [],
@@ -48,9 +74,18 @@ export default {
       next: null,
       previous: null,
       currentPage: 1,
+      filterOptions: {
+        hardSkills: []
+      },
+      filters: {
+        searchQuery: '',
+        selectedHardSkill: null,
+        selectedCourse: null
+      }
     }
   },
   created() {
+    this.fetchHardSkills();
     this.fetchStudents()
   },
   methods: {
@@ -95,7 +130,19 @@ export default {
     },
     async fetchStudents(url=`anket_app/students/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
       try {
-        const response = await axios.get(url)
+        const { searchQuery, selectedHardSkill, selectedCourse } = this.filters;
+        let params = {
+          search: searchQuery,
+          course: selectedCourse
+        };
+
+        if (selectedHardSkill) {
+          params.hard_skills_id = selectedHardSkill;
+        }
+
+        const response = await axios.get(url, {
+          params
+        });
         this.students = response.data.results
         this.next = response.data.next;
         this.previous = response.data.previous;
@@ -103,11 +150,23 @@ export default {
         alert('Ошибка')
       }
     },
+    async fetchHardSkills() {
+      try {
+        const response = await axios.get('hard_skill_app/hard_skills/');
+        this.filterOptions.hardSkills = response.data.results;
+      } catch (e) {
+        alert('Ошибка при получении списка навыков');
+      }
+    },
     setActiveTab(index) {
       this.activeTab = index;
       this.itemsPerPage = index === 0 ? 12 : 6;
       this.fetchStudents();
     },
+    updateFilters(newFilters) {
+      this.filters = newFilters;
+      this.fetchStudents();
+    }
   }
 }
 </script>
