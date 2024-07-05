@@ -5,15 +5,15 @@
       <div class="first-column">
         <div class="form-group">
           <label>Фамилия:</label>
-          <input v-model="form.surname" required :readonly="readonly">
+          <input v-model="form.surname" placeholder="Иванов" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Имя:</label>
-          <input v-model="form.name" required :readonly="readonly">
+          <input v-model="form.name" placeholder="Иван" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Отчество:</label>
-          <input v-model="form.patronymic" required :readonly="readonly">
+          <input v-model="form.patronymic" placeholder="Иванович" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Пол:</label>
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
           <label>Должность:</label>
-          <input v-model="form.job_position" required :readonly="readonly">
+          <input v-model="form.job_position" placeholder="Самый главный" required :readonly="readonly">
         </div>
       </div>
       <div class="second-column">
@@ -46,11 +46,11 @@
         </div>
         <div class="form-group">
           <label>Дополнительная информация:</label>
-          <textarea v-model="form.other_info" :readonly="readonly"/>
+          <textarea v-model="form.other_info" placeholder="Поборол депрессию в 0 лет" :readonly="readonly"/>
         </div>
         <div class="form-group">
           <label>Софт скиллы:</label>
-          <textarea v-model="form.soft_skills" :readonly="readonly"/>
+          <textarea v-model="form.soft_skills" placeholder="Умеет убеждать перерисовывать связи между сущностями" :readonly="readonly"/>
         </div>
         <div class="form-group">
           <label>Хард скиллы:</label>

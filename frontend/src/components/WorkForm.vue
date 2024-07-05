@@ -3,7 +3,7 @@
     <modal-header>{{ readonly ? 'Просмотр работы' : workId ? 'Редактирование работы' : 'Создание новой работы' }}</modal-header>
     <div class="form-group">
       <label>Заголовок:</label>
-      <input v-model="form.name" required :readonly="readonly"/>
+      <input v-model="form.name" placeholder="Наименование работы" required :readonly="readonly"/>
     </div>
     <div class="form-group">
       <label>Студент:</label>
@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
       <label>Позиция:</label>
-      <input v-model="form.position" required :readonly="readonly"/>
+      <input v-model="form.position" placeholder="Инженер-программист" required :readonly="readonly"/>
     </div>
     <div class="form-group">
       <label>Дата начала:</label>
@@ -45,7 +45,7 @@
     </div>
     <div class="form-group">
       <label>Описание:</label>
-      <textarea v-model="form.description" :readonly="readonly"/>
+      <textarea v-model="form.description" placeholder="Быстро развивается" :readonly="readonly"/>
     </div>
   </modal-overlay>
 </template>

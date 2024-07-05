@@ -5,15 +5,15 @@
       <div class="first-column">
         <div class="form-group">
           <label>Фамилия:</label>
-          <input v-model="form.surname" required :readonly="readonly">
+          <input v-model="form.surname" placeholder="Иванов" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Имя:</label>
-          <input v-model="form.name" required :readonly="readonly">
+          <input v-model="form.name" placeholder="Иван" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Отчество:</label>
-          <input v-model="form.patronymic" required :readonly="readonly">
+          <input v-model="form.patronymic" placeholder="Иванович" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Пол:</label>
@@ -29,15 +29,15 @@
         </div>
         <div class="form-group">
           <label>Учебное учреждение:</label>
-          <input v-model="form.establishment" required :readonly="readonly">
+          <input v-model="form.establishment" placeholder="Наименование учреждения" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Дата начала обучения:</label>
-          <input v-model="form.start_study_year" type="number" required :readonly="readonly">
+          <input v-model="form.start_study_year" placeholder="2010" type="number" required :readonly="readonly">
         </div>
         <div class="form-group">
           <label>Дата окончания обучения:</label>
-          <input v-model="form.end_study_year" type="number" required :readonly="readonly">
+          <input v-model="form.end_study_year" placeholder="2014" type="number" required :readonly="readonly">
         </div>
       </div>
       <div class="second-column">
@@ -54,11 +54,11 @@
         </div>
         <div class="form-group">
           <label>Дополнительная информация:</label>
-          <textarea v-model="form.other_info" :readonly="readonly"/>
+          <textarea v-model="form.other_info" placeholder="Участвует в мероприятиях, не имеет задолженностей" :readonly="readonly"/>
         </div>
         <div class="form-group">
           <label>Софт скиллы:</label>
-          <textarea v-model="form.soft_skills" :readonly="readonly"/>
+          <textarea v-model="form.soft_skills" placeholder="Умение работать в команде, писать удобочитаемый код, разбираться в чужом коде" :readonly="readonly"/>
         </div>
         <div class="form-group">
           <label>Хард скиллы:</label>

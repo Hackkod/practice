@@ -29,8 +29,12 @@ class WorkViewSet(viewsets.ModelViewSet):
         'description',
         'type',
         'position',
+        'student__surname',
         'student__name',
-        'mentor__name'
+        'student__patronymic',
+        'mentor__surname',
+        'mentor__name',
+        'mentor__patronymic'
     ]
 
 
@@ -49,6 +53,10 @@ class StudyViewSet(viewsets.ModelViewSet):
         'end_date',
         'description',
         'type',
+        'student__surname',
         'student__name',
-        'mentor__name'
+        'student__patronymic',
+        'mentor__surname',
+        'mentor__name',
+        'mentor__patronymic'
     ]
