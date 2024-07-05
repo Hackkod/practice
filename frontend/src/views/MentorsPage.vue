@@ -25,6 +25,7 @@
       <template v-else-if="activeTab === 1">
         <MentorList
             :mentors="mentors"
+            @viewMentor="viewMentor"
             @updateMentors="fetchMentors"
             @editMentor="editMentor"
         />

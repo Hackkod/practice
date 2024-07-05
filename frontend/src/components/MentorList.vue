@@ -11,9 +11,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="mentor in mentors" :key="mentor.id">
+      <tr
+          class="row-content"
+          v-for="mentor in mentors"
+          :key="mentor.id"
+          @click="this.$emit('viewMentor', mentor)"
+      >
         <td class="mentor-info">
-          <img :src="mentor.profile_photo" alt=" " class="mentor-photo">
+          <img :src="mentor.profile_photo" alt="" class="mentor-photo">
           <span>{{ truncatedName(mentor) }}</span>
         </td>
         <td>{{ mentor.gender }}</td>
@@ -21,10 +26,10 @@
         <td>{{ mentor.birth_date }}</td>
         <td>
           <div class="table-btns">
-            <button @click="editMentor(mentor)">
+            <button @click.stop="editMentor(mentor)">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
-            <button @click="confirmDelete(mentor)">
+            <button @click.stop="confirmDelete(mentor)">
               <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>

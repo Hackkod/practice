@@ -11,9 +11,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="student in students" :key="student.id">
+      <tr
+          class="row-content"
+          v-for="student in students"
+          :key="student.id"
+          @click="this.$emit('viewStudent', student)"
+      >
         <td class="student-info">
-          <img :src="student.profile_photo" alt=" " class="student-photo">
+          <img :src="student.profile_photo" alt="" class="student-photo">
           <span>{{ truncatedName(student) }}</span>
         </td>
         <td>{{ truncatedEstablishment(student) }}</td>
@@ -21,10 +26,10 @@
         <td>{{ student.course }}</td>
         <td>
           <div class="table-btns">
-            <button @click="editStudent(student)">
+            <button @click.stop="editStudent(student)">
               <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
             </button>
-            <button @click="confirmDelete(student)">
+            <button @click.stop="confirmDelete(student)">
               <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
             </button>
           </div>

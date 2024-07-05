@@ -12,10 +12,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr class="row-content" v-for="work in works" :key="work.id" @click="viewWork(work)">
+      <tr
+          class="row-content"
+          v-for="work in works"
+          :key="work.id"
+          @click="viewWork(work)">
         <td>{{ work.name }}</td>
-        <td>{{ work.student_full.name }}</td>
-        <td>{{ work.mentor_full.name }}</td>
+        <td>{{ truncatedName(work.student_full) }}</td>
+        <td>{{ truncatedName(work.mentor_full) }}</td>
         <td>{{ work.type }}</td>
         <td>{{ work.start_date }} - {{ work.end_date }}</td>
         <td>
@@ -91,6 +95,13 @@ export default {
       if (confirm(`Вы уверены, что хотите удалить работу ${work.name}?`)) {
         this.deleteWork(work);
       }
+    },
+    truncatedName(person){
+      const fullName =
+          person.surname + ' ' +
+          person.name[0] + '.' +
+          person.patronymic[0] + '.'
+      return fullName.length > 13 ? fullName.slice(0, 13) + '..' : fullName;
     },
   }
 }

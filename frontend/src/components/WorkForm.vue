@@ -7,7 +7,7 @@
     </div>
     <div class="form-group">
       <label>Студент:</label>
-      <input v-if="readonly" v-model="students.name" :readonly="readonly">
+      <input v-if="readonly" v-model="student_full_name" :readonly="readonly">
       <select v-else v-model="form.student" required>
         <option v-for="student in students" :key="student.id" :value="student.id">
           {{ truncatedName(student) }}
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label>Наставник:</label>
-      <input v-if="readonly" v-model="mentors.name" :readonly="readonly">
+      <input v-if="readonly" v-model="mentor_full_name" :readonly="readonly">
       <select v-else v-model="form.mentor" required>
         <option v-for="mentor in mentors" :key="mentor.id" :value="mentor.id">
           {{ truncatedName(mentor) }}
@@ -71,6 +71,8 @@ export default {
         end_date: null,
         description: '',
       },
+      student_full_name: '',
+      mentor_full_name: '',
       students: [],
       mentors: []
     };
@@ -80,22 +82,13 @@ export default {
       this.fetchStudents();
     if (!this.readonly)
       this.fetchMentors();
-    if (this.workId)
-      this.fetchWorkDetails(this.workId);
   },
   watch: {
-    work: {
+    workId: {
       immediate: true,
-      handler(newWork) {
-        if (newWork) {
-          this.form.name = newWork.name;
-          this.form.student = newWork.student_full.id;
-          this.form.mentor = newWork.mentor_full.id;
-          this.form.type = newWork.type;
-          this.form.position = newWork.position;
-          this.form.start_date = newWork.start_date;
-          this.form.end_date = newWork.end_date;
-          this.form.description = newWork.description;
+      handler(newWorkId) {
+        if (newWorkId) {
+          this.fetchWorkDetails(newWorkId)
         }
       }
     }
@@ -105,10 +98,12 @@ export default {
       try {
         const response = await axios.get(`event_app/works/${id}/`);
         if (this.readonly)
-          this.students = response.data.student_full
+          this.student_full_name = this.truncatedName(response.data.student_full)
         if (this.readonly)
-          this.mentors = response.data.mentor_full
+          this.mentor_full_name = this.truncatedName(response.data.mentor_full)
         this.form = { ...response.data }
+        this.form.student = response.data.student_full.id
+        this.form.mentor = response.data.mentor_full.id
       } catch (e) {
         alert('Ошибка при загрузке данных студента');
       }
