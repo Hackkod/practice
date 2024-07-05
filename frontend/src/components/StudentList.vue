@@ -17,9 +17,11 @@
           :key="student.id"
           @click="this.$emit('viewStudent', student)"
       >
-        <td class="student-info">
-          <img :src="student.profile_photo" alt="" class="student-photo">
-          <span>{{ truncatedName(student) }}</span>
+        <td class="td-info">
+          <div class="line-info">
+            <img :src="student.profile_photo" alt="" class="line-photo">
+            <span>{{ truncatedName(student) }}</span>
+          </div>
         </td>
         <td>{{ truncatedEstablishment(student) }}</td>
         <td>{{ student.start_study_year }} - {{student.end_study_year}}</td>
@@ -106,16 +108,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.student-info {
-  display: flex;
-  align-items: center;
-}
 
-.student-photo {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 </style>
