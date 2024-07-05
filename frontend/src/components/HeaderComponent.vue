@@ -69,7 +69,10 @@
             <div class="page-filter-label">Курс:</div>
             <input
                 type="number"
+                max="6"
+                min="1"
                 v-model="selectedCourse"
+                @input="validateCourse"
                 @change="updateFilters"
                 placeholder="Все курсы"
                 :class="{'active-input': selectedCourse, 'page-select-field': true}"
@@ -175,7 +178,22 @@ export default {
       this.selectedHardSkill = '';
       this.selectedCourse = '';
       this.updateFilters();
-    }
+    },
+    validateCourse(event) {
+      const min = 1
+      const max = 6
+      let value = event.target.value
+
+      if (value !== '') {
+        value = parseInt(value, 10)
+        if (value < min) {
+          value = min
+        } else if (value > max) {
+          value = max
+        }
+      }
+      this.selectedCourse = value
+    },
   }
 }
 </script>
@@ -260,7 +278,7 @@ export default {
 }
 
 .page-select-field {
-  background: url("@/assets/img/FilterIcon.png") no-repeat calc(100% - 15px) center;
+  background: url("@/assets/img/FilterIcon.svg") no-repeat calc(100% - 15px) center;
   background-size: 27px 27px;
   border: 3px solid #eee;
   border-radius: 10px;
@@ -371,7 +389,7 @@ export default {
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  background: url("@/assets/img/SearchIcon.png") no-repeat center center;
+  background: url("@/assets/img/SearchIcon.svg") no-repeat center center;
   background-size: 27px 27px;
   width: 27px;
   height: 27px;
