@@ -170,6 +170,8 @@ export default {
   background: #ffffff;
   color: #32312e;
   outline: none;
+  height: 100px;
+  overflow-y: auto;
 }
 
 .mentor-info-img-container {

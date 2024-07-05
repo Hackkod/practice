@@ -179,6 +179,8 @@ export default {
   background: #ffffff;
   color: #32312e;
   outline: none;
+  height: 100px;
+  overflow-y: auto;
 }
 
 .student-info-img-container {
