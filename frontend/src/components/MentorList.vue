@@ -17,9 +17,11 @@
           :key="mentor.id"
           @click="this.$emit('viewMentor', mentor)"
       >
-        <td class="mentor-info">
-          <img :src="mentor.profile_photo" alt="" class="mentor-photo">
-          <span>{{ truncatedName(mentor) }}</span>
+        <td class="td-info">
+          <div class="line-info">
+            <img :src="mentor.profile_photo" alt="" class="line-photo">
+            <span>{{ truncatedName(mentor) }}</span>
+          </div>
         </td>
         <td>{{ mentor.gender }}</td>
         <td>{{ mentor.job_position }}</td>
@@ -74,32 +76,6 @@ export default {
         alert('Ошибка при изменении наставника');
       }
       this.closeForm();
-      // try {
-      //   const studentId = updatedStudent.get('id');
-      //
-      //   if (studentId) {
-      //     const hasNewProfilePhoto = updatedStudent.has('profile_photo') && updatedStudent.get('profile_photo') instanceof File;
-      //
-      //     if (!hasNewProfilePhoto) {
-      //       updatedStudent.delete('profile_photo');
-      //     }
-      //     await axios.put(`anket_app/students/${studentId}/`, updatedStudent, {
-      //       headers: {
-      //         'Content-Type': 'multipart/form-data'
-      //       }
-      //     });
-      //   } else {
-      //     await axios.post(`anket_app/students/`, updatedStudent, {
-      //       headers: {
-      //         'Content-Type': 'multipart/form-data'
-      //       }
-      //     });
-      //   }
-      //   this.$emit('updateStudents');
-      // } catch (e) {
-      //   alert('Ошибка при изменении студента');
-      // }
-      // this.closeForm();
     },
     async deleteMentor(mentor) {
       try {
@@ -126,16 +102,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mentor-info {
-  display: flex;
-  align-items: center;
-}
 
-.mentor-photo {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 </style>

@@ -65,6 +65,23 @@ export default {
     white-space: nowrap;
   }
 
+  :deep(.td-info) {
+    padding-block: 4px;
+  }
+
+  :deep(.line-info) {
+    display: flex;
+    align-items: center;
+  }
+
+  :deep(.line-photo) {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
   :deep(td:first-child) {
     border-radius: 20px 0 0 20px;
     padding-left: 20px;
@@ -77,11 +94,11 @@ export default {
   :deep(.table-btns) {
     display: flex;
     grid-gap: 35px;
+  }
 
-    :deep(button) {
-      display: flex;
-      align-items: center;
-    }
+  :deep(button) {
+    display: flex;
+    align-items: center;
   }
 
   :deep(.row-content) {
