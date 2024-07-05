@@ -1,8 +1,14 @@
 <template>
   <div class="wrapper">
     <div class="paginator-menu">
-      <button @click="previousPage" :disabled="!previous" class="btn prev"></button>
-      <button @click="nextPage" :disabled="!next" class="btn next"></button>
+      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="btn prev"></button>
+      <button
+          v-for="page in visiblePages"
+          :key="page"
+          @click="changePage(page)"
+          :class="['btn number', { active: currentPage === page }]"
+      >{{ page }}</button>
+      <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages" class="btn next"></button>
     </div>
   </div>
 </template>
@@ -11,20 +17,57 @@
 export default {
   name: "PaginatorTable",
   props: {
-    next: String,
-    previous: String,
+    totalPages: {
+      type: Number,
+      required: true
+    },
+    currentPage: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    visiblePages() {
+      let pages = [];
+      if (this.totalPages <= 5) {
+        for (let i = 1; i <= this.totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        if (this.currentPage <= 3) {
+          for (let i = 1; i <= 4; i++) {
+            pages.push(i);
+          }
+          pages.push('...');
+          pages.push(this.totalPages);
+        } else if (this.currentPage > this.totalPages - 3) {
+          pages.push(1);
+          pages.push('...');
+          for (let i = this.totalPages - 3; i <= this.totalPages; i++) {
+            pages.push(i);
+          }
+        } else {
+          pages.push(1);
+          pages.push('...');
+          for (let i = this.currentPage - 2; i <= this.currentPage + 2; i++) {
+            pages.push(i);
+          }
+          pages.push('...');
+          pages.push(this.totalPages);
+        }
+      }
+      return pages;
+    }
   },
   data() {
       return{
-
       }
   },
   methods: {
-    previousPage() {
-      this.$emit('changePage', this.previous);
-    },
-    nextPage() {
-      this.$emit('changePage', this.next);
+    changePage(page) {
+      if (page !== '...' && page !== this.currentPage) {
+        this.$emit('changePage', page);
+      }
     }
   }
 }
@@ -49,6 +92,15 @@ export default {
   height: 22px;
   margin: 0 10px;
   background-color: #32312e;
+  color: #bbbbbb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn.number{
+  background-color: transparent;
+  font-size: 18px;
 }
 
 .btn.prev {
@@ -72,5 +124,15 @@ button:disabled {
 
 .btn:active {
   transform: scale(0.95);
+}
+
+.btn.active {
+  color: #32312e;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background-color: #e9e3ff;
+  border-radius: 5px;
+  font-weight: bold;
 }
 </style>
