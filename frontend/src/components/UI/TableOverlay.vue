@@ -40,7 +40,7 @@ export default {
 
   :deep(th) {
     color: #32312e;
-    padding: 12px 8px;
+    padding: 14px 8px;
     text-align: left;
     border: none;
     white-space: nowrap;
@@ -59,7 +59,7 @@ export default {
 
   :deep(td) {
     color: #32312e;
-    padding: 12px 8px;
+    padding: 16px 8px;
     text-align: left;
     border: none;
     white-space: nowrap;
