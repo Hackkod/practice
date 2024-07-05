@@ -25,6 +25,7 @@
       <template v-else-if="activeTab === 1">
         <StudentList
           :students="students"
+          @viewStudent="viewStudent"
           @updateStudents="fetchStudents"
           @editStudent="editStudent"
         />

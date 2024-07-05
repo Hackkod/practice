@@ -14,8 +14,8 @@
       <tbody>
       <tr class="row-content" v-for="study in studies" :key="study.id" @click="viewStudy(study)">
         <td>{{ study.name }}</td>
-        <td>{{ study.student_full.name }}</td>
-        <td>{{ study.mentor_full.name }}</td>
+        <td>{{ truncatedName(study.student_full) }}</td>
+        <td>{{ truncatedName(study.mentor_full) }}</td>
         <td>{{ study.type }}</td>
         <td>{{ study.start_date }} - {{ study.end_date }}</td>
         <td>
@@ -91,6 +91,13 @@ export default {
       if (confirm(`Вы уверены, что хотите удалить обучение ${study.name}?`)) {
         this.deleteStudy(study);
       }
+    },
+    truncatedName(person){
+      const fullName =
+          person.surname + ' ' +
+          person.name[0] + '.' +
+          person.patronymic[0] + '.'
+      return fullName.length > 13 ? fullName.slice(0, 13) + '..' : fullName;
     },
   }
 }
