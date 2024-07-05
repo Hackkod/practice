@@ -51,10 +51,13 @@ class StudentAnketViewSet(viewsets.ModelViewSet):
         start_year = validated_data.get('start_study_year')
         end_year = validated_data.get('end_study_year')
 
-        if end_year < start_year:
-            raise ValidationError('Старт обучения не может быть после его конца')
-        if start_year and end_year and (end_year - start_year) < 4:
-            raise ValidationError('Срок обучения должен составлять не менее 4-х лет')
+        if start_year and end_year:
+            if end_year < start_year:
+                raise ValidationError('Старт обучения не может быть после его конца')
+            if (end_year - start_year) < 4:
+                raise ValidationError('Срок обучения должен составлять не менее 4-х лет')
+            elif (end_year - start_year) > 6:
+                raise ValidationError('Срок обучения должен составлять не более 6-ти лет')
 
         curr_date = datetime.date.today()
         if start_year > curr_date.year or (start_year == curr_date.year and curr_date.month < 9):
