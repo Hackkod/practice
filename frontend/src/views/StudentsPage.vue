@@ -39,9 +39,9 @@
         @save="saveStudent"
     />
     <PaginatorTable
-        :next="next"
-        :previous="previous"
-        @changePage="fetchStudents"
+        :totalPages="totalPages"
+        :currentPage="currentPage"
+        @changePage="handleChangePage"
     />
   </div>
 </template>
@@ -75,8 +75,7 @@ export default {
         { name: 'Карта' },
         { name: 'Таблица' }
       ],
-      next: null,
-      previous: null,
+      totalPages: 0,
       currentPage: 1,
       filterOptions: {
         hardSkills: []
@@ -144,6 +143,7 @@ export default {
       try {
         const { searchQuery, selectedHardSkill, selectedCourse } = this.filters;
         let params = {
+          page: this.currentPage,
           search: searchQuery,
           course: selectedCourse
         };
@@ -156,8 +156,7 @@ export default {
           params
         });
         this.students = response.data.results
-        this.next = response.data.next;
-        this.previous = response.data.previous;
+        this.totalPages = Math.ceil(response.data.count / this.itemsPerPage);
       } catch (e) {
         alert('Ошибка')
       }
@@ -177,6 +176,10 @@ export default {
     },
     updateFilters(newFilters) {
       this.filters = newFilters;
+      this.fetchStudents();
+    },
+    handleChangePage(page) {
+      this.currentPage = page;
       this.fetchStudents();
     }
   }

@@ -19,9 +19,9 @@
         @save="saveStudy"
     />
     <PaginatorTable
-        :next="next"
-        :previous="previous"
-        @changePage="fetchStudies"
+        :totalPages="totalPages"
+        :currentPage="currentPage"
+        @changePage="handleChangePage"
     />
   </div>
 </template>
@@ -48,8 +48,7 @@ export default {
       tabs: [
         { name: 'Таблица' }
       ],
-      next: null,
-      previous: null,
+      totalPages: 0,
       currentPage: 1,
       filters: {
         searchQuery: '',
@@ -87,6 +86,7 @@ export default {
         const { searchQuery, startDate, endDate, selectedType } = this.filters;
         const response = await axios.get(url, {
           params: {
+            page: this.currentPage,
             search: searchQuery,
             start_date: startDate,
             end_date: endDate,
@@ -94,8 +94,7 @@ export default {
           }
         });
         this.studies = response.data.results;
-        this.next = response.data.next;
-        this.previous = response.data.previous;
+        this.totalPages = Math.ceil(response.data.count / 6);
       } catch (e) {
         alert('Ошибка при получении списка обучений')
       }
@@ -105,6 +104,10 @@ export default {
     },
     updateFilters(newFilters) {
       this.filters = newFilters;
+      this.fetchStudies();
+    },
+    handleChangePage(page) {
+      this.currentPage = page;
       this.fetchStudies();
     }
   }

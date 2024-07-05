@@ -32,9 +32,9 @@
       </template>
     </div>
     <PaginatorTable
-        :next="next"
-        :previous="previous"
-        @changePage="fetchMentors"
+        :totalPages="totalPages"
+        :currentPage="currentPage"
+        @changePage="handleChangePage"
     />
     <MentorForm
         :mentorId="selectedMentor"
@@ -74,8 +74,7 @@ export default {
         { name: 'Карта' },
         { name: 'Таблица' }
       ],
-      next: null,
-      previous: null,
+      totalPages: 0,
       currentPage: 1,
       filterOptions: {
         hardSkills: []
@@ -142,6 +141,7 @@ export default {
       try {
         const { searchQuery, selectedHardSkill } = this.filters;
         let params = {
+          page: this.currentPage,
           search: searchQuery
         };
 
@@ -153,8 +153,7 @@ export default {
           params
         });
         this.mentors = response.data.results
-        this.next = response.data.next
-        this.previous = response.data.previous
+        this.totalPages = Math.ceil(response.data.count / this.itemsPerPage);
       } catch (e) {
         alert('Ошибка')
       }
@@ -174,6 +173,10 @@ export default {
     },
     updateFilters(newFilters) {
       this.filters = newFilters;
+      this.fetchMentors();
+    },
+    handleChangePage(page) {
+      this.currentPage = page;
       this.fetchMentors();
     }
   },
