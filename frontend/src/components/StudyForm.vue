@@ -3,7 +3,7 @@
     <modal-header>{{ readonly ? 'Просмотр обучения' : studyId ? 'Редактирование обучения' : 'Создание нового обучения' }}</modal-header>
     <div class="form-group">
       <label>Заголовок:</label>
-      <input v-model="form.name" required :readonly="readonly">
+      <input v-model="form.name" placeholder="Наименование обучения" required :readonly="readonly">
     </div>
     <div class="form-group">
       <label>Студент:</label>
@@ -41,7 +41,7 @@
     </div>
     <div class="form-group">
       <label>Описание:</label>
-      <textarea v-model="form.description" :readonly="readonly"/>
+      <textarea v-model="form.description" placeholder="Будет разрабатывать проект в команде" :readonly="readonly"/>
     </div>
   </modal-overlay>
 </template>

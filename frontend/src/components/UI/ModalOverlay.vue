@@ -108,6 +108,10 @@ button:hover {
   outline: none;
 }
 
+:deep(input::placeholder) {
+  color: #bbb; /* Ваш желаемый цвет */
+}
+
 :deep(select) {
   width: 230px;
   padding: 4px;
@@ -119,6 +123,7 @@ button:hover {
 
 :deep(textarea) {
   width: 230px;
+  min-height: 90px;
   padding: 4px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -126,4 +131,9 @@ button:hover {
   color: #32312e;
   outline: none;
 }
+
+:deep(textarea::placeholder) {
+  color: #bbb; /* Ваш желаемый цвет */
+}
+
 </style>

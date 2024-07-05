@@ -201,7 +201,7 @@ export default {
     font-size: 18px;
     color: #bbb;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   .left-side-exit-btn {
