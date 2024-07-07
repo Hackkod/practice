@@ -67,24 +67,31 @@
                 {{ skill.skill_name }}
             </span>
           </div>
-          <select v-else multiple v-model="form.hard_skills_id" required :disabled="readonly">
-            <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
-              {{ hard_skill.skill_name }}
-            </option>
-          </select>
+          <div v-else>
+            <select multiple v-model="form.hard_skills_id" required :disabled="readonly">
+              <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
+                {{ hard_skill.skill_name }}
+              </option>
+            </select>
+          </div>
         </div>
+      </div>
+      <div v-if="!readonly" class="third-column">
+          <button class="add-button" @click.prevent="openAddHardSkillForm"></button>
       </div>
     </div>
   </modal-overlay>
+  <HardSkillForm v-if="showAddHardSkillForm" @close="closeAddHardSkillForm" @refreshHardSkills="fetchHardSkillIds" />
 </template>
 
 <script>
 import ModalOverlay from "@/components/UI/ModalOverlay.vue";
 import axios from "@/plugins/axios";
+import HardSkillForm from "@/components/HardSkillForm.vue";
 
 export default {
   name: "StudentForm",
-  components: {ModalOverlay},
+  components: {HardSkillForm, ModalOverlay},
   props: {
     studentId: Number,
     readonly: Boolean
@@ -106,6 +113,7 @@ export default {
         end_study_year: null
       },
       hard_skill_ids: [],
+      showAddHardSkillForm: false
     };
   },
   created() {
@@ -157,6 +165,12 @@ export default {
     },
     close() {
       this.$emit('close');
+    },
+    openAddHardSkillForm() {
+      this.showAddHardSkillForm = true;
+    },
+    closeAddHardSkillForm() {
+      this.showAddHardSkillForm = false;
     }
   }
 }
@@ -201,5 +215,22 @@ export default {
   justify-content: left;
   width: 230px;
   outline: none;
+}
+
+.third-column {
+  margin-left: -20px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 87px;
+}
+
+.add-button {
+  background-size: cover;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  background-image: url("@/assets/img/AddIcon.png");
+  background-color: #f0ecff;
+  border-radius: 8px;
 }
 </style>
