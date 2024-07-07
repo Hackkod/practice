@@ -1,48 +1,103 @@
 <template>
   <modal-overlay @close="close" @submit="save" :readonly="readonly">
     <modal-header>{{ readonly ? 'Просмотр обучения' : studyId ? 'Редактирование обучения' : 'Создание нового обучения' }}</modal-header>
-    <div class="form-group">
-      <label>Заголовок:</label>
-      <input v-model="form.name" placeholder="Наименование обучения" required :readonly="readonly">
-    </div>
-    <div class="form-group">
-      <label>Студент:</label>
-      <input v-if="readonly" v-model="student_full_name" :readonly="readonly">
-      <select v-else v-model="form.student" required>
-        <option v-for="student in students" :key="student.id" :value="student.id">
-          {{ truncatedName(student) }}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Наставник:</label>
-      <input v-if="readonly" v-model="mentor_full_name" :readonly="readonly">
-      <select v-else v-model="form.mentor" required>
-        <option v-for="mentor in mentors" :key="mentor.id" :value="mentor.id">
-          {{ truncatedName(mentor) }}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Тип:</label>
-      <input v-if="readonly" v-model="form.type" :readonly="readonly">
-      <select v-else v-model="form.type" required>
-        <option value="PRACTICE">Practice</option>
-        <option value="INTERNSHIP">Internship</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Дата начала:</label>
-      <input v-model="form.start_date" type="date" required :readonly="readonly">
-    </div>
-    <div class="form-group">
-      <label>Дата окончания:</label>
-      <input v-model="form.end_date" type="date" required :readonly="readonly">
-    </div>
-    <div class="form-group">
-      <label>Описание:</label>
-      <textarea v-model="form.description" placeholder="Будет разрабатывать проект в команде" :readonly="readonly"/>
-    </div>
+    <v-text-field
+        class="form-input name"
+        label="Заголовок"
+        placeholder="#1111"
+        variant="outlined"
+        density="compact"
+        v-model="form.name"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-text-field
+        v-if="readonly"
+        class="form-input student"
+        label="Студент"
+        variant="outlined"
+        density="compact"
+        v-model="student_full_name"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-select
+        v-else
+        class="form-input student-select"
+        label="Студент"
+        :item-title="truncatedName"
+        item-value="id"
+        density="compact"
+        variant="outlined"
+        v-model="form.student"
+        :items="students"
+    ></v-select>
+    <v-text-field
+        v-if="readonly"
+        class="form-input mentor"
+        label="Наставник"
+        variant="outlined"
+        density="compact"
+        v-model="mentor_full_name"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-select
+        v-else
+        class="form-input mentor"
+        label="Наставник"
+        :item-title="truncatedName"
+        item-value="id"
+        density="compact"
+        variant="outlined"
+        v-model="form.mentor"
+        :items="mentors"
+    ></v-select>
+    <v-text-field
+        v-if="readonly"
+        class="form-input type"
+        label="Наставник"
+        variant="outlined"
+        density="compact"
+        v-model="form.type"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-select
+        v-else
+        class="form-input type"
+        label="Тип"
+        item-title="name"
+        item-value="value"
+        density="compact"
+        variant="outlined"
+        v-model="form.type"
+        :items="types"
+    ></v-select>
+    <v-text-field
+        class="form-input start_date"
+        label="Дата начала"
+        variant="outlined"
+        density="compact"
+        type="date"
+        v-model="form.start_date"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-text-field
+        class="form-input end_date"
+        label="Дата окончания"
+        variant="outlined"
+        density="compact"
+        type="date"
+        v-model="form.end_date"
+        :readonly="readonly"
+    ></v-text-field>
+    <v-textarea
+        class="form-input description"
+        label="Описание"
+        variant="outlined"
+        density="compact"
+        rows="2"
+        no-resize
+        v-model="form.description"
+        :readonly="readonly"
+    ></v-textarea>
   </modal-overlay>
 </template>
 
@@ -69,7 +124,17 @@ export default {
       student_full_name: '',
       mentor_full_name: '',
       students: [],
-      mentors: []
+      mentors: [],
+      types: [
+        {
+          name: 'Practice',
+          value: 'PRACTICE'
+        },
+        {
+          name: 'Internship',
+          value: 'INTERNSHIP'
+        },
+      ],
     };
   },
   created() {
@@ -89,51 +154,59 @@ export default {
     }
   },
   methods: {
-    async fetchStudyDetails(id) {
-      try {
-        const response = await axios.get(`event_app/studies/${id}/`);
-        if (this.readonly)
-          this.student_full_name = this.truncatedName(response.data.student_full)
-        if (this.readonly)
-          this.mentor_full_name = this.truncatedName(response.data.mentor_full)
-        this.form = { ...response.data }
-        this.form.student = response.data.student_full.id
-        this.form.mentor = response.data.mentor_full.id
-      } catch (e) {
-        alert('Ошибка при загрузке данных студента');
-      }
+    fetchStudyDetails(id) {
+      axios.get(`event_app/studies/${id}/`)
+        .then((response) => {
+          const data = response.data;
+
+          if (this.readonly) {
+            this.student_full_name = this.truncatedName(data.student_full || {});
+            this.mentor_full_name = this.truncatedName(data.mentor_full || {});
+          }
+
+          this.form = { ...data };
+          this.form.student = data.student_full ? data.student_full.id : null;
+          this.form.mentor = data.mentor_full ? data.mentor_full.id : null;
+        })
+        .catch(() => {
+          alert('Ошибка при загрузке данных студента');
+        });
     },
-    async fetchStudents() {
-      try {
-        const response = await axios.get('anket_app/students/');
-        this.students = response.data.results;
-        if (!this.studyId && this.students.length) {
-          this.form.student = this.students[0].id;
-        }
-      } catch (e) {
-        alert('Ошибка при загрузке списка студентов');
-      }
+    fetchStudents() {
+      axios.get('anket_app/students/')
+        .then((response) => {
+          this.students = response.data.results;
+          if (!this.studyId && this.students.length) {
+            this.form.student = this.students[0].id;
+          }
+        })
+        .catch(() => {
+          alert('Ошибка при загрузке списка студентов');
+        });
     },
-    async fetchMentors() {
-      try {
-        const response = await axios.get('anket_app/mentors/');
-        this.mentors = response.data.results;
-        if (!this.studyId && this.mentors.length) {
-          this.form.mentor = this.mentors[0].id;
-        }
-      } catch (e) {
-        alert('Ошибка при загрузке списка наставников');
-      }
+    fetchMentors() {
+      axios.get('anket_app/mentors/')
+        .then((response) => {
+          this.mentors = response.data.results;
+          if (!this.studyId && this.mentors.length) {
+            this.form.mentor = this.mentors[0].id;
+          }
+        })
+        .catch(() => {
+          alert('Ошибка при загрузке списка наставников');
+        });
     },
     async save() {
       this.$emit('save', this.form);
     },
     truncatedName(person){
-      const fullName =
-          person.surname + ' ' +
+      if (person.surname && person.name && person.patronymic) {
+        return person.surname + ' ' +
           person.name[0] + '.' +
-          person.patronymic[0] + '.'
-      return fullName.length > 13 ? fullName.slice(0, 13) + '..' : fullName;
+          person.patronymic[0] + '.';
+      } else {
+        return ''
+      }
     },
     close() {
       this.$emit('close');
@@ -143,5 +216,8 @@ export default {
 </script>
 
 <style scoped>
-
+.form-input {
+  min-width: 225px;
+  max-height: 86px;
+}
 </style>
