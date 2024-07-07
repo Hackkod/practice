@@ -5,5 +5,5 @@ from .serializers import HardSkillSerializer
 
 
 class HardSkillListViewSet(viewsets.ModelViewSet):
-    queryset = HardSkill.objects.all()
+    queryset = HardSkill.objects.all().order_by('id')
     serializer_class = HardSkillSerializer

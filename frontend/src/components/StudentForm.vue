@@ -9,138 +9,163 @@
     </modal-header>
     <div class="form-content">
       <div class="first-column">
-        <div class="form-group">
-          <label>Фамилия:</label>
-          <input
-              v-model="form.surname"
-              placeholder="Иванов"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Имя:</label>
-          <input
-              v-model="form.name"
-              placeholder="Иван"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Отчество:</label>
-          <input
-              v-model="form.patronymic"
-              placeholder="Иванович"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Пол:</label>
-          <input
-              v-if="readonly"
-              v-model="form.gender"
-              required
-              :readonly="readonly"
-          />
-          <select v-else v-model="form.gender" required>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Дата рождения:</label>
-          <input
-              v-model="form.birth_date"
-              type="date"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Учебное учреждение:</label>
-          <input
-              v-model="form.establishment"
-              placeholder="Наименование учреждения"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Дата начала обучения:</label>
-          <input
-              v-model="form.start_study_year"
-              placeholder="2010"
-              type="number"
-              required
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Дата окончания обучения:</label>
-          <input
-              v-model="form.end_study_year"
-              placeholder="2014"
-              type="number"
-              required
-              :readonly="readonly"
-          />
-        </div>
+        <v-text-field
+            class="form-input surname"
+            label="Фамилия"
+            placeholder="Иванов"
+            variant="outlined"
+            density="compact"
+            v-model="form.surname"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            class="form-input name"
+            label="Имя"
+            placeholder="Иван"
+            variant="outlined"
+            density="compact"
+            v-model="form.name"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            class="form-input patronymic"
+            label="Отчество"
+            placeholder="Иванович"
+            variant="outlined"
+            density="compact"
+            v-model="form.patronymic"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            v-if="readonly"
+            class="form-input gender"
+            label="Пол"
+            variant="outlined"
+            density="compact"
+            v-model="form.gender"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-select
+            v-else
+            class="form-input gender-select"
+            label="Пол"
+            item-title="name"
+            item-value="value"
+            density="compact"
+            variant="outlined"
+            v-model="form.gender"
+            :items="genders"
+        ></v-select>
+        <v-text-field
+            class="form-input birth_date"
+            label="Дата рождения"
+            variant="outlined"
+            density="compact"
+            type="date"
+            v-model="form.birth_date"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            class="form-input establishment"
+            label="Учебное учреждение"
+            placeholder="ЧувГУ"
+            variant="outlined"
+            density="compact"
+            v-model="form.establishment"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            class="form-input start_study_year"
+            label="Начало обучения"
+            placeholder="2021"
+            variant="outlined"
+            density="compact"
+            v-model="form.start_study_year"
+            type="number"
+            :readonly="readonly"
+        ></v-text-field>
+        <v-text-field
+            class="form-input end_study_year"
+            label="Конец обучения"
+            placeholder="2025"
+            variant="outlined"
+            density="compact"
+            v-model="form.end_study_year"
+            type="number"
+            :readonly="readonly"
+        ></v-text-field>
       </div>
-      <div class="second-column">
-        <div class="form-group">
-          <label>Фотография студента:</label>
-          <div v-if="readonly" class="student-info-img-container-main">
-            <div class="student-info-img-container">
-              <img
-                  class="student-info-img"
-                   :src="form.profile_photo"
-                   alt=""
-              />
-            </div>
-          </div>
-          <input
-              v-else type="file"
-              @change="handleFileChange"
-              name="profile_photo"
-          />
-        </div>
-        <div class="form-group">
-          <label>Дополнительная информация:</label>
-          <textarea
-              v-model="form.other_info"
-              placeholder="Участвует в мероприятиях, не имеет задолженностей"
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Софт скиллы:</label>
-          <textarea
-              v-model="form.soft_skills"
-              placeholder="Умение работать в команде, писать удобочитаемый код, разбираться в чужом коде"
-              :readonly="readonly"
-          />
-        </div>
-        <div class="form-group">
-          <label>Хард скиллы:</label>
-          <div class="hard-skill-list" v-if="readonly">
-            <span v-for="skill in hard_skill_ids" :key="skill.id">
-                {{ skill.skill_name }}
+      <div :class="secondColumnClass(readonly)">
+        <v-img
+            v-if="readonly"
+            class="profile_photo"
+            aspect-ratio="1/1"
+            cover
+            :width="180"
+            :src="form.profile_photo"
+        ></v-img>
+        <v-file-input
+            v-else
+            class="form-input profile_photo-select"
+            label="Фотография наставника"
+            variant="outlined"
+            density="compact"
+            clearable
+            @change="handleFileChange"
+        ></v-file-input>
+        <v-textarea
+            class="form-input other_info"
+            label="Дополнительная информация"
+            variant="outlined"
+            density="compact"
+            rows="2"
+            no-resize
+            v-model="form.other_info"
+            :readonly="readonly"
+        ></v-textarea>
+        <v-textarea
+            class="form-input soft_skills"
+            label="Софт скиллы"
+            variant="outlined"
+            density="compact"
+            rows="2"
+            no-resize
+            v-model="form.soft_skills"
+            :readonly="readonly"
+        ></v-textarea>
+        <v-select
+            v-if="!readonly"
+            class="form-input hard_skills"
+            label="Хард скиллы"
+            item-title="skill_name"
+            item-value="id"
+            density="compact"
+            variant="outlined"
+            multiple
+            v-model="form.hard_skills_id"
+            :items="hard_skill_ids"
+        >
+          <template v-slot:selection="{ item, index }">
+            <v-chip v-if="index < 1">
+              <span>{{ item.title }}</span>
+            </v-chip>
+            <span
+                v-if="index === 1"
+                class="text-grey text-caption align-self-center"
+            >
+              (+{{ form.hard_skills_id.length - 1 }} others)
             </span>
-          </div>
-          <div v-else>
-            <select multiple v-model="form.hard_skills_id" required :disabled="readonly">
-              <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
-                {{ hard_skill.skill_name }}
-              </option>
-            </select>
-          </div>
-        </div>
+          </template>
+        </v-select>
       </div>
       <div v-if="!readonly" class="third-column">
-          <button class="add-button" @click.prevent="openAddHardSkillForm"></button>
+        <button class="add-button" @click.prevent="openAddHardSkillForm"></button>
       </div>
+    </div>
+    <div class="hard-skills-chips" v-if="readonly">
+      <v-chip class="skill-chip" v-for="skill in hard_skill_ids" :key="skill.id">
+        <span>{{ skill.skill_name }}</span>
+      </v-chip>
     </div>
   </modal-overlay>
   <HardSkillForm
@@ -179,6 +204,16 @@ export default {
         end_study_year: null
       },
       hard_skill_ids: [],
+      genders: [
+        {
+          name: 'Male',
+          value: 'M'
+        },
+        {
+          name: 'Female',
+          value: 'F'
+        },
+      ],
       showAddHardSkillForm: false
     };
   },
@@ -189,6 +224,9 @@ export default {
       this.fetchStudentDetails(this.studentId)
   },
   methods: {
+    secondColumnClass(readonly) {
+      return readonly ? 'second-column-readonly' : 'second-column'
+    },
     async fetchStudentDetails(id) {
       try {
         const response = await axios.get(`anket_app/students/${id}/`);
@@ -249,38 +287,31 @@ export default {
   grid-gap: 30px;
 }
 
-.hard-skill-list {
+.second-column-readonly {
   display: flex;
   flex-direction: column;
-  width: 230px;
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #32312e;
-  outline: none;
-  height: 100px;
-  overflow-y: auto;
-}
-
-.student-info-img-container {
-  height: 160px;
-  width: 160px;
-  overflow: hidden;
-}
-
-.student-info-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   align-items: center;
 }
 
-.student-info-img-container-main {
-  display: flex;
-  justify-content: left;
-  width: 230px;
-  outline: none;
+.form-input {
+  min-width: 225px;
+  max-height: 86px;
+}
+
+.profile_photo {
+  margin-bottom: 20px;
+  border-radius: 50%;
+  max-height: 180px;
+}
+
+.hard-skills-chips {
+  max-width: 480px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.skill-chip {
+  margin: 0 5px 3px 0;
 }
 
 .third-column {

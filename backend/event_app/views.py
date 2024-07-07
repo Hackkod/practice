@@ -14,7 +14,7 @@ class WorkStudyPagination(PageNumberPagination):
 
 
 class WorkViewSet(viewsets.ModelViewSet):
-    queryset = Work.objects.all()
+    queryset = Work.objects.all().order_by('id')
     serializer_class = WorkSerializer
     pagination_class = WorkStudyPagination
     filter_backends = [
@@ -39,7 +39,7 @@ class WorkViewSet(viewsets.ModelViewSet):
 
 
 class StudyViewSet(viewsets.ModelViewSet):
-    queryset = Study.objects.all()
+    queryset = Study.objects.all().order_by('id')
     serializer_class = StudySerializer
     pagination_class = WorkStudyPagination
     filter_backends = [
