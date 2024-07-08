@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from '@/services/auth'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: '/api/',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -14,6 +14,7 @@ instance.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Token ${token}`;
         }
+
         return config;
     },
     error => {

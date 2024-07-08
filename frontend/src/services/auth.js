@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api-token-auth/';
+const API_URL = '/api-token-auth/';
 
 export const login = async (username, password) => {
     try {
