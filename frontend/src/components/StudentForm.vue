@@ -107,12 +107,18 @@
         <v-file-input
             v-else
             class="form-input profile_photo-select"
-            label="Фотография наставника"
+            label="Фотография студента"
             variant="outlined"
             density="compact"
+            counter
+            show-size
             clearable
             @change="handleFileChange"
-        ></v-file-input>
+        >
+          <template v-slot:selection>
+            {{ truncFile }}
+          </template>
+        </v-file-input>
         <v-textarea
             class="form-input other_info"
             label="Дополнительная информация"
@@ -222,6 +228,15 @@ export default {
       this.fetchHardSkillIds()
     if (this.studentId)
       this.fetchStudentDetails(this.studentId)
+  },
+  computed: {
+    truncFile() {
+      if (this.form.profile_photo && this.form.profile_photo.name) {
+        const fullName = this.form.profile_photo.name;
+        return fullName.length > 8 ? fullName.slice(0, 8) + '...' : fullName;
+      }
+      return '';
+    }
   },
   methods: {
     secondColumnClass(readonly) {
