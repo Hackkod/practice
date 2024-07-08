@@ -3,12 +3,12 @@ from models.events import EventBase
 from anket_app.models import StudentAnket, MentorAnket
 
 
-practice = 'PRACTICE'
-internship = 'INTERNSHIP'
+practice = 'Практика'
+internship = 'Стажировка'
 
 STUDY_TYPE_CHOICES = [
-    (practice, 'Practice'),
-    (internship, 'Internship')
+    (practice, 'Практика'),
+    (internship, 'Стажировка')
 ]
 
 
@@ -32,12 +32,12 @@ class Study(EventBase):
         return f'{self.name}: {self.student}'
 
 
-agreement = 'AGREEMENT'
-staff = 'STAFF'
+agreement = 'Договор'
+staff = 'Штаб'
 
 WORK_TYPE_CHOICES = [
-    (agreement, 'Agreement'),
-    (staff, 'Staff')
+    (agreement, 'Договор'),
+    (staff, 'Штаб')
 ]
 
 

@@ -172,7 +172,7 @@ export default {
         name: '',
         surname: '',
         patronymic: '',
-        gender: 'M',
+        gender: null,
         birth_date: null,
         soft_skills: '',
         hard_skills_id: [],
@@ -182,12 +182,12 @@ export default {
       },
       genders: [
         {
-          name: 'Male',
-          value: 'M'
+          name: 'Мужской',
+          value: 'Мужской'
         },
         {
-          name: 'Female',
-          value: 'F'
+          name: 'Женский',
+          value: 'Женский'
         },
       ],
       hard_skill_ids: [],

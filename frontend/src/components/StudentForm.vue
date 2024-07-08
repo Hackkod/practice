@@ -193,7 +193,7 @@ export default {
         name: '',
         surname: '',
         patronymic: '',
-        gender: 'M',
+        gender: null,
         birth_date: null,
         soft_skills: '',
         hard_skills_id: [],
@@ -206,12 +206,12 @@ export default {
       hard_skill_ids: [],
       genders: [
         {
-          name: 'Male',
-          value: 'M'
+          name: 'Мужской',
+          value: 'Мужской'
         },
         {
-          name: 'Female',
-          value: 'F'
+          name: 'Женский',
+          value: 'Женский'
         },
       ],
       showAddHardSkillForm: false
@@ -265,6 +265,7 @@ export default {
       if (this.form.profile_photo) {
         formData.append('profile_photo', this.form.profile_photo);
       }
+      console.log(this.form)
       this.$emit('save', formData);
     },
     close() {

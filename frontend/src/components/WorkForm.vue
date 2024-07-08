@@ -131,7 +131,7 @@ export default {
         name: '',
         student: null,
         mentor: null,
-        type: 'AGREEMENT',
+        type: null,
         position: '',
         start_date: null,
         end_date: null,
@@ -143,12 +143,12 @@ export default {
       mentors: [],
       types: [
         {
-          name: 'Agreement',
-          value: 'AGREEMENT'
+          name: 'Договор',
+          value: 'Договор'
         },
         {
-          name: 'Staff',
-          value: 'STAFF'
+          name: 'Штаб',
+          value: 'Штаб'
         },
       ],
     };
