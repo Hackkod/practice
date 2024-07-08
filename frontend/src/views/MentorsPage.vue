@@ -173,6 +173,7 @@ export default {
     },
     updateFilters(newFilters) {
       this.filters = newFilters;
+      this.currentPage = 1;
       this.fetchMentors();
     },
     handleChangePage(page) {
