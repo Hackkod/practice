@@ -19,7 +19,11 @@
       >
         <td class="td-info">
           <div class="line-info">
-            <img :src="student.profile_photo" alt="" class="line-photo">
+            <img
+                :src="student.profile_photo"
+                alt=""
+                class="line-photo"
+            />
             <span>{{ truncatedName(student) }}</span>
           </div>
         </td>
@@ -29,17 +33,32 @@
         <td>
           <div class="table-btns">
             <button @click.stop="editStudent(student)">
-              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/EditIcon.svg')"
+                  alt="Иконка редактирования"
+                  width="24"
+                  height="24"
+              />
             </button>
             <button @click.stop="confirmDelete(student)">
-              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/DeleteIcon.svg')"
+                  alt="Иконка удаления"
+                  width="24"
+                  height="24"
+              />
             </button>
           </div>
         </td>
       </tr>
       </tbody>
     </table-overlay>
-    <student-form v-if="showForm" :student="selectedStudent" @close="closeForm" @save="saveStudent"/>
+    <student-form
+        v-if="showForm"
+        :student="selectedStudent"
+        @close="closeForm"
+        @save="saveStudent"
+    />
   </div>
 </template>
 

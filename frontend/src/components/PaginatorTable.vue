@@ -1,14 +1,24 @@
 <template>
   <div class="wrapper">
     <div class="paginator-menu">
-      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="btn prev"></button>
+      <button
+          @click="changePage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          class="btn prev"
+      />
       <button
           v-for="page in visiblePages"
           :key="page"
           @click="changePage(page)"
           :class="['btn number', { active: currentPage === page }]"
-      >{{ page }}</button>
-      <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages" class="btn next"></button>
+      >
+        {{ page }}
+      </button>
+      <button
+          @click="changePage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          class="btn next"
+      />
     </div>
   </div>
 </template>
