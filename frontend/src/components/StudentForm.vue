@@ -318,7 +318,7 @@ export default {
   margin-left: -20px;
   display: flex;
   align-items: flex-end;
-  margin-bottom: 87px;
+  margin-bottom: 223px;
 }
 
 .add-button {
