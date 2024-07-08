@@ -16,14 +16,14 @@ export default {
   props: {
     readonly: Boolean,
   },
-  emits: ["close", "submit"],
+  emits: ["close", "save"],
   methods: {
     close() {
       this.$emit("close");
     },
     submit(event) {
       if (event.target.checkValidity()) {
-        this.$emit("submit", this.form);
+        this.$emit("save", this.form);
       } else {
         alert("Пожалуйста, заполните все обязательные поля.");
       }
