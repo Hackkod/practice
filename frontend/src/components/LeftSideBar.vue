@@ -8,7 +8,7 @@
             class="left-side-profile-img"
             :src="user.photo"
             alt=""
-          >
+          />
         </div>
         <div class="left-side-profile-info-container">
           <span class="left-side-profile-name" v-if="user !== null">{{ user.username }}</span>
@@ -22,8 +22,12 @@
                   class="nav-item"
                   :class="{ active: activeIndexPage === index }"
                   @click="setActive(index)">
-                <v-icon>{{ item.icon }}</v-icon>
-                <a>{{ item.name }}</a>
+                <v-icon>
+                  {{ item.icon }}
+                </v-icon>
+                <a>
+                  {{ item.name }}
+                </a>
               </div>
             </li>
           </ul>
@@ -31,7 +35,9 @@
       </div>
       <div class="left-side-divider" />
       <div class="left-side-exit-container">
-        <v-icon>mdi-exit-to-app</v-icon>
+        <v-icon>
+          mdi-exit-to-app
+        </v-icon>
         <button class="left-side-exit-btn" @click="handleLogout">Выйти</button>
       </div>
     </div>

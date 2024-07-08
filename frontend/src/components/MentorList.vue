@@ -19,7 +19,11 @@
       >
         <td class="td-info">
           <div class="line-info">
-            <img :src="mentor.profile_photo" alt="" class="line-photo">
+            <img
+                :src="mentor.profile_photo"
+                alt=""
+                class="line-photo"
+            />
             <span>{{ truncatedName(mentor) }}</span>
           </div>
         </td>
@@ -29,17 +33,32 @@
         <td>
           <div class="table-btns">
             <button @click.stop="editMentor(mentor)">
-              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/EditIcon.svg')"
+                  alt="Иконка редактирования"
+                  width="24"
+                  height="24"
+              >
             </button>
             <button @click.stop="confirmDelete(mentor)">
-              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/DeleteIcon.svg')"
+                  alt="Иконка удаления"
+                  width="24"
+                  height="24"
+              />
             </button>
           </div>
         </td>
       </tr>
       </tbody>
     </table-overlay>
-    <mentor-form v-if="showForm" :student="selectedMentor" @close="closeForm" @save="saveMentor"/>
+    <mentor-form
+        v-if="showForm"
+        :student="selectedMentor"
+        @close="closeForm"
+        @save="saveMentor"
+    />
   </div>
 </template>
 

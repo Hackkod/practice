@@ -2,9 +2,11 @@
   <div class="mentor-info-container" @click="this.$emit('viewMentor', mentor)">
     <div class="mentor-info-main">
       <div class="mentor-info-img-container">
-        <img class="mentor-info-img"
-             :src="mentor.profile_photo"
-             alt="">
+        <img
+            class="mentor-info-img"
+            :src="mentor.profile_photo"
+            alt=""
+        />
       </div>
       <div class="mentor-info-name-pos">
         <span class="mentor-name">{{ truncatedName }}</span>
@@ -17,14 +19,16 @@
             :src="require('@/assets/img/EditIcon.svg')"
             alt="Иконка редактирования"
             width="26"
-            height="26">
+            height="26"
+        />
       </button>
       <button class="card-delete-btn" @click.stop="confirmDelete(mentor.id)">
         <img
             :src="require('@/assets/img/DeleteIcon.svg')"
             alt="Иконка удаления"
             width="26"
-            height="26">
+            height="26"
+        />
       </button>
     </div>
   </div>

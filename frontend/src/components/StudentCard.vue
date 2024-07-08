@@ -2,9 +2,11 @@
   <div class="student-info-container" @click="this.$emit('viewStudent', student)">
     <div class="student-info-main">
       <div class="student-info-img-container">
-        <img class="student-info-img"
+        <img
+            class="student-info-img"
              :src="student.profile_photo"
-             alt="">
+             alt=""
+        />
       </div>
       <div class="student-info-name-est">
         <span class="student-name">{{ truncatedName }}</span>
@@ -13,19 +15,27 @@
       </div>
     </div>
     <div class="student-info-actions">
-      <button class="card-edit-btn" @click.stop="editStudent(student)" >
+      <button
+          class="card-edit-btn"
+          @click.stop="editStudent(student)"
+      >
         <img
             :src="require('@/assets/img/EditIcon.svg')"
             alt="Иконка редактирования"
             width="26"
-            height="26">
+            height="26"
+        />
       </button>
-      <button class="card-delete-btn" @click.stop="confirmDelete(student.id)" >
+      <button
+          class="card-delete-btn"
+          @click.stop="confirmDelete(student.id)"
+      >
         <img
             :src="require('@/assets/img/DeleteIcon.svg')"
             alt="Иконка удаления"
             width="26"
-            height="26">
+            height="26"
+        />
       </button>
     </div>
   </div>

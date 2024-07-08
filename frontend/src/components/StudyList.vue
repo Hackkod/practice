@@ -21,17 +21,33 @@
         <td>
           <div class="table-btns">
             <button @click.stop="editStudy(study)">
-              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/EditIcon.svg')"
+                  alt="Иконка редактирования"
+                  width="24"
+                  height="24"
+              />
             </button>
             <button @click.stop="confirmDelete(study)">
-              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/DeleteIcon.svg')"
+                  alt="Иконка удаления"
+                  width="24"
+                  height="24"
+              />
             </button>
           </div>
         </td>
       </tr>
       </tbody>
     </table-overlay>
-    <study-form v-if="showForm" :studyId="selectedStudy" :readonly="readonly" @close="closeForm" @save="saveStudy"/>
+    <study-form
+        v-if="showForm"
+        :studyId="selectedStudy"
+        :readonly="readonly"
+        @close="closeForm"
+        @save="saveStudy"
+    />
   </div>
 </template>
 

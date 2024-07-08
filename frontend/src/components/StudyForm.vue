@@ -3,11 +3,20 @@
     <modal-header>{{ readonly ? 'Просмотр обучения' : studyId ? 'Редактирование обучения' : 'Создание нового обучения' }}</modal-header>
     <div class="form-group">
       <label>Заголовок:</label>
-      <input v-model="form.name" placeholder="Наименование обучения" required :readonly="readonly">
+      <input
+          v-model="form.name"
+          placeholder="Наименование обучения"
+          required
+          :readonly="readonly"
+      />
     </div>
     <div class="form-group">
       <label>Студент:</label>
-      <input v-if="readonly" v-model="student_full_name" :readonly="readonly">
+      <input
+          v-if="readonly"
+          v-model="student_full_name"
+          :readonly="readonly"
+      />
       <select v-else v-model="form.student" required>
         <option v-for="student in students" :key="student.id" :value="student.id">
           {{ truncatedName(student) }}
