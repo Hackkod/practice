@@ -6,10 +6,10 @@
     <div class="page-table-functional-row">
       <div class="page-table-switchers">
         <div
-            v-for="(tab, index) in tabs"
-            :key="index"
-            :class="['tab', { active: activeTab === index }]"
-            @click="$emit('tabChange', index)"
+          v-for="(tab, index) in tabs"
+          :key="index"
+          :class="['tab', { active: activeTab === index }]"
+          @click="$emit('tabChange', index)"
         >
           {{ tab.name }}
         </div>
@@ -19,31 +19,31 @@
         <div class="page-func-inputs-show" v-if="showEventFilters">
           <div class="page-filter-label">С:</div>
           <input
-              type="date"
-              v-model="startDate"
-              @change="updateFilters"
-              placeholder="Дата начала"
-              :class="{'active-input': startDate}"
-          >
+            type="date"
+            v-model="startDate"
+            @change="updateFilters"
+            placeholder="Дата начала"
+            :class="{ 'active-input': startDate }"
+          />
           <div class="page-filter-label">По:</div>
           <input
-              type="date"
-              v-model="endDate"
-              @change="updateFilters"
-              placeholder="Дата окончания"
-              :class="{'active-input': endDate}"
-          >
+            type="date"
+            v-model="endDate"
+            @change="updateFilters"
+            placeholder="Дата окончания"
+            :class="{ 'active-input': endDate }"
+          />
           <select
-              class="page-select-field"
-              v-model="selectedType"
-              @change="updateFilters"
-              :class="{'active-input': selectedType}"
+            class="page-select-field"
+            v-model="selectedType"
+            @change="updateFilters"
+            :class="{ 'active-input': selectedType }"
           >
             <option value="" selected>Все типы</option>
             <option
-                v-for="option in typeOptions"
-                :key="option.value"
-                :value="option.value"
+              v-for="option in typeOptions"
+              :key="option.value"
+              :value="option.value"
             >
               {{ option.label }}
             </option>
@@ -51,16 +51,16 @@
         </div>
         <div class="page-func-inputs-show" v-if="showAnketFilters">
           <select
-              class="page-select-field"
-              v-model="selectedHardSkill"
-              @change="updateFilters"
-              :class="{'active-input': selectedHardSkill}"
+            class="page-select-field"
+            v-model="selectedHardSkill"
+            @change="updateFilters"
+            :class="{ 'active-input': selectedHardSkill }"
           >
             <option value="" selected>Все навыки</option>
             <option
-                v-for="skill in filterOptions.hardSkills"
-                :key="skill.id"
-                :value="skill.id"
+              v-for="skill in filterOptions.hardSkills"
+              :key="skill.id"
+              :value="skill.id"
             >
               {{ skill.skill_name }}
             </option>
@@ -68,37 +68,37 @@
           <div class="page-func-inputs-show" v-if="showCourseFilter">
             <div class="page-filter-label">Курс:</div>
             <input
-                type="number"
-                max="6"
-                min="1"
-                v-model="selectedCourse"
-                @input="validateCourse"
-                @change="updateFilters"
-                placeholder="Все курсы"
-                :class="{'active-input': selectedCourse, 'page-select-field': true}"
-            >
+              type="number"
+              max="6"
+              min="1"
+              v-model="selectedCourse"
+              @input="validateCourse"
+              @change="updateFilters"
+              placeholder="Все курсы"
+              :class="{
+                'active-input': selectedCourse,
+                'page-select-field': true,
+              }"
+            />
           </div>
         </div>
         <v-icon
-            class="clear-filters-btn"
-            color="#aaa"
-            size="large"
-            @click="clearFilters"
+          class="clear-filters-btn"
+          color="#aaa"
+          size="large"
+          @click="clearFilters"
         >
           mdi-close
         </v-icon>
         <div class="search-container">
           <input
-              class="page-input-filter"
-              type="text"
-              placeholder="Поиск"
-              v-model="searchQuery"
-              @keyup.enter="updateFilters"
-          >
-          <button
-              class="search-icon-btn"
-              @click="updateFilters"
+            class="page-input-filter"
+            type="text"
+            placeholder="Поиск"
+            v-model="searchQuery"
+            @keyup.enter="updateFilters"
           />
+          <button class="search-icon-btn" @click="updateFilters" />
         </div>
       </div>
     </div>
@@ -116,86 +116,87 @@ export default {
     },
     tabs: {
       type: Array,
-      required: true
+      required: true,
     },
     activeTab: {
       type: Number,
-      required: true
+      required: true,
     },
     typeOptions: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     showEventFilters: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showAnketFilters: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showCourseFilter: {
       type: Boolean,
-      default: false
+      default: false,
     },
     filterOptions: {
       type: Object,
       default: () => ({
-        hardSkills: []
-      })
-    }
+        hardSkills: [],
+      }),
+    },
   },
+  emits: ["tabChange", "openForm", "updateFilters"],
   data() {
     return {
-      searchQuery: '',
-      startDate: '',
-      endDate: '',
-      selectedType: '',
-      selectedHardSkill: '',
-      selectedCourse: ''
-    }
+      searchQuery: "",
+      startDate: "",
+      endDate: "",
+      selectedType: "",
+      selectedHardSkill: "",
+      selectedCourse: "",
+    };
   },
   methods: {
     openForm() {
-      this.$emit('openForm');
+      this.$emit("openForm");
     },
     updateFilters() {
-      this.$emit('updateFilters', {
+      this.$emit("updateFilters", {
         searchQuery: this.searchQuery,
         startDate: this.startDate,
         endDate: this.endDate,
         selectedType: this.selectedType,
         selectedHardSkill: this.selectedHardSkill,
-        selectedCourse: this.selectedCourse
+        selectedCourse: this.selectedCourse,
       });
     },
     clearFilters() {
-      this.searchQuery = '';
-      this.startDate = '';
-      this.endDate = '';
-      this.selectedType = '';
-      this.selectedHardSkill = '';
-      this.selectedCourse = '';
+      this.searchQuery = "";
+      this.startDate = "";
+      this.endDate = "";
+      this.selectedType = "";
+      this.selectedHardSkill = "";
+      this.selectedCourse = "";
       this.updateFilters();
     },
     validateCourse(event) {
-      const min = 1
-      const max = 6
-      let value = event.target.value
+      const min = 1;
+      const max = 6;
+      let value = event.target.value;
 
-      if (value !== '') {
-        value = parseInt(value, 10)
+      if (value !== "") {
+        value = parseInt(value, 10);
         if (value < min) {
-          value = min
+          value = min;
         } else if (value > max) {
-          value = max
+          value = max;
         }
       }
-      this.selectedCourse = value
+      this.selectedCourse = value;
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -278,7 +279,8 @@ export default {
 }
 
 .page-select-field {
-  background: url("@/assets/img/FilterIcon.svg") no-repeat calc(100% - 15px) center;
+  background: url("@/assets/img/FilterIcon.svg") no-repeat calc(100% - 15px)
+    center;
   background-size: 27px 27px;
   border: 3px solid #eee;
   border-radius: 10px;
@@ -357,7 +359,8 @@ export default {
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(47%) sepia(0%) saturate(0%) hue-rotate(194deg) brightness(91%) contrast(90%);
+    filter: invert(47%) sepia(0%) saturate(0%) hue-rotate(194deg)
+      brightness(91%) contrast(90%);
     cursor: pointer;
   }
 

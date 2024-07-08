@@ -1,34 +1,37 @@
 <template>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  />
 
   <div class="wrapper">
     <div class="form-container">
       <div class="col col-1">
         <div class="image-layer">
           <img
-              :src="require('@/assets/img/Floor.svg')"
-              class="form-image-floor"
-              alt="floor"
+            :src="require('@/assets/img/Floor.svg')"
+            class="form-image-floor"
+            alt="floor"
           />
           <img
-              :src="require('@/assets/img/Cabinet.svg')"
-              class="form-image cabinet"
-              alt="cabinet"
+            :src="require('@/assets/img/Cabinet.svg')"
+            class="form-image cabinet"
+            alt="cabinet"
           />
           <img
-              :src="require('@/assets/img/Plants.svg')"
-              class="form-image plants"
-              alt="plants"
+            :src="require('@/assets/img/Plants.svg')"
+            class="form-image plants"
+            alt="plants"
           />
           <img
-              :src="require('@/assets/img/Folder.svg')"
-              class="form-image folder"
-              alt="folder"
+            :src="require('@/assets/img/Folder.svg')"
+            class="form-image folder"
+            alt="folder"
           />
           <img
-              :src="require('@/assets/img/Resumes.svg')"
-              class="form-image resumes"
-              alt="resumes"
+            :src="require('@/assets/img/Resumes.svg')"
+            class="form-image resumes"
+            alt="resumes"
           />
         </div>
       </div>
@@ -41,21 +44,21 @@
           <div class="form-inputs">
             <div class="input-box">
               <input
-                  v-model="username"
-                  type="text"
-                  class="input-field"
-                  placeholder="Имя пользователя"
-                  required
+                v-model="username"
+                type="text"
+                class="input-field"
+                placeholder="Имя пользователя"
+                required
               />
               <i class="bx bx-user icon"></i>
             </div>
             <div class="input-box">
               <input
-                  v-model="password"
-                  type="password"
-                  class="input-field"
-                  placeholder="Пароль"
-                  required
+                v-model="password"
+                type="password"
+                class="input-field"
+                placeholder="Пароль"
+                required
               />
               <i class="bx bx-lock-alt icon"></i>
             </div>
@@ -66,10 +69,7 @@
               </button>
             </div>
           </div>
-          <p
-              v-if="error"
-              class="error-message"
-          >
+          <p v-if="error" class="error-message">
             {{ error }}
           </p>
         </div>
@@ -79,15 +79,15 @@
 </template>
 
 <script>
-import { login } from '@/services/auth';
+import { login } from "@/services/auth";
 
 export default {
-  name: 'LoginPage',
+  name: "LoginPage",
   data() {
     return {
-      username: '',
-      password: '',
-      error: ''
+      username: "",
+      password: "",
+      error: "",
     };
   },
   methods: {
@@ -95,21 +95,21 @@ export default {
       try {
         const token = await login(this.username, this.password);
         if (token) {
-          this.$router.push({ name: 'Students' });
+          this.$router.push({ name: "Students" });
         }
       } catch (error) {
-        this.error = 'Invalid username or password';
-        console.error('Error details:', error);
+        this.error = "Invalid username or password";
+        console.error("Error details:", error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.wrapper{
-  background-color: #8EC5FC;
-  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+.wrapper {
+  background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -123,18 +123,22 @@ export default {
   padding: 0 20px;
 }
 
-.form-container{
+.form-container {
   display: flex;
   width: 1000px;
   height: 600px;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(20px);
-  background: linear-gradient(180deg, rgba(227, 222, 229, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(227, 222, 229, 0.2) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
   overflow: hidden;
 }
 
-.col-1{
+.col-1 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,18 +149,18 @@ export default {
   border-radius: 0 30% 30% 0;
 }
 
-.image-layer{
+.image-layer {
   position: relative;
 }
 
-.form-image-floor{
+.form-image-floor {
   width: 100%;
   position: relative;
   top: 20%;
   animation: scale-up 3s ease-in-out alternate infinite;
 }
 
-.form-image{
+.form-image {
   position: absolute;
   left: 0;
   /*width: 200px;*/
@@ -185,47 +189,47 @@ export default {
   left: 25%;
 }
 
-.plants{
+.plants {
   animation: scale-down 3s ease-in-out alternate infinite;
 }
 
-.folder{
+.folder {
   animation: scale-down 3s ease-in-out alternate infinite;
 }
 
-.resumes{
+.resumes {
   animation: up-down 3s ease-in-out alternate infinite;
 }
 
-.cabinet{
+.cabinet {
   animation: left-right 3s ease-in-out alternate infinite;
 }
 
-@keyframes left-right{
-  to{
+@keyframes left-right {
+  to {
     transform: translateX(10px);
   }
 }
 
 @keyframes up-down {
-  to{
+  to {
     transform: translateY(10px);
   }
 }
 
 @keyframes scale-down {
-  to{
+  to {
     transform: scale(0.95);
   }
 }
 
 @keyframes scale-up {
-  to{
+  to {
     transform: scale(1.05);
   }
 }
 
-.col-2{
+.col-2 {
   position: relative;
   width: 45%;
   /*padding: 20px;*/
@@ -233,7 +237,7 @@ export default {
   overflow: hidden;
 }
 
-.login-form{
+.login-form {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -244,7 +248,7 @@ export default {
   padding: 0 4vw;
 }
 
-.form-title{
+.form-title {
   /*margin: 40px 0;*/
   margin: 10px 0 70px 0;
   color: #fff;
@@ -252,15 +256,15 @@ export default {
   font-weight: 500;
 }
 
-.form-inputs{
+.form-inputs {
   width: 100%;
 }
 
-.input-box{
+.input-box {
   position: relative;
 }
 
-.input-field{
+.input-field {
   width: 100%;
   height: 55px;
   padding: 0 15px;
@@ -274,13 +278,13 @@ export default {
   outline: none;
 }
 
-::placeholder{
+::placeholder {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
 }
 
-.input-box .icon{
+.input-box .icon {
   position: absolute;
   top: 50%;
   right: 15px;
@@ -288,7 +292,7 @@ export default {
   color: #ffffff;
 }
 
-.input-submit{
+.input-submit {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -302,10 +306,10 @@ export default {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.input-submit:hover{
+.input-submit:hover {
   gap: 15px;
 }
 
@@ -314,16 +318,16 @@ export default {
   margin-top: 0;
 }
 
-@media (max-width: 892px){
-  .form-container{
+@media (max-width: 892px) {
+  .form-container {
     width: 400px;
   }
 
-  .col-1{
+  .col-1 {
     display: none;
   }
 
-  .col-2{
+  .col-2 {
     width: 100%;
   }
 }

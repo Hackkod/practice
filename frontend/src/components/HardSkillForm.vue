@@ -24,31 +24,30 @@ import ModalHeader from "@/components/UI/ModalHeader.vue";
 
 export default {
   name: "HardSkillForm",
-  components: {ModalHeader, ModalOverlay },
+  components: { ModalHeader, ModalOverlay },
+  emits: ["refreshHardSkills", "close"],
   data() {
     return {
       form: {
-        skill_name: '',
-      }
+        skill_name: "",
+      },
     };
   },
   methods: {
     async save() {
       try {
-        await axios.post('hard_skill_app/hard_skills/', this.form);
-        this.$emit('refreshHardSkills');
+        await axios.post("hard_skill_app/hard_skills/", this.form);
+        this.$emit("refreshHardSkills");
         this.close();
       } catch (e) {
-        alert('Ошибка при добавлении hard skill');
+        alert("Ошибка при добавлении hard skill");
       }
     },
     close() {
-      this.$emit('close');
-    }
-  }
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

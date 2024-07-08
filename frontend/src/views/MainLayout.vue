@@ -14,17 +14,17 @@ import PaginatorTable from "@/components/PaginatorTable.vue";
 
 export default {
   name: "MainLayout",
-  components: {PaginatorTable, LeftSideBar},
-}
+  components: { PaginatorTable, LeftSideBar },
+};
 </script>
 
 <style scoped lang="scss">
-  .main-layout {
-    display: flex;
-    flex-direction: row;
-  }
+.main-layout {
+  display: flex;
+  flex-direction: row;
+}
 
-  .content {
-    width: 100%;
-  }
+.content {
+  width: 100%;
+}
 </style>

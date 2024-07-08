@@ -1,24 +1,25 @@
 <template>
   <div>
     <HeaderComponent
-        title="Студенты"
-        :tabs="tabs"
-        :activeTab="activeTab"
-        @tabChange="setActiveTab"
-        @openForm="createStudent"
-       :filterOptions="filterOptions"
-       :showEventFilters="false"
-       :showAnketFilters="true"
-       :showCourseFilter="true"
-       @updateFilters="updateFilters"
+      title="Студенты"
+      :tabs="tabs"
+      :active-tab="activeTab"
+      @tabChange="setActiveTab"
+      @openForm="createStudent"
+      :filter-options="filterOptions"
+      :show-event-filters="false"
+      :show-anket-filters="true"
+      :show-course-filter="true"
+      @updateFilters="updateFilters"
     />
-    <div :class="{'page-content': activeTab === 0}">
+    <div :class="{ 'page-content': activeTab === 0 }">
       <template v-if="activeTab === 0">
         <StudentCard
           @viewStudent="viewStudent"
           @updateStudents="fetchStudents"
           @editStudent="editStudent"
-          v-for="student in students" :key="student.id"
+          v-for="student in students"
+          :key="student.id"
           :student="student"
         />
       </template>
@@ -32,16 +33,16 @@
       </template>
     </div>
     <StudentForm
-        :studentId="selectedStudent"
-        :readonly="readonly"
-        v-if="showForm"
-        @close="closeForm"
-        @save="saveStudent"
+      :student-id="selectedStudent"
+      :readonly="readonly"
+      v-if="showForm"
+      @close="closeForm"
+      @save="saveStudent"
     />
     <PaginatorTable
-        :totalPages="totalPages"
-        :currentPage="currentPage"
-        @changePage="handleChangePage"
+      :total-pages="totalPages"
+      :current-page="currentPage"
+      @changePage="handleChangePage"
     />
   </div>
 </template>
@@ -55,13 +56,13 @@ import PaginatorTable from "@/components/PaginatorTable.vue";
 import StudentList from "@/components/StudentList.vue";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
     StudentList,
     PaginatorTable,
     StudentForm,
     HeaderComponent,
-    StudentCard
+    StudentCard,
   },
   data() {
     return {
@@ -71,81 +72,82 @@ export default {
       selectedStudent: null,
       activeTab: 0,
       itemsPerPage: 12,
-      tabs: [
-        { name: 'Карта' },
-        { name: 'Таблица' }
-      ],
+      tabs: [{ name: "Карта" }, { name: "Таблица" }],
       totalPages: 0,
       currentPage: 1,
       filterOptions: {
-        hardSkills: []
+        hardSkills: [],
       },
       filters: {
-        searchQuery: '',
+        searchQuery: "",
         selectedHardSkill: null,
-        selectedCourse: null
-      }
-    }
+        selectedCourse: null,
+      },
+    };
   },
   created() {
     this.fetchHardSkills();
-    this.fetchStudents()
+    this.fetchStudents();
   },
   methods: {
     createStudent() {
-      this.selectedStudent = null
-      this.showForm = true
-      this.readonly = false
+      this.selectedStudent = null;
+      this.showForm = true;
+      this.readonly = false;
     },
     editStudent(student) {
-      this.selectedStudent = student.id
-      this.showForm = true
-      this.readonly = false
+      this.selectedStudent = student.id;
+      this.showForm = true;
+      this.readonly = false;
     },
     closeForm() {
-      this.showForm = false
-      this.selectedStudent = null
-      this.readonly = false
+      this.showForm = false;
+      this.selectedStudent = null;
+      this.readonly = false;
     },
     viewStudent(student) {
-      this.selectedStudent = student.id
-      this.readonly = true
-      this.showForm = true
+      this.selectedStudent = student.id;
+      this.readonly = true;
+      this.showForm = true;
     },
     async saveStudent(student) {
       try {
-        const studentId = student.get('id');
+        const studentId = student.get("id");
         if (studentId) {
-          const hasNewProfilePhoto = student.has('profile_photo') && student.get('profile_photo') instanceof File;
+          const hasNewProfilePhoto =
+            student.has("profile_photo") &&
+            student.get("profile_photo") instanceof File;
 
           if (!hasNewProfilePhoto) {
-            student.delete('profile_photo');
+            student.delete("profile_photo");
           }
           await axios.put(`anket_app/students/${studentId}/`, student, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              "Content-Type": "multipart/form-data",
+            },
           });
         } else {
           await axios.post(`anket_app/students/`, student, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              "Content-Type": "multipart/form-data",
+            },
           });
         }
         await this.fetchStudents();
       } catch (e) {
-        alert('Ошибка при создании студента');
+        alert("Ошибка при создании студента");
       }
       this.closeForm();
     },
-    async fetchStudents(url=`anket_app/students/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
+    async fetchStudents(
+      url = `anket_app/students/?page=${this.currentPage}&page_size=${this.itemsPerPage}`,
+    ) {
       try {
         const { searchQuery, selectedHardSkill, selectedCourse } = this.filters;
         let params = {
           page: this.currentPage,
           search: searchQuery,
-          course: selectedCourse
+          course: selectedCourse,
         };
 
         if (selectedHardSkill) {
@@ -153,20 +155,20 @@ export default {
         }
 
         const response = await axios.get(url, {
-          params
+          params,
         });
-        this.students = response.data.results
+        this.students = response.data.results;
         this.totalPages = Math.ceil(response.data.count / this.itemsPerPage);
       } catch (e) {
-        alert('Ошибка')
+        alert("Ошибка");
       }
     },
     async fetchHardSkills() {
       try {
-        const response = await axios.get('hard_skill_app/hard_skills/');
+        const response = await axios.get("hard_skill_app/hard_skills/");
         this.filterOptions.hardSkills = response.data.results;
       } catch (e) {
-        alert('Ошибка при получении списка навыков');
+        alert("Ошибка при получении списка навыков");
       }
     },
     setActiveTab(index) {
@@ -182,9 +184,9 @@ export default {
     handleChangePage(page) {
       this.currentPage = page;
       this.fetchStudents();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

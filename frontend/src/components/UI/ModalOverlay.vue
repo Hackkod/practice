@@ -12,23 +12,24 @@
 
 <script>
 export default {
-  name: 'ModalOverlay',
+  name: "ModalOverlay",
   props: {
-    readonly: Boolean
+    readonly: Boolean,
   },
+  emits: ["close", "submit"],
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
     submit(event) {
       if (event.target.checkValidity()) {
-        this.$emit('submit', this.form);
+        this.$emit("submit", this.form);
       } else {
-        alert('Пожалуйста, заполните все обязательные поля.');
+        alert("Пожалуйста, заполните все обязательные поля.");
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
