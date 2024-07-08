@@ -1,14 +1,17 @@
 <template>
   <modal-overlay @close="close" @submit="save">
-    <modal-header>Добавление нового Хард скилла</modal-header>
+    <modal-header>Добавление хард скилла</modal-header>
     <div class="form-content">
       <div class="form-group">
-        <label for="skill_name">Название навыка:</label>
-        <input
-            type="text"
-            id="skill_name"
-            v-model="form.skill_name"
-        />
+        <v-text-field
+          class="form-input skill_name"
+          label="Название навыка"
+          placeholder="python"
+          variant="outlined"
+          density="compact"
+          v-model="form.skill_name"
+        >
+        </v-text-field>
       </div>
     </div>
   </modal-overlay>
@@ -47,10 +50,5 @@ export default {
 </script>
 
 <style scoped>
-.form-content {
-  padding: 20px;
-}
-.form-group {
-  margin-bottom: 15px;
-}
+
 </style>
