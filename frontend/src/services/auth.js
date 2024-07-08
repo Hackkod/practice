@@ -17,13 +17,8 @@ export const login = async (username, password) => {
 
 export const logout = () => {
     localStorage.removeItem('token')
-    deleteCookie('sessionid');
 };
 
 export const getToken = () => {
     return localStorage.getItem('token');
-};
-
-export const deleteCookie = (name) => {
-    document.cookie = name + '=; Max-Age=0; path=/';
 };
