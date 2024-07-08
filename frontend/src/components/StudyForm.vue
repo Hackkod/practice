@@ -116,7 +116,7 @@ export default {
         name: '',
         student: null,
         mentor: null,
-        type: 'PRACTICE',
+        type: null,
         start_date: null,
         end_date: null,
         description: '',
@@ -127,12 +127,12 @@ export default {
       mentors: [],
       types: [
         {
-          name: 'Practice',
-          value: 'PRACTICE'
+          name: 'Практика',
+          value: 'Практика'
         },
         {
-          name: 'Internship',
-          value: 'INTERNSHIP'
+          name: 'Стажировка',
+          value: 'Стажировка'
         },
       ],
     };

@@ -1,12 +1,12 @@
 from django.db import models
 
 
-male = 'M'
-female = 'F'
+male = 'Мужской'
+female = 'Женский'
 
 GENDER_CHOICES = [
-    (male, 'Male'),
-    (female, 'Female')
+    (male, 'Мужской'),
+    (female, 'Женский')
 ]
 
 
@@ -21,7 +21,7 @@ class AnketBase(models.Model):
         max_length=1024
     )
     gender = models.CharField(
-        max_length=1,
+        max_length=7,
         choices=GENDER_CHOICES
     )
     birth_date = models.DateField()
