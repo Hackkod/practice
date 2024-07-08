@@ -2,22 +2,25 @@
   <div class="wrapper">
     <div class="paginator-menu">
       <button
-          @click="changePage(currentPage - 1)"
-          :disabled="currentPage === 1"
-          class="btn prev"
+        @click="changePage(currentPage - 1)"
+        :disabled="currentPage === 1"
+        class="btn prev"
       />
       <button
-          v-for="page in visiblePages"
-          :key="page"
-          @click="changePage(page)"
-          :class="['btn number', { active: currentPage === page, disabled: totalPages === 0 }]"
+        v-for="page in visiblePages"
+        :key="page"
+        @click="changePage(page)"
+        :class="[
+          'btn number',
+          { active: currentPage === page, disabled: totalPages === 0 },
+        ]"
       >
         {{ page }}
       </button>
       <button
-          @click="changePage(currentPage + 1)"
-          :disabled="currentPage === totalPages || totalPages === 0"
-          class="btn next"
+        @click="changePage(currentPage + 1)"
+        :disabled="currentPage === totalPages || totalPages === 0"
+        class="btn next"
       />
     </div>
   </div>
@@ -29,13 +32,14 @@ export default {
   props: {
     totalPages: {
       type: Number,
-      required: true
+      required: true,
     },
     currentPage: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
+  emits: ["changePage"],
   computed: {
     visiblePages() {
       let pages = [];
@@ -48,43 +52,41 @@ export default {
           for (let i = 1; i <= 4; i++) {
             pages.push(i);
           }
-          pages.push('...');
+          pages.push("...");
           pages.push(this.totalPages);
         } else if (this.currentPage > this.totalPages - 3) {
           pages.push(1);
-          pages.push('...');
+          pages.push("...");
           for (let i = this.totalPages - 3; i <= this.totalPages; i++) {
             pages.push(i);
           }
         } else {
           pages.push(1);
-          pages.push('...');
+          pages.push("...");
           for (let i = this.currentPage - 2; i <= this.currentPage + 2; i++) {
             pages.push(i);
           }
-          pages.push('...');
+          pages.push("...");
           pages.push(this.totalPages);
         }
       }
       return pages;
-    }
+    },
   },
   data() {
-      return{
-      }
+    return {};
   },
   methods: {
     changePage(page) {
-      if (page !== '...' && page !== this.currentPage) {
-        this.$emit('changePage', page);
+      if (page !== "..." && page !== this.currentPage) {
+        this.$emit("changePage", page);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 .paginator-menu {
   display: flex;
   justify-content: center;
@@ -95,7 +97,7 @@ export default {
   padding: 0 20px;
 }
 
-.btn{
+.btn {
   border: none;
   cursor: pointer;
   width: 22px;
@@ -108,7 +110,7 @@ export default {
   align-items: center;
 }
 
-.btn.number{
+.btn.number {
   background-color: transparent;
   font-size: 18px;
 }

@@ -1,40 +1,33 @@
 <template>
-  <div class="student-info-container" @click="this.$emit('viewStudent', student)">
+  <div
+    class="student-info-container"
+    @click="this.$emit('viewStudent', student)"
+  >
     <div class="student-info-main">
       <div class="student-info-img-container">
-        <img
-            class="student-info-img"
-             :src="student.profile_photo"
-             alt=""
-        />
+        <img class="student-info-img" :src="student.profile_photo" alt="" />
       </div>
       <div class="student-info-name-est">
         <span class="student-name">{{ truncatedName }}</span>
         <span class="student-establishment">{{ truncateEstablishment }}</span>
-        <span class="student-course">Курс: {{student.course}}</span>
+        <span class="student-course">Курс: {{ student.course }}</span>
       </div>
     </div>
     <div class="student-info-actions">
-      <button
-          class="card-edit-btn"
-          @click.stop="editStudent(student)"
-      >
+      <button class="card-edit-btn" @click.stop="editStudent(student)">
         <img
-            :src="require('@/assets/img/EditIcon.svg')"
-            alt="Иконка редактирования"
-            width="26"
-            height="26"
+          :src="require('@/assets/img/EditIcon.svg')"
+          alt="Иконка редактирования"
+          width="26"
+          height="26"
         />
       </button>
-      <button
-          class="card-delete-btn"
-          @click.stop="confirmDelete(student.id)"
-      >
+      <button class="card-delete-btn" @click.stop="confirmDelete(student.id)">
         <img
-            :src="require('@/assets/img/DeleteIcon.svg')"
-            alt="Иконка удаления"
-            width="26"
-            height="26"
+          :src="require('@/assets/img/DeleteIcon.svg')"
+          alt="Иконка удаления"
+          width="26"
+          height="26"
         />
       </button>
     </div>
@@ -46,50 +39,58 @@ import axios from "@/plugins/axios";
 
 export default {
   name: "StudentCard",
-  components: { },
+  components: {},
+  emits: ["updateStudents", "editStudent"],
   data() {
     return {
       selectedStudent: null,
-    }
+    };
   },
   props: {
     student: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     editStudent(student) {
-      this.$emit('editStudent', student);
+      this.$emit("editStudent", student);
     },
     async deleteStudent(id) {
       try {
-        await axios.delete(`anket_app/students/${id}/`)
-        this.$emit('updateStudents');
+        await axios.delete(`anket_app/students/${id}/`);
+        this.$emit("updateStudents");
       } catch (e) {
-        alert('Ошибка при удалении студента')
+        alert("Ошибка при удалении студента");
       }
     },
     confirmDelete(id) {
-      if (confirm(`Вы уверены, что хотите удалить студента ${this.student.surname + ' ' + this.student.name}?`)) {
+      if (
+        confirm(
+          `Вы уверены, что хотите удалить студента ${this.student.surname + " " + this.student.name}?`,
+        )
+      ) {
         this.deleteStudent(id);
       }
-    }
+    },
   },
   computed: {
     truncatedName() {
       const fullName =
-          this.student.surname + ' ' +
-          this.student.name[0] + '.' +
-          this.student.patronymic[0] + '.'
-      return fullName.length > 11 ? fullName.slice(0, 11) + '...' : fullName;
+        this.student.surname +
+        " " +
+        this.student.name[0] +
+        "." +
+        this.student.patronymic[0] +
+        ".";
+      return fullName.length > 11 ? fullName.slice(0, 11) + "..." : fullName;
     },
     truncateEstablishment() {
-      const establish = this.student.establishment
-      return establish.length > 12 ? establish.slice(0, 12) + '...' : establish;
-    }
+      const establish = this.student.establishment;
+      return establish.length > 12 ? establish.slice(0, 12) + "..." : establish;
+    },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -135,7 +136,8 @@ export default {
   color: #344ca2;
 }
 
-.student-establishment, .student-course {
+.student-establishment,
+.student-course {
   font-weight: 400;
   font-size: 16px;
   color: #bbb;

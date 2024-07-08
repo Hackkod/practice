@@ -1,47 +1,48 @@
 <template>
   <div>
     <HeaderComponent
-        title="Наставники"
-        :tabs="tabs"
-        :activeTab="activeTab"
-        @tabChange="setActiveTab"
-        @openForm="createMentor"
-       :filterOptions="filterOptions"
-       :showEventFilters="false"
-       :showAnketFilters="true"
-       :showCourseFilter="false"
-       @updateFilters="updateFilters"
+      title="Наставники"
+      :tabs="tabs"
+      :active-tab="activeTab"
+      @tabChange="setActiveTab"
+      @openForm="createMentor"
+      :filter-options="filterOptions"
+      :show-event-filters="false"
+      :show-anket-filters="true"
+      :show-course-filter="false"
+      @updateFilters="updateFilters"
     />
-    <div :class="{'page-content': activeTab === 0}">
+    <div :class="{ 'page-content': activeTab === 0 }">
       <template v-if="activeTab === 0">
         <MentorCard
-            @viewMentor="viewMentor"
-            @updateMentors="fetchMentors"
-            @editMentor="editMentor"
-            v-for="mentor in mentors" :key="mentor.id"
-            :mentor="mentor"
+          @viewMentor="viewMentor"
+          @updateMentors="fetchMentors"
+          @editMentor="editMentor"
+          v-for="mentor in mentors"
+          :key="mentor.id"
+          :mentor="mentor"
         />
       </template>
       <template v-else-if="activeTab === 1">
         <MentorList
-            :mentors="mentors"
-            @viewMentor="viewMentor"
-            @updateMentors="fetchMentors"
-            @editMentor="editMentor"
+          :mentors="mentors"
+          @viewMentor="viewMentor"
+          @updateMentors="fetchMentors"
+          @editMentor="editMentor"
         />
       </template>
     </div>
     <PaginatorTable
-        :totalPages="totalPages"
-        :currentPage="currentPage"
-        @changePage="handleChangePage"
+      :total-pages="totalPages"
+      :current-page="currentPage"
+      @changePage="handleChangePage"
     />
     <MentorForm
-        :mentorId="selectedMentor"
-        :readonly="readonly"
-        v-if="showForm"
-        @close="closeForm"
-        @save="saveMentor"
+      :mentor-id="selectedMentor"
+      :readonly="readonly"
+      v-if="showForm"
+      @close="closeForm"
+      @save="saveMentor"
     />
   </div>
 </template>
@@ -60,7 +61,7 @@ export default {
     PaginatorTable,
     MentorForm,
     HeaderComponent,
-    MentorCard
+    MentorCard,
   },
   data() {
     return {
@@ -70,79 +71,80 @@ export default {
       selectedMentor: null,
       activeTab: 0,
       itemsPerPage: 12,
-      tabs: [
-        { name: 'Карта' },
-        { name: 'Таблица' }
-      ],
+      tabs: [{ name: "Карта" }, { name: "Таблица" }],
       totalPages: 0,
       currentPage: 1,
       filterOptions: {
-        hardSkills: []
+        hardSkills: [],
       },
       filters: {
-        searchQuery: '',
-        selectedHardSkill: null
-      }
-    }
+        searchQuery: "",
+        selectedHardSkill: null,
+      },
+    };
   },
   created() {
     this.fetchHardSkills();
-    this.fetchMentors()
+    this.fetchMentors();
   },
   methods: {
     createMentor() {
-      this.selectedMentor = null
-      this.showForm = true
-      this.readonly = false
+      this.selectedMentor = null;
+      this.showForm = true;
+      this.readonly = false;
     },
     editMentor(mentor) {
-      this.selectedMentor = mentor.id
-      this.showForm = true
-      this.readonly = false
+      this.selectedMentor = mentor.id;
+      this.showForm = true;
+      this.readonly = false;
     },
     closeForm() {
-      this.showForm = false
-      this.selectedMentor = null
-      this.readonly = false
+      this.showForm = false;
+      this.selectedMentor = null;
+      this.readonly = false;
     },
     viewMentor(mentor) {
-      this.selectedMentor = mentor.id
-      this.readonly = true
-      this.showForm = true
+      this.selectedMentor = mentor.id;
+      this.readonly = true;
+      this.showForm = true;
     },
     async saveMentor(mentor) {
       try {
-        const mentorId = mentor.get('id');
+        const mentorId = mentor.get("id");
         if (mentorId) {
-          const hasNewProfilePhoto = mentor.has('profile_photo') && mentor.get('profile_photo') instanceof File;
+          const hasNewProfilePhoto =
+            mentor.has("profile_photo") &&
+            mentor.get("profile_photo") instanceof File;
 
           if (!hasNewProfilePhoto) {
-            mentor.delete('profile_photo');
+            mentor.delete("profile_photo");
           }
           await axios.put(`anket_app/mentors/${mentorId}/`, mentor, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              "Content-Type": "multipart/form-data",
+            },
           });
         } else {
           await axios.post(`anket_app/mentors/`, mentor, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              "Content-Type": "multipart/form-data",
+            },
           });
         }
         await this.fetchMentors();
       } catch (e) {
-        alert('Ошибка при создании наставника');
+        alert("Ошибка при создании наставника");
       }
       this.closeForm();
     },
-    async fetchMentors(url=`anket_app/mentors/?page=${this.currentPage}&page_size=${this.itemsPerPage}`) {
+    async fetchMentors(
+      url = `anket_app/mentors/?page=${this.currentPage}&page_size=${this.itemsPerPage}`,
+    ) {
       try {
         const { searchQuery, selectedHardSkill } = this.filters;
         let params = {
           page: this.currentPage,
-          search: searchQuery
+          search: searchQuery,
         };
 
         if (selectedHardSkill) {
@@ -150,20 +152,20 @@ export default {
         }
 
         const response = await axios.get(url, {
-          params
+          params,
         });
-        this.mentors = response.data.results
+        this.mentors = response.data.results;
         this.totalPages = Math.ceil(response.data.count / this.itemsPerPage);
       } catch (e) {
-        alert('Ошибка')
+        alert("Ошибка");
       }
     },
     async fetchHardSkills() {
       try {
-        const response = await axios.get('hard_skill_app/hard_skills/');
+        const response = await axios.get("hard_skill_app/hard_skills/");
         this.filterOptions.hardSkills = response.data.results;
       } catch (e) {
-        alert('Ошибка при получении списка навыков');
+        alert("Ошибка при получении списка навыков");
       }
     },
     setActiveTab(index) {
@@ -179,9 +181,9 @@ export default {
     handleChangePage(page) {
       this.currentPage = page;
       this.fetchMentors();
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

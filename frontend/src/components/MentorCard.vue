@@ -2,11 +2,7 @@
   <div class="mentor-info-container" @click="this.$emit('viewMentor', mentor)">
     <div class="mentor-info-main">
       <div class="mentor-info-img-container">
-        <img
-            class="mentor-info-img"
-            :src="mentor.profile_photo"
-            alt=""
-        />
+        <img class="mentor-info-img" :src="mentor.profile_photo" alt="" />
       </div>
       <div class="mentor-info-name-pos">
         <span class="mentor-name">{{ truncatedName }}</span>
@@ -14,20 +10,20 @@
       </div>
     </div>
     <div class="mentor-info-actions">
-      <button class="card-edit-btn" @click.stop="editMentor(mentor)" >
+      <button class="card-edit-btn" @click.stop="editMentor(mentor)">
         <img
-            :src="require('@/assets/img/EditIcon.svg')"
-            alt="Иконка редактирования"
-            width="26"
-            height="26"
+          :src="require('@/assets/img/EditIcon.svg')"
+          alt="Иконка редактирования"
+          width="26"
+          height="26"
         />
       </button>
       <button class="card-delete-btn" @click.stop="confirmDelete(mentor.id)">
         <img
-            :src="require('@/assets/img/DeleteIcon.svg')"
-            alt="Иконка удаления"
-            width="26"
-            height="26"
+          :src="require('@/assets/img/DeleteIcon.svg')"
+          alt="Иконка удаления"
+          width="26"
+          height="26"
         />
       </button>
     </div>
@@ -39,50 +35,58 @@ import axios from "@/plugins/axios";
 
 export default {
   name: "MentorCard",
-  components: { },
+  components: {},
+  emits: ["editMentor", "updateMentors"],
   data() {
     return {
       selectedMentor: null,
-    }
+    };
   },
   props: {
     mentor: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     editMentor(mentor) {
-      this.$emit('editMentor', mentor);
+      this.$emit("editMentor", mentor);
     },
     async deleteMentor(id) {
       try {
-        await axios.delete(`anket_app/mentors/${id}/`)
-        this.$emit('updateMentors');
+        await axios.delete(`anket_app/mentors/${id}/`);
+        this.$emit("updateMentors");
       } catch (e) {
-        alert('Ошибка при удалении наставника')
+        alert("Ошибка при удалении наставника");
       }
     },
     confirmDelete(id) {
-      if (confirm(`Вы уверены, что хотите удалить наставника ${this.mentor.surname + ' ' + this.mentor.name}?`)) {
+      if (
+        confirm(
+          `Вы уверены, что хотите удалить наставника ${this.mentor.surname + " " + this.mentor.name}?`,
+        )
+      ) {
         this.deleteMentor(id);
       }
-    }
+    },
   },
   computed: {
     truncatedName() {
       const fullName =
-          this.mentor.surname + ' ' +
-          this.mentor.name[0] + '.' +
-          this.mentor.patronymic[0] + '.'
-      return fullName.length > 10 ? fullName.slice(0, 10) + '..' : fullName;
+        this.mentor.surname +
+        " " +
+        this.mentor.name[0] +
+        "." +
+        this.mentor.patronymic[0] +
+        ".";
+      return fullName.length > 10 ? fullName.slice(0, 10) + ".." : fullName;
     },
     truncatedPosition() {
-      const pos = this.mentor.job_position
-      return pos.length > 11 ? pos.slice(0, 11) + '..' : pos;
-    }
+      const pos = this.mentor.job_position;
+      return pos.length > 11 ? pos.slice(0, 11) + ".." : pos;
+    },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

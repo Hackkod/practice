@@ -1,27 +1,20 @@
 <template>
   <div>
     <HeaderComponent
-        title="Работа"
-        :tabs="tabs"
-        :activeTab="activeTab"
-        :typeOptions="typeOptions"
-        @tabChange="setActiveTab"
-        @openForm="createWork"
-        @updateFilters="updateFilters"
+      title="Работа"
+      :tabs="tabs"
+      :active-tab="activeTab"
+      :type-options="typeOptions"
+      @tabChange="setActiveTab"
+      @openForm="createWork"
+      @updateFilters="updateFilters"
     />
-    <WorkList
-        :works="works"
-        @updateWorks="fetchWorks"
-    />
-    <WorkForm
-        v-if="showForm"
-        @close="closeForm"
-        @save="saveWork"
-    />
+    <WorkList :works="works" @updateWorks="fetchWorks" />
+    <WorkForm v-if="showForm" @close="closeForm" @save="saveWork" />
     <PaginatorTable
-        :totalPages="totalPages"
-        :currentPage="currentPage"
-        @changePage="handleChangePage"
+      :total-pages="totalPages"
+      :current-page="currentPage"
+      @changePage="handleChangePage"
     />
   </div>
 </template>
@@ -38,28 +31,27 @@ export default {
     PaginatorTable,
     WorkForm,
     HeaderComponent,
-    WorkList},
+    WorkList,
+  },
   data() {
     return {
       works: [],
       showForm: false,
       activeTab: 0,
-      tabs: [
-        { name: 'Таблица' }
-      ],
+      tabs: [{ name: "Таблица" }],
       totalPages: 0,
       currentPage: 1,
       filters: {
-        searchQuery: '',
-        startDate: '',
-        endDate: '',
-        selectedType: ''
+        searchQuery: "",
+        startDate: "",
+        endDate: "",
+        selectedType: "",
       },
       typeOptions: [
-        { value: 'AGREEMENT', label: 'Agreement' },
-        { value: 'STAFF', label: 'Staff' }
-      ]
-    }
+        { value: "AGREEMENT", label: "Agreement" },
+        { value: "STAFF", label: "Staff" },
+      ],
+    };
   },
   created() {
     this.fetchWorks();
@@ -77,7 +69,7 @@ export default {
         await this.fetchWorks();
         this.closeForm();
       } catch (e) {
-        alert('Ошибка при создании работы');
+        alert("Ошибка при создании работы");
       }
     },
     async fetchWorks(url = `event_app/works/?page=${this.currentPage}`) {
@@ -89,13 +81,13 @@ export default {
             search: searchQuery,
             start_date: startDate,
             end_date: endDate,
-            type: selectedType
-          }
+            type: selectedType,
+          },
         });
         this.works = response.data.results;
         this.totalPages = Math.ceil(response.data.count / 6);
       } catch (e) {
-        alert('Ошибка при получении списка работ')
+        alert("Ошибка при получении списка работ");
       }
     },
     setActiveTab(index) {
@@ -109,11 +101,9 @@ export default {
     handleChangePage(page) {
       this.currentPage = page;
       this.fetchWorks();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
