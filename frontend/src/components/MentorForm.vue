@@ -1,35 +1,71 @@
 <template>
   <modal-overlay @close="close" @submit="save" :readonly="readonly">
-    <modal-header>{{ readonly ? 'Просмотр наставника' : mentorId ? 'Редактирование наставника' : 'Создание нового наставника' }}</modal-header>
+    <modal-header>
+      {{ readonly ? 'Просмотр наставника' : mentorId ? 'Редактирование наставника' : 'Создание нового наставника' }}
+    </modal-header>
     <div class="form-content">
       <div class="first-column">
         <div class="form-group">
           <label>Фамилия:</label>
-          <input v-model="form.surname" placeholder="Иванов" required :readonly="readonly">
+          <input
+              v-model="form.surname"
+              placeholder="Иванов"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Имя:</label>
-          <input v-model="form.name" placeholder="Иван" required :readonly="readonly">
+          <input
+              v-model="form.name"
+              placeholder="Иван"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Отчество:</label>
-          <input v-model="form.patronymic" placeholder="Иванович" required :readonly="readonly">
+          <input
+              v-model="form.patronymic"
+              placeholder="Иванович"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Пол:</label>
-          <input v-if="readonly" v-model="form.gender" required :readonly="readonly">
-          <select v-else v-model="form.gender" required>
+          <input
+              v-if="readonly"
+              v-model="form.gender"
+              required
+              :readonly="readonly"
+          />
+          <select
+              v-else
+              v-model="form.gender"
+              required
+          >
             <option value="M">Male</option>
             <option value="F">Female</option>
           </select>
         </div>
         <div class="form-group">
           <label>Дата рождения:</label>
-          <input v-model="form.birth_date" type="date" required :readonly="readonly">
+          <input
+              v-model="form.birth_date"
+              type="date"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Должность:</label>
-          <input v-model="form.job_position" placeholder="Самый главный" required :readonly="readonly">
+          <input
+              v-model="form.job_position"
+              placeholder="Самый главный"
+              required
+              :readonly="readonly"
+          />
         </div>
       </div>
       <div class="second-column">
@@ -37,20 +73,35 @@
           <label>Фотография наставника:</label>
           <div v-if="readonly" class="mentor-info-img-container-main">
             <div class="mentor-info-img-container">
-              <img class="mentor-info-img"
-                   :src="form.profile_photo"
-                   alt="">
+              <img
+                  class="mentor-info-img"
+                  :src="form.profile_photo"
+                  alt=""
+              />
             </div>
           </div>
-          <input v-else type="file" @change="handleFileChange" name="profile_photo">
+          <input
+              v-else
+              type="file"
+              @change="handleFileChange"
+              name="profile_photo"
+          />
         </div>
         <div class="form-group">
           <label>Дополнительная информация:</label>
-          <textarea v-model="form.other_info" placeholder="Поборол депрессию в 0 лет" :readonly="readonly"/>
+          <textarea
+              v-model="form.other_info"
+              placeholder="Поборол депрессию в 0 лет"
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Софт скиллы:</label>
-          <textarea v-model="form.soft_skills" placeholder="Умеет убеждать перерисовывать связи между сущностями" :readonly="readonly"/>
+          <textarea
+              v-model="form.soft_skills"
+              placeholder="Умеет убеждать перерисовывать связи между сущностями"
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Хард скиллы:</label>
@@ -60,8 +111,17 @@
             </span>
           </div>
           <div v-else>
-            <select multiple v-model="form.hard_skills_id" required :disabled="readonly">
-              <option v-for="hard_skill in hard_skill_ids" :key="hard_skill.id" :value="hard_skill.id">
+            <select
+                multiple
+                v-model="form.hard_skills_id"
+                required
+                :disabled="readonly"
+            >
+              <option
+                  v-for="hard_skill in hard_skill_ids"
+                  :key="hard_skill.id"
+                  :value="hard_skill.id"
+              >
                 {{ hard_skill.skill_name }}
               </option>
             </select>
@@ -69,11 +129,18 @@
         </div>
       </div>
       <div v-if="!readonly" class="third-column">
-        <button class="add-button" @click.prevent="openAddHardSkillForm"></button>
+        <button
+            class="add-button"
+            @click.prevent="openAddHardSkillForm"
+        />
       </div>
     </div>
   </modal-overlay>
-  <HardSkillForm v-if="showAddHardSkillForm" @close="closeAddHardSkillForm" @refreshHardSkills="fetchHardSkillIds" />
+  <hard-skill-form
+      v-if="showAddHardSkillForm"
+      @close="closeAddHardSkillForm"
+      @refreshHardSkills="fetchHardSkillIds"
+  />
 </template>
 
 <script>

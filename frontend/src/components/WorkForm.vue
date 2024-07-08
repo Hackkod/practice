@@ -1,13 +1,28 @@
 <template>
-  <modal-overlay @close="close" @submit="save" :readonly="readonly">
-    <modal-header>{{ readonly ? 'Просмотр работы' : workId ? 'Редактирование работы' : 'Создание новой работы' }}</modal-header>
+  <modal-overlay
+      @close="close"
+      @submit="save"
+      :readonly="readonly"
+  >
+    <modal-header>
+      {{ readonly ? 'Просмотр работы' : workId ? 'Редактирование работы' : 'Создание новой работы' }}
+    </modal-header>
     <div class="form-group">
       <label>Заголовок:</label>
-      <input v-model="form.name" placeholder="Наименование работы" required :readonly="readonly"/>
+      <input
+          v-model="form.name"
+          placeholder="Наименование работы"
+          required
+          :readonly="readonly"
+      />
     </div>
     <div class="form-group">
       <label>Студент:</label>
-      <input v-if="readonly" v-model="student_full_name" :readonly="readonly">
+      <input
+          v-if="readonly"
+          v-model="student_full_name"
+          :readonly="readonly"
+      />
       <select v-else v-model="form.student" required>
         <option v-for="student in students" :key="student.id" :value="student.id">
           {{ truncatedName(student) }}
@@ -16,7 +31,11 @@
     </div>
     <div class="form-group">
       <label>Наставник:</label>
-      <input v-if="readonly" v-model="mentor_full_name" :readonly="readonly">
+      <input
+          v-if="readonly"
+          v-model="mentor_full_name"
+          :readonly="readonly"
+      />
       <select v-else v-model="form.mentor" required>
         <option v-for="mentor in mentors" :key="mentor.id" :value="mentor.id">
           {{ truncatedName(mentor) }}
@@ -25,7 +44,11 @@
     </div>
     <div class="form-group">
       <label>Тип:</label>
-      <input v-if="readonly" v-model="form.type" :readonly="readonly">
+      <input
+          v-if="readonly"
+          v-model="form.type"
+          :readonly="readonly"
+      />
       <select v-else v-model="form.type" required>
         <option value="AGREEMENT">Agreement</option>
         <option value="STAFF">Staff</option>
@@ -33,19 +56,38 @@
     </div>
     <div class="form-group">
       <label>Позиция:</label>
-      <input v-model="form.position" placeholder="Инженер-программист" required :readonly="readonly"/>
+      <input
+          v-model="form.position"
+          placeholder="Инженер-программист"
+          required
+          :readonly="readonly"
+      />
     </div>
     <div class="form-group">
       <label>Дата начала:</label>
-      <input v-model="form.start_date" type="date" required :readonly="readonly"/>
+      <input
+          v-model="form.start_date"
+          type="date"
+          required
+          :readonly="readonly"
+      />
     </div>
     <div class="form-group">
       <label>Дата окончания:</label>
-      <input v-model="form.end_date" type="date" required :readonly="readonly"/>
+      <input
+          v-model="form.end_date"
+          type="date"
+          required
+          :readonly="readonly"
+      />
     </div>
     <div class="form-group">
       <label>Описание:</label>
-      <textarea v-model="form.description" placeholder="Быстро развивается" :readonly="readonly"/>
+      <textarea
+          v-model="form.description"
+          placeholder="Быстро развивается"
+          :readonly="readonly"
+      />
     </div>
   </modal-overlay>
 </template>

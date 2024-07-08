@@ -1,23 +1,49 @@
 <template>
-  <modal-overlay @close="close" @submit="save" :readonly="readonly">
-    <modal-header>{{ readonly ? 'Просмотр студента' : studentId ? 'Редактирование студента' : 'Создание нового студента' }}</modal-header>
+  <modal-overlay
+      @close="close"
+      @submit="save"
+      :readonly="readonly"
+  >
+    <modal-header>
+      {{ readonly ? 'Просмотр студента' : studentId ? 'Редактирование студента' : 'Создание нового студента' }}
+    </modal-header>
     <div class="form-content">
       <div class="first-column">
         <div class="form-group">
           <label>Фамилия:</label>
-          <input v-model="form.surname" placeholder="Иванов" required :readonly="readonly">
+          <input
+              v-model="form.surname"
+              placeholder="Иванов"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Имя:</label>
-          <input v-model="form.name" placeholder="Иван" required :readonly="readonly">
+          <input
+              v-model="form.name"
+              placeholder="Иван"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Отчество:</label>
-          <input v-model="form.patronymic" placeholder="Иванович" required :readonly="readonly">
+          <input
+              v-model="form.patronymic"
+              placeholder="Иванович"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Пол:</label>
-          <input v-if="readonly" v-model="form.gender" required :readonly="readonly">
+          <input
+              v-if="readonly"
+              v-model="form.gender"
+              required
+              :readonly="readonly"
+          />
           <select v-else v-model="form.gender" required>
             <option value="M">Male</option>
             <option value="F">Female</option>
@@ -25,19 +51,41 @@
         </div>
         <div class="form-group">
           <label>Дата рождения:</label>
-          <input v-model="form.birth_date" type="date" required :readonly="readonly">
+          <input
+              v-model="form.birth_date"
+              type="date"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Учебное учреждение:</label>
-          <input v-model="form.establishment" placeholder="Наименование учреждения" required :readonly="readonly">
+          <input
+              v-model="form.establishment"
+              placeholder="Наименование учреждения"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Дата начала обучения:</label>
-          <input v-model="form.start_study_year" placeholder="2010" type="number" required :readonly="readonly">
+          <input
+              v-model="form.start_study_year"
+              placeholder="2010"
+              type="number"
+              required
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Дата окончания обучения:</label>
-          <input v-model="form.end_study_year" placeholder="2014" type="number" required :readonly="readonly">
+          <input
+              v-model="form.end_study_year"
+              placeholder="2014"
+              type="number"
+              required
+              :readonly="readonly"
+          />
         </div>
       </div>
       <div class="second-column">
@@ -45,20 +93,34 @@
           <label>Фотография студента:</label>
           <div v-if="readonly" class="student-info-img-container-main">
             <div class="student-info-img-container">
-              <img class="student-info-img"
+              <img
+                  class="student-info-img"
                    :src="form.profile_photo"
-                   alt="">
+                   alt=""
+              />
             </div>
           </div>
-          <input v-else type="file" @change="handleFileChange" name="profile_photo">
+          <input
+              v-else type="file"
+              @change="handleFileChange"
+              name="profile_photo"
+          />
         </div>
         <div class="form-group">
           <label>Дополнительная информация:</label>
-          <textarea v-model="form.other_info" placeholder="Участвует в мероприятиях, не имеет задолженностей" :readonly="readonly"/>
+          <textarea
+              v-model="form.other_info"
+              placeholder="Участвует в мероприятиях, не имеет задолженностей"
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Софт скиллы:</label>
-          <textarea v-model="form.soft_skills" placeholder="Умение работать в команде, писать удобочитаемый код, разбираться в чужом коде" :readonly="readonly"/>
+          <textarea
+              v-model="form.soft_skills"
+              placeholder="Умение работать в команде, писать удобочитаемый код, разбираться в чужом коде"
+              :readonly="readonly"
+          />
         </div>
         <div class="form-group">
           <label>Хард скиллы:</label>
@@ -81,7 +143,11 @@
       </div>
     </div>
   </modal-overlay>
-  <HardSkillForm v-if="showAddHardSkillForm" @close="closeAddHardSkillForm" @refreshHardSkills="fetchHardSkillIds" />
+  <HardSkillForm
+      v-if="showAddHardSkillForm"
+      @close="closeAddHardSkillForm"
+      @refreshHardSkills="fetchHardSkillIds"
+  />
 </template>
 
 <script>

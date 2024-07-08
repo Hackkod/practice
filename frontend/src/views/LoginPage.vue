@@ -5,11 +5,31 @@
     <div class="form-container">
       <div class="col col-1">
         <div class="image-layer">
-          <img :src="require('@/assets/img/Floor.svg')" class="form-image-floor" alt="floor">
-          <img :src="require('@/assets/img/Cabinet.svg')" class="form-image cabinet" alt="cabinet">
-          <img :src="require('@/assets/img/Plants.svg')" class="form-image plants" alt="plants">
-          <img :src="require('@/assets/img/Folder.svg')" class="form-image folder" alt="folder">
-          <img :src="require('@/assets/img/Resumes.svg')" class="form-image resumes" alt="resumes">
+          <img
+              :src="require('@/assets/img/Floor.svg')"
+              class="form-image-floor"
+              alt="floor"
+          />
+          <img
+              :src="require('@/assets/img/Cabinet.svg')"
+              class="form-image cabinet"
+              alt="cabinet"
+          />
+          <img
+              :src="require('@/assets/img/Plants.svg')"
+              class="form-image plants"
+              alt="plants"
+          />
+          <img
+              :src="require('@/assets/img/Folder.svg')"
+              class="form-image folder"
+              alt="folder"
+          />
+          <img
+              :src="require('@/assets/img/Resumes.svg')"
+              class="form-image resumes"
+              alt="resumes"
+          />
         </div>
       </div>
 
@@ -20,11 +40,23 @@
           </div>
           <div class="form-inputs">
             <div class="input-box">
-              <input v-model="username" type="text" class="input-field" placeholder="Имя пользователя" required>
+              <input
+                  v-model="username"
+                  type="text"
+                  class="input-field"
+                  placeholder="Имя пользователя"
+                  required
+              />
               <i class="bx bx-user icon"></i>
             </div>
             <div class="input-box">
-              <input v-model="password" type="password" class="input-field" placeholder="Пароль" required>
+              <input
+                  v-model="password"
+                  type="password"
+                  class="input-field"
+                  placeholder="Пароль"
+                  required
+              />
               <i class="bx bx-lock-alt icon"></i>
             </div>
             <div class="input-box">
@@ -34,7 +66,12 @@
               </button>
             </div>
           </div>
-          <p v-if="error" class="error-message">{{ error }}</p>
+          <p
+              v-if="error"
+              class="error-message"
+          >
+            {{ error }}
+          </p>
         </div>
       </div>
     </div>

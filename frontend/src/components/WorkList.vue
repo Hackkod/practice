@@ -25,17 +25,33 @@
         <td>
           <div class="table-btns">
             <button @click.stop="editWork(work)">
-              <img :src="require('@/assets/img/EditIcon.svg')" alt="Иконка редактирования" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/EditIcon.svg')"
+                  alt="Иконка редактирования"
+                  width="24"
+                  height="24"
+              />
             </button>
             <button @click.stop="confirmDelete(work)">
-              <img :src="require('@/assets/img/DeleteIcon.svg')" alt="Иконка удаления" width="24" height="24">
+              <img
+                  :src="require('@/assets/img/DeleteIcon.svg')"
+                  alt="Иконка удаления"
+                  width="24"
+                  height="24"
+              />
             </button>
           </div>
         </td>
       </tr>
       </tbody>
     </table-overlay>
-    <work-form v-if="showForm" :workId="selectedWork" :readonly="readonly" @close="closeForm" @save="saveWork"/>
+    <work-form
+        v-if="showForm"
+        :workId="selectedWork"
+        :readonly="readonly"
+        @close="closeForm"
+        @save="saveWork"
+    />
   </div>
 </template>
 

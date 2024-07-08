@@ -4,7 +4,11 @@
     <div class="form-content">
       <div class="form-group">
         <label for="skill_name">Название навыка:</label>
-        <input type="text" id="skill_name" v-model="form.skill_name" />
+        <input
+            type="text"
+            id="skill_name"
+            v-model="form.skill_name"
+        />
       </div>
     </div>
   </modal-overlay>
