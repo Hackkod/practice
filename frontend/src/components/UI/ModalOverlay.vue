@@ -1,12 +1,12 @@
 <template>
   <div class="modal-overlay" @click.self="close">
-    <form @submit.prevent="save" class="modal-content">
+    <v-form class="modal-content" ref="form">
       <slot></slot>
       <div v-if="!readonly" class="form-btns">
-        <button type="button" @click="close">Отмена</button>
-        <button type="submit">Сохранить</button>
+        <v-btn size="large" class="cancel-btn" @click="close">Отмена</v-btn>
+        <v-btn size="large" class="submit-btn" @click="submitForm">Сохранить</v-btn>
       </div>
-    </form>
+    </v-form>
   </div>
 </template>
 
@@ -16,16 +16,15 @@ export default {
   props: {
     readonly: Boolean,
   },
-  emits: ["close", "save"],
+  emits: ["close", "submit"],
   methods: {
     close() {
       this.$emit("close");
     },
-    submit(event) {
-      if (event.target.checkValidity()) {
-        this.$emit("save", this.form);
-      } else {
-        alert("Пожалуйста, заполните все обязательные поля.");
+    async submitForm() {
+      const { valid } = await this.$refs.form.validate()
+      if (valid) {
+        this.$emit("submit", this.form);
       }
     },
   },
@@ -61,20 +60,19 @@ export default {
 
 button {
   width: 47%;
-  padding: 8px;
   font-size: 16px;
   border: 3px solid;
   border-radius: 10px;
   cursor: pointer;
 }
 
-button[type="submit"] {
+.submit-btn {
   background: #f0ecff;
   color: #bdabff;
   border-color: #bdabff;
 }
 
-button[type="button"] {
+.cancel-btn {
   background: #ffecec;
   color: #ffabab;
   border-color: #ffabab;

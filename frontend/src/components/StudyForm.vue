@@ -1,20 +1,23 @@
 <template>
   <modal-overlay @close="close" @submit="save" :readonly="readonly">
-    <modal-header>{{
-      readonly
-        ? "Просмотр обучения"
-        : studyId
-          ? "Редактирование обучения"
-          : "Создание нового обучения"
-    }}</modal-header>
+    <modal-header>
+      {{
+        readonly
+          ? "Просмотр обучения"
+          : studyId
+            ? "Редактирование обучения"
+            : "Создание нового обучения"
+      }}
+    </modal-header>
     <v-text-field
       class="form-input name"
-      label="Заголовок"
+      label="Заголовок*"
       placeholder="#1111"
       variant="outlined"
       density="compact"
       v-model="form.name"
       :readonly="readonly"
+      :rules="[rules.required]"
     ></v-text-field>
     <v-text-field
       v-if="readonly"
@@ -28,13 +31,14 @@
     <v-select
       v-else
       class="form-input student-select"
-      label="Студент"
+      label="Студент*"
       :item-title="truncatedName"
       item-value="id"
       density="compact"
       variant="outlined"
       v-model="form.student"
       :items="students"
+      :rules="[rules.required]"
     ></v-select>
     <v-text-field
       v-if="readonly"
@@ -48,18 +52,19 @@
     <v-select
       v-else
       class="form-input mentor"
-      label="Наставник"
+      label="Наставник*"
       :item-title="truncatedName"
       item-value="id"
       density="compact"
       variant="outlined"
       v-model="form.mentor"
       :items="mentors"
+      :rules="[rules.required]"
     ></v-select>
     <v-text-field
       v-if="readonly"
       class="form-input type"
-      label="Наставник"
+      label="Тип"
       variant="outlined"
       density="compact"
       v-model="form.type"
@@ -68,31 +73,34 @@
     <v-select
       v-else
       class="form-input type"
-      label="Тип"
+      label="Тип*"
       item-title="name"
       item-value="value"
       density="compact"
       variant="outlined"
       v-model="form.type"
       :items="types"
+      :rules="[rules.required]"
     ></v-select>
     <v-text-field
       class="form-input start_date"
-      label="Дата начала"
+      label="Дата начала*"
       variant="outlined"
       density="compact"
       type="date"
       v-model="form.start_date"
       :readonly="readonly"
+      :rules="[rules.required]"
     ></v-text-field>
     <v-text-field
       class="form-input end_date"
-      label="Дата окончания"
+      label="Дата окончания*"
       variant="outlined"
       density="compact"
       type="date"
       v-model="form.end_date"
       :readonly="readonly"
+      :rules="[rules.required, rules.endDateValid]"
     ></v-text-field>
     <v-textarea
       class="form-input description"
@@ -143,6 +151,11 @@ export default {
           value: "Стажировка",
         },
       ],
+      rules: {
+        required: (value) => !!value || "Обязательно.",
+        endDateValid: (value) =>
+          value >= this.form.start_date || "Дата окончания раньше начала.",
+      },
     };
   },
   created() {

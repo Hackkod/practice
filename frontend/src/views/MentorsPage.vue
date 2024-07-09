@@ -132,10 +132,10 @@ export default {
           });
         }
         await this.fetchMentors();
+        this.closeForm();
       } catch (e) {
         alert("Ошибка при создании наставника");
       }
-      this.closeForm();
     },
     async fetchMentors(
       url = `anket_app/mentors/?page=${this.currentPage}&page_size=${this.itemsPerPage}`,

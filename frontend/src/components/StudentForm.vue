@@ -13,30 +13,33 @@
       <div class="first-column">
         <v-text-field
           class="form-input surname"
-          label="Фамилия"
+          label="Фамилия*"
           placeholder="Иванов"
           variant="outlined"
           density="compact"
           v-model="form.surname"
           :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
           class="form-input name"
-          label="Имя"
+          label="Имя*"
           placeholder="Иван"
           variant="outlined"
           density="compact"
           v-model="form.name"
           :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
           class="form-input patronymic"
-          label="Отчество"
+          label="Отчество*"
           placeholder="Иванович"
           variant="outlined"
           density="compact"
           v-model="form.patronymic"
           :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
           v-if="readonly"
@@ -50,51 +53,61 @@
         <v-select
           v-else
           class="form-input gender-select"
-          label="Пол"
+          label="Пол*"
           item-title="name"
           item-value="value"
           density="compact"
           variant="outlined"
           v-model="form.gender"
           :items="genders"
+          :rules="[rules.required]"
         ></v-select>
         <v-text-field
           class="form-input birth_date"
-          label="Дата рождения"
+          label="Дата рождения*"
           variant="outlined"
           density="compact"
           type="date"
           v-model="form.birth_date"
           :readonly="readonly"
+          :rules="[rules.required, rules.birthDate]"
         ></v-text-field>
         <v-text-field
           class="form-input establishment"
-          label="Учебное учреждение"
+          label="Учебное учреждение*"
           placeholder="ЧувГУ"
           variant="outlined"
           density="compact"
           v-model="form.establishment"
           :readonly="readonly"
+          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field
           class="form-input start_study_year"
-          label="Начало обучения"
+          label="Начало обучения*"
           placeholder="2021"
           variant="outlined"
           density="compact"
           v-model="form.start_study_year"
           type="number"
           :readonly="readonly"
+          :rules="[rules.required, rules.yearValid]"
         ></v-text-field>
         <v-text-field
           class="form-input end_study_year"
-          label="Конец обучения"
+          label="Конец обучения*"
           placeholder="2025"
           variant="outlined"
           density="compact"
           v-model="form.end_study_year"
           type="number"
           :readonly="readonly"
+          :rules="[
+            rules.required,
+            rules.yearValid,
+            rules.endYearValid,
+            rules.studyTerm,
+          ]"
         ></v-text-field>
       </div>
       <div :class="secondColumnClass(readonly)">
@@ -133,18 +146,19 @@
         ></v-textarea>
         <v-textarea
           class="form-input soft_skills"
-          label="Софт скиллы"
+          label="Софт скиллы*"
           variant="outlined"
           density="compact"
           rows="2"
           no-resize
           v-model="form.soft_skills"
           :readonly="readonly"
+          :rules="[rules.required]"
         ></v-textarea>
         <v-select
           v-if="!readonly"
           class="form-input hard_skills"
-          label="Хард скиллы"
+          label="Хард скиллы*"
           item-title="skill_name"
           item-value="id"
           density="compact"
@@ -152,6 +166,7 @@
           multiple
           v-model="form.hard_skills_id"
           :items="hard_skill_ids"
+          :rules="[rules.notEmptyArr]"
         >
           <template #selection="{ item, index }">
             <v-chip v-if="index < 1">
@@ -231,6 +246,37 @@ export default {
         },
       ],
       showAddHardSkillForm: false,
+      rules: {
+        required: (value) => !!value || "Обязательно.",
+        min2ch: (value) =>
+          (value && value.length >= 2) || "Не менее 2 символов.",
+        notEmptyArr: (value) =>
+          (Array.isArray(value) && value.length > 0) || "Обязательно.",
+        birthDate: (value) => {
+          const currentDate = new Date();
+          const birthDate = new Date(value);
+          if (birthDate > currentDate) {
+            return `Не позже текущей даты.`;
+          }
+          const minAge = 14;
+          let age = currentDate.getFullYear() - birthDate.getFullYear();
+          const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+          const dayDiff = currentDate.getDate() - birthDate.getDate();
+
+          if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+          }
+          return age >= minAge || `Не менее 14 лет.`;
+        },
+        yearValid: (value) =>
+          value.toString().length === 4 || "Некорректный год.",
+        endYearValid: (value) =>
+          value >= this.form.start_study_year || "Год окончания раньше начала.",
+        studyTerm: (value) =>
+          (value - this.form.start_study_year >= 4 &&
+            value - this.form.start_study_year <= 6) ||
+          "Некорректный срок.",
+      },
     };
   },
   created() {
