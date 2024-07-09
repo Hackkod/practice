@@ -238,7 +238,7 @@ export default {
             (skill) => skill.id,
           );
       } catch (e) {
-        alert("Ошибка при загрузке данных наставника: ");
+        alert("Ошибка при загрузке данных наставника");
       }
     },
     async fetchHardSkillIds() {
