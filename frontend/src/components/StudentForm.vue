@@ -186,7 +186,7 @@
   <HardSkillForm
     v-if="showAddHardSkillForm"
     @close="closeAddHardSkillForm"
-    @refreshHardSkills="fetchHardSkillIds"
+    @refresh-hard-skills="fetchHardSkillIds"
   />
 </template>
 

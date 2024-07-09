@@ -4,20 +4,20 @@
       title="Наставники"
       :tabs="tabs"
       :active-tab="activeTab"
-      @tabChange="setActiveTab"
-      @openForm="createMentor"
+      @tab-change="setActiveTab"
+      @open-form="createMentor"
       :filter-options="filterOptions"
       :show-event-filters="false"
       :show-anket-filters="true"
       :show-course-filter="false"
-      @updateFilters="updateFilters"
+      @update-filters="updateFilters"
     />
     <div :class="{ 'page-content': activeTab === 0 }">
       <template v-if="activeTab === 0">
         <MentorCard
-          @viewMentor="viewMentor"
-          @updateMentors="fetchMentors"
-          @editMentor="editMentor"
+          @view-mentor="viewMentor"
+          @update-mentors="fetchMentors"
+          @edit-mentor="editMentor"
           v-for="mentor in mentors"
           :key="mentor.id"
           :mentor="mentor"
@@ -26,16 +26,16 @@
       <template v-else-if="activeTab === 1">
         <MentorList
           :mentors="mentors"
-          @viewMentor="viewMentor"
-          @updateMentors="fetchMentors"
-          @editMentor="editMentor"
+          @view-mentor="viewMentor"
+          @update-mentors="fetchMentors"
+          @edit-mentor="editMentor"
         />
       </template>
     </div>
     <PaginatorTable
       :total-pages="totalPages"
       :current-page="currentPage"
-      @changePage="handleChangePage"
+      @change-page="handleChangePage"
     />
     <MentorForm
       :mentor-id="selectedMentor"

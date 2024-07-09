@@ -5,16 +5,16 @@
       :tabs="tabs"
       :active-tab="activeTab"
       :type-options="typeOptions"
-      @tabChange="setActiveTab"
-      @openForm="createWork"
-      @updateFilters="updateFilters"
+      @tab-change="setActiveTab"
+      @open-form="createWork"
+      @update-filters="updateFilters"
     />
-    <WorkList :works="works" @updateWorks="fetchWorks" />
+    <WorkList :works="works" @update-works="fetchWorks" />
     <WorkForm v-if="showForm" @close="closeForm" @save="saveWork" />
     <PaginatorTable
       :total-pages="totalPages"
       :current-page="currentPage"
-      @changePage="handleChangePage"
+      @change-page="handleChangePage"
     />
   </div>
 </template>

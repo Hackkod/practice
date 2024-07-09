@@ -5,16 +5,16 @@
       :tabs="tabs"
       :active-tab="activeTab"
       :type-options="typeOptions"
-      @tabChange="setActiveTab"
-      @openForm="createStudy"
-      @updateFilters="updateFilters"
+      @tab-change="setActiveTab"
+      @open-form="createStudy"
+      @update-filters="updateFilters"
     />
-    <studyList :studies="studies" @updateStudies="fetchStudies" />
+    <studyList :studies="studies" @update-studies="fetchStudies" />
     <studyForm v-if="showForm" @close="closeForm" @save="saveStudy" />
     <PaginatorTable
       :total-pages="totalPages"
       :current-page="currentPage"
-      @changePage="handleChangePage"
+      @change-page="handleChangePage"
     />
   </div>
 </template>

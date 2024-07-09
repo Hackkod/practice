@@ -4,20 +4,20 @@
       title="Студенты"
       :tabs="tabs"
       :active-tab="activeTab"
-      @tabChange="setActiveTab"
-      @openForm="createStudent"
+      @tab-change="setActiveTab"
+      @open-form="createStudent"
       :filter-options="filterOptions"
       :show-event-filters="false"
       :show-anket-filters="true"
       :show-course-filter="true"
-      @updateFilters="updateFilters"
+      @update-filters="updateFilters"
     />
     <div :class="{ 'page-content': activeTab === 0 }">
       <template v-if="activeTab === 0">
         <StudentCard
-          @viewStudent="viewStudent"
-          @updateStudents="fetchStudents"
-          @editStudent="editStudent"
+          @view-student="viewStudent"
+          @update-students="fetchStudents"
+          @edit-student="editStudent"
           v-for="student in students"
           :key="student.id"
           :student="student"
@@ -26,9 +26,9 @@
       <template v-else-if="activeTab === 1">
         <StudentList
           :students="students"
-          @viewStudent="viewStudent"
-          @updateStudents="fetchStudents"
-          @editStudent="editStudent"
+          @view-student="viewStudent"
+          @update-students="fetchStudents"
+          @edit-student="editStudent"
         />
       </template>
     </div>
@@ -42,7 +42,7 @@
     <PaginatorTable
       :total-pages="totalPages"
       :current-page="currentPage"
-      @changePage="handleChangePage"
+      @change-page="handleChangePage"
     />
   </div>
 </template>
