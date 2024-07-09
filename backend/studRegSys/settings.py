@@ -197,6 +197,6 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
-CELERY_BROKER_URL = 'amqp://guest:guest@my-rabbitmq:5672//'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
