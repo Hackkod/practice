@@ -134,10 +134,10 @@ export default {
           });
         }
         await this.fetchStudents();
+        this.closeForm();
       } catch (e) {
         alert("Ошибка при создании студента");
       }
-      this.closeForm();
     },
     async fetchStudents(
       url = `anket_app/students/?page=${this.currentPage}&page_size=${this.itemsPerPage}`,

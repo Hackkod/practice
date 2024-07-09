@@ -12,79 +12,79 @@
     <div class="form-content">
       <div class="first-column">
         <v-text-field
-            class="form-input surname"
-            label="Фамилия*"
-            placeholder="Иванов"
-            variant="outlined"
-            density="compact"
-            v-model="form.surname"
-            maxlength="25"
-            :readonly="readonly"
-            :rules="[rules.required, rules.min2ch]"
+          class="form-input surname"
+          label="Фамилия*"
+          placeholder="Иванов"
+          variant="outlined"
+          density="compact"
+          v-model="form.surname"
+          maxlength="25"
+          :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
-            class="form-input name"
-            label="Имя*"
-            placeholder="Иван"
-            variant="outlined"
-            density="compact"
-            v-model="form.name"
-            maxlength="25"
-            :readonly="readonly"
-            :rules="[rules.required, rules.min2ch]"
+          class="form-input name"
+          label="Имя*"
+          placeholder="Иван"
+          variant="outlined"
+          density="compact"
+          v-model="form.name"
+          maxlength="25"
+          :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
-            class="form-input patronymic"
-            label="Отчество*"
-            placeholder="Иванович"
-            variant="outlined"
-            density="compact"
-            v-model="form.patronymic"
-            maxlength="25"
-            :readonly="readonly"
-            :rules="[rules.required, rules.min2ch]"
+          class="form-input patronymic"
+          label="Отчество*"
+          placeholder="Иванович"
+          variant="outlined"
+          density="compact"
+          v-model="form.patronymic"
+          maxlength="25"
+          :readonly="readonly"
+          :rules="[rules.required, rules.min2ch]"
         ></v-text-field>
         <v-text-field
-            v-if="readonly"
-            class="form-input gender"
-            label="Пол"
-            variant="outlined"
-            density="compact"
-            v-model="form.gender"
-            :readonly="readonly"
+          v-if="readonly"
+          class="form-input gender"
+          label="Пол"
+          variant="outlined"
+          density="compact"
+          v-model="form.gender"
+          :readonly="readonly"
         ></v-text-field>
         <v-select
-            v-else
-            class="form-input gender-select"
-            label="Пол*"
-            item-title="name"
-            item-value="value"
-            density="compact"
-            variant="outlined"
-            v-model="form.gender"
-            :items="genders"
-            :rules="[rules.required]"
+          v-else
+          class="form-input gender-select"
+          label="Пол*"
+          item-title="name"
+          item-value="value"
+          density="compact"
+          variant="outlined"
+          v-model="form.gender"
+          :items="genders"
+          :rules="[rules.required]"
         ></v-select>
         <v-text-field
-            class="form-input birth_date"
-            label="Дата рождения*"
-            variant="outlined"
-            density="compact"
-            type="date"
-            v-model="form.birth_date"
-            :readonly="readonly"
-            :rules="[rules.required, rules.birthDate]"
+          class="form-input birth_date"
+          label="Дата рождения*"
+          variant="outlined"
+          density="compact"
+          type="date"
+          v-model="form.birth_date"
+          :readonly="readonly"
+          :rules="[rules.required, rules.birthDate]"
         ></v-text-field>
         <v-text-field
-            class="form-input job_position"
-            label="Должность*"
-            placeholder="Младший разработчик"
-            variant="outlined"
-            density="compact"
-            maxlength="50"
-            v-model="form.job_position"
-            :readonly="readonly"
-            :rules="[rules.required]"
+          class="form-input job_position"
+          label="Должность*"
+          placeholder="Младший разработчик"
+          variant="outlined"
+          density="compact"
+          maxlength="50"
+          v-model="form.job_position"
+          :readonly="readonly"
+          :rules="[rules.required]"
         ></v-text-field>
       </div>
       <div :class="secondColumnClass(readonly)">
@@ -122,28 +122,28 @@
           :readonly="readonly"
         ></v-textarea>
         <v-textarea
-            class="form-input soft_skills"
-            label="Софт скиллы*"
-            variant="outlined"
-            density="compact"
-            rows="2"
-            no-resize
-            v-model="form.soft_skills"
-            :readonly="readonly"
-            :rules="[rules.required]"
+          class="form-input soft_skills"
+          label="Софт скиллы*"
+          variant="outlined"
+          density="compact"
+          rows="2"
+          no-resize
+          v-model="form.soft_skills"
+          :readonly="readonly"
+          :rules="[rules.required]"
         ></v-textarea>
         <v-select
-            v-if="!readonly"
-            class="form-input hard_skills"
-            label="Хард скиллы*"
-            item-title="skill_name"
-            item-value="id"
-            density="compact"
-            variant="outlined"
-            multiple
-            v-model="form.hard_skills_id"
-            :items="hard_skill_ids"
-            :rules="[rules.notEmptyArr]"
+          v-if="!readonly"
+          class="form-input hard_skills"
+          label="Хард скиллы*"
+          item-title="skill_name"
+          item-value="id"
+          density="compact"
+          variant="outlined"
+          multiple
+          v-model="form.hard_skills_id"
+          :items="hard_skill_ids"
+          :rules="[rules.notEmptyArr]"
         >
           <template #selection="{ item, index }">
             <v-chip v-if="index < 1">
@@ -222,27 +222,29 @@ export default {
       hard_skill_ids: [],
       showAddHardSkillForm: false,
       rules: {
-        required: value => !!value || 'Обязательно.',
-        min2ch: value => (value && value.length >= 2) || 'Не менее 2 символов.',
-        notEmptyArr: value => Array.isArray(value) && value.length > 0 || 'Обязательно.',
-        birthDate: value => {
-          const currentDate = new Date()
-          const birthDate = new Date(value)
+        required: (value) => !!value || "Обязательно.",
+        min2ch: (value) =>
+          (value && value.length >= 2) || "Не менее 2 символов.",
+        notEmptyArr: (value) =>
+          (Array.isArray(value) && value.length > 0) || "Обязательно.",
+        birthDate: (value) => {
+          const currentDate = new Date();
+          const birthDate = new Date(value);
           if (birthDate > currentDate) {
-            return `Не позже текущей даты.`
+            return `Не позже текущей даты.`;
           }
-          const minAge = 14
-          let age = currentDate.getFullYear() - birthDate.getFullYear()
-          const monthDiff = currentDate.getMonth() - birthDate.getMonth()
-          const dayDiff = currentDate.getDate() - birthDate.getDate()
+          const minAge = 18;
+          let age = currentDate.getFullYear() - birthDate.getFullYear();
+          const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+          const dayDiff = currentDate.getDate() - birthDate.getDate();
 
           if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-            age--
+            age--;
           }
-          return age >= minAge || `Не менее 14 лет.`
+          return age >= minAge || `Не менее 18 лет.`;
         },
       },
-    }
+    };
   },
   created() {
     if (!this.readonly) this.fetchHardSkillIds();
