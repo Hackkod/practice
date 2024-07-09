@@ -1,7 +1,13 @@
 <template>
   <modal-overlay @close="close" @submit="save" :readonly="readonly">
     <modal-header>
-      {{ readonly ? 'Просмотр наставника' : mentorId ? 'Редактирование наставника' : 'Создание нового наставника' }}
+      {{
+        readonly
+          ? "Просмотр наставника"
+          : mentorId
+            ? "Редактирование наставника"
+            : "Создание нового наставника"
+      }}
     </modal-header>
     <div class="form-content">
       <div class="first-column">
@@ -227,8 +233,12 @@ export default {
     async fetchMentorDetails(id) {
       try {
         const response = await axios.get(`anket_app/mentors/${id}/`);
-        if (this.readonly) this.hard_skill_ids = response.data.hard_skills_ids;
         this.form = { ...response.data };
+        if (this.readonly) this.hard_skill_ids = response.data.hard_skills_ids;
+        else
+          this.form.hard_skills_id = response.data.hard_skills_ids.map(
+            (skill) => skill.id,
+          );
       } catch (e) {
         alert("Ошибка при загрузке данных наставника");
       }
