@@ -1,12 +1,14 @@
 <template>
   <modal-overlay @close="close" @submit="save" :readonly="readonly">
-    <modal-header>{{
-      readonly
-        ? "Просмотр обучения"
-        : studyId
-          ? "Редактирование обучения"
-          : "Создание нового обучения"
-    }}</modal-header>
+    <modal-header>
+      {{
+        readonly
+          ? "Просмотр обучения"
+          : studyId
+            ? "Редактирование обучения"
+            : "Создание нового обучения"
+      }}
+    </modal-header>
     <v-text-field
       class="form-input name"
       label="Заголовок*"

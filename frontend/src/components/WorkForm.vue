@@ -210,7 +210,7 @@ export default {
         .get("anket_app/students/")
         .then((response) => {
           this.students = response.data.results;
-          if (!this.studyId && this.students.length) {
+          if (!this.workId && this.students.length) {
             this.form.student = this.students[0].id;
           }
         })
@@ -223,7 +223,7 @@ export default {
         .get("anket_app/mentors/")
         .then((response) => {
           this.mentors = response.data.results;
-          if (!this.studyId && this.mentors.length) {
+          if (!this.workId && this.mentors.length) {
             this.form.mentor = this.mentors[0].id;
           }
         })
