@@ -19,18 +19,11 @@ services:
       - "8000:8000"
     depends_on:
       - redis
-      - my-rabbitmq
 
   redis:
     image: redis
     ports:
       - "6379:6379"
-
-  my-rabbitmq:
-    image: rabbitmq:management
-    ports:
-      - "15672:15672"
-      - "5672:5672"
 
   celery-worker:
     build:
@@ -41,7 +34,6 @@ services:
     depends_on:
       - web
       - redis
-      - my-rabbitmq
 
   celery-beat:
     build:
@@ -52,4 +44,3 @@ services:
     depends_on:
       - web
       - redis
-      - my-rabbitmq
