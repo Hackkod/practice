@@ -9,6 +9,7 @@
           placeholder="python"
           variant="outlined"
           density="compact"
+          maxlength="15"
           v-model="form.skill_name"
         >
         </v-text-field>

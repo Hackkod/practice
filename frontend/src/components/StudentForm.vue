@@ -17,6 +17,7 @@
           placeholder="Иванов"
           variant="outlined"
           density="compact"
+          maxlength="25"
           v-model="form.surname"
           :readonly="readonly"
           :rules="[rules.required, rules.min2ch]"
@@ -27,6 +28,7 @@
           placeholder="Иван"
           variant="outlined"
           density="compact"
+          maxlength="25"
           v-model="form.name"
           :readonly="readonly"
           :rules="[rules.required, rules.min2ch]"
@@ -37,6 +39,7 @@
           placeholder="Иванович"
           variant="outlined"
           density="compact"
+          maxlength="25"
           v-model="form.patronymic"
           :readonly="readonly"
           :rules="[rules.required, rules.min2ch]"
@@ -78,6 +81,7 @@
           placeholder="ЧувГУ"
           variant="outlined"
           density="compact"
+          maxlength="25"
           v-model="form.establishment"
           :readonly="readonly"
           :rules="[rules.required]"
@@ -180,9 +184,14 @@
             </span>
           </template>
           <template #append>
-           <span class="append-icon">
-             <v-icon color="#96989f" @click.prevent="openAddHardSkillForm" size="large">mdi-plus</v-icon>
-           </span>
+            <span class="append-icon">
+              <v-icon
+                color="#96989f"
+                @click.prevent="openAddHardSkillForm"
+                size="large"
+                >mdi-plus</v-icon
+              >
+            </span>
           </template>
         </v-select>
       </div>

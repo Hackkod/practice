@@ -15,6 +15,7 @@
       placeholder="#1111"
       variant="outlined"
       density="compact"
+      maxlength="25"
       v-model="form.name"
       :readonly="readonly"
       :rules="[rules.required]"
