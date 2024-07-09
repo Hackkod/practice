@@ -49,6 +49,7 @@
                 class="input-field"
                 placeholder="Имя пользователя"
                 required
+                @keyup.enter="$refs.input_password.focus()"
               />
               <i class="bx bx-user icon"></i>
             </div>
@@ -59,6 +60,8 @@
                 class="input-field"
                 placeholder="Пароль"
                 required
+                @keyup.enter="handleLogin"
+                ref="input_password"
               />
               <i class="bx bx-lock-alt icon"></i>
             </div>
@@ -98,7 +101,7 @@ export default {
           this.$router.push({ name: "Students" });
         }
       } catch (error) {
-        this.error = "Invalid username or password";
+        this.error = "Неверное имя или пароль";
         console.error("Error details:", error);
       }
     },

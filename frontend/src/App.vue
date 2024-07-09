@@ -11,6 +11,26 @@
 export default {
   name: 'App',
 }
+
+// Остановить ошибку resizeObserver
+const debounce = (callback, delay) => {
+  let tid;
+  return function (...args) {
+    const ctx = this;
+    if (tid) clearTimeout(tid);
+    tid = setTimeout(() => {
+      callback.apply(ctx, args);
+    }, delay);
+  };
+};
+
+const OriginalResizeObserver = window.ResizeObserver;
+
+window.ResizeObserver = class ResizeObserver extends OriginalResizeObserver {
+  constructor(callback) {
+    super(debounce(callback, 20));
+  }
+};
 </script>
 
 <style>

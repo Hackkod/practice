@@ -138,10 +138,12 @@
               (+{{ form.hard_skills_id.length - 1 }} others)
             </span>
           </template>
+          <template #append>
+           <span class="append-icon">
+             <v-icon color="#96989f" @click.prevent="openAddHardSkillForm" size="large">mdi-plus</v-icon>
+           </span>
+          </template>
         </v-select>
-      </div>
-      <div v-if="!readonly" class="third-column">
-        <button class="add-button" @click.prevent="openAddHardSkillForm" />
       </div>
     </div>
     <div class="hard-skills-chips" v-if="readonly">
@@ -323,5 +325,10 @@ export default {
   background-image: url("@/assets/img/AddIcon.png");
   background-color: #f0ecff;
   border-radius: 8px;
+}
+
+.append-icon {
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>
