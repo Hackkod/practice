@@ -156,6 +156,17 @@
               (+{{ form.hard_skills_id.length - 1 }})
             </span>
           </template>
+          <template #prepend-item>
+            <v-list-item title="Выбрать все" @click="toggle">
+              <template #prepend>
+                <v-checkbox-btn
+                  :indeterminate="SomeHardSkill && !AllHardSkill"
+                  :model-value="AllHardSkill"
+                ></v-checkbox-btn>
+              </template>
+            </v-list-item>
+            <v-divider class="mt-2"></v-divider>
+          </template>
           <template #append>
             <span class="append-icon">
               <v-icon
@@ -270,6 +281,12 @@ export default {
       }
       return "";
     },
+    SomeHardSkill() {
+      return this.hard_skill_ids.length > 0;
+    },
+    AllHardSkill() {
+      return this.hard_skill_ids.length === this.form.hard_skills_id.length;
+    },
   },
   methods: {
     secondColumnClass(readonly) {
@@ -336,6 +353,13 @@ export default {
         this.form.hard_skills_id = [];
       } catch (e) {
         alert("Ошибка при удалении хард скиллов");
+      }
+    },
+    toggle() {
+      if (this.AllHardSkill) {
+        this.form.hard_skills_id = [];
+      } else {
+        this.form.hard_skills_id = this.hard_skill_ids.map((skill) => skill.id);
       }
     },
   },
