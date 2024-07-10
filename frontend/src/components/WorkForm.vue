@@ -29,9 +29,10 @@
       v-model="student_full_name"
       :readonly="readonly"
     ></v-text-field>
-    <v-select
+    <v-autocomplete
       v-else
       class="form-input student-select"
+      clearable
       label="Студент*"
       :item-title="truncatedName"
       item-value="id"
@@ -40,7 +41,8 @@
       v-model="form.student"
       :items="students"
       :rules="[rules.required]"
-    ></v-select>
+      @update:search="(search) => fetchStudents(search)"
+    ></v-autocomplete>
     <v-text-field
       v-if="readonly"
       class="form-input mentor"
@@ -50,9 +52,10 @@
       v-model="mentor_full_name"
       :readonly="readonly"
     ></v-text-field>
-    <v-select
+    <v-autocomplete
       v-else
       class="form-input mentor"
+      clearable
       label="Наставник*"
       :item-title="truncatedName"
       item-value="id"
@@ -61,7 +64,8 @@
       v-model="form.mentor"
       :items="mentors"
       :rules="[rules.required]"
-    ></v-select>
+      @update:search="(search) => fetchMentors(search)"
+    ></v-autocomplete>
     <v-text-field
       v-if="readonly"
       class="form-input type"
@@ -129,6 +133,7 @@
 
 <script>
 import axios from "@/plugins/axios";
+import { debounce } from "lodash";
 
 export default {
   name: "WorkForm",
@@ -207,31 +212,43 @@ export default {
           alert("Ошибка при загрузке данных студента");
         });
     },
-    fetchStudents() {
-      axios
-        .get("anket_app/students/")
-        .then((response) => {
+    fetchStudents: debounce(async function (search = "") {
+      try {
+        if (this.form.student) {
+          const studentData = await this.fetchStudentById(this.form.student);
+          this.students = [studentData];
+        } else {
+          const response = await axios.get("anket_app/students/", {
+            params: { search: search, page_size: 10 },
+          });
           this.students = response.data.results;
-          if (!this.workId && this.students.length) {
-            this.form.student = this.students[0].id;
-          }
-        })
-        .catch(() => {
-          alert("Ошибка при загрузке списка студентов");
-        });
-    },
-    fetchMentors() {
-      axios
-        .get("anket_app/mentors/")
-        .then((response) => {
+        }
+      } catch {
+        alert("Ошибка при загрузке списка студентов");
+      }
+    }, 300),
+    fetchMentors: debounce(async function (search = "") {
+      try {
+        if (this.form.mentor) {
+          const mentorData = await this.fetchMentorById(this.form.mentor);
+          this.mentors = [mentorData];
+        } else {
+          const response = await axios.get("anket_app/mentors/", {
+            params: { search: search, page_size: 10 },
+          });
           this.mentors = response.data.results;
-          if (!this.workId && this.mentors.length) {
-            this.form.mentor = this.mentors[0].id;
-          }
-        })
-        .catch(() => {
-          alert("Ошибка при загрузке списка наставников");
-        });
+        }
+      } catch {
+        alert("Ошибка при загрузке списка наставников");
+      }
+    }, 300),
+    async fetchStudentById(id) {
+      const response = await axios.get(`anket_app/students/${id}/`);
+      return response.data;
+    },
+    async fetchMentorById(id) {
+      const response = await axios.get(`anket_app/mentors/${id}/`);
+      return response.data;
     },
     async save() {
       this.$emit("save", this.form);

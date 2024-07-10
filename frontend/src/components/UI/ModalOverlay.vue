@@ -1,10 +1,12 @@
 <template>
-  <div class="modal-overlay" @click.self="close">
+  <div class="modal-overlay" @dblclick.self="close" @click.self="handleClick">
     <v-form class="modal-content" ref="form">
       <slot></slot>
       <div v-if="!readonly" class="form-btns">
         <v-btn size="large" class="cancel-btn" @click="close">Отмена</v-btn>
-        <v-btn size="large" class="submit-btn" @click="submitForm">Сохранить</v-btn>
+        <v-btn size="large" class="submit-btn" @click="submitForm"
+          >Сохранить</v-btn
+        >
       </div>
     </v-form>
   </div>
@@ -21,8 +23,13 @@ export default {
     close() {
       this.$emit("close");
     },
+    handleClick() {
+      if (this.readonly) {
+        this.close();
+      }
+    },
     async submitForm() {
-      const { valid } = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate();
       if (valid) {
         this.$emit("submit", this.form);
       }

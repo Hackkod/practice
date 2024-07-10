@@ -48,8 +48,8 @@ export default {
         selectedType: "",
       },
       typeOptions: [
-        { value: "PRACTICE", label: "Practice" },
-        { value: "INTERNSHIP", label: "Internship" },
+        { value: "Практика", label: "Практика" },
+        { value: "Стажировка", label: "Стажировка" },
       ],
     };
   },
