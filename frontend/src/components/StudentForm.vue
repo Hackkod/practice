@@ -173,7 +173,7 @@
           :rules="[rules.notEmptyArr]"
         >
           <template #selection="{ item, index }">
-            <v-chip v-if="index < 1" style="max-width: 100px">
+            <v-chip v-if="index < 1" style="max-width: 78px">
               <span>{{ item.title }}</span>
             </v-chip>
             <span

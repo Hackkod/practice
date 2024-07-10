@@ -146,7 +146,7 @@
           :rules="[rules.notEmptyArr]"
         >
           <template #selection="{ item, index }">
-            <v-chip v-if="index < 1" style="max-width: 100px">
+            <v-chip v-if="index < 1" style="max-width: 78px">
               <span>{{ item.title }}</span>
             </v-chip>
             <span
@@ -166,10 +166,7 @@
               >
             </span>
             <span class="append-icon">
-              <v-icon
-                color="grey"
-                @click.prevent="removeHardSkill"
-                size="large"
+              <v-icon color="grey" @click.prevent="removeHardSkill" size="large"
                 >mdi-delete</v-icon
               >
             </span>
