@@ -32,18 +32,18 @@
           :readonly="readonly"
         ></v-text-field>
         <v-autocomplete
-            v-else
-            class="form-input student-select"
-            clearable
-            label="Студент*"
-            :item-title="truncatedName"
-            item-value="id"
-            density="compact"
-            variant="outlined"
-            v-model="form.student"
-            :items="students"
-            :rules="[rules.required]"
-            @update:search="(search) => fetchStudents(search)"
+          v-else
+          class="form-input student-select"
+          clearable
+          label="Студент*"
+          :item-title="truncatedName"
+          item-value="id"
+          density="compact"
+          variant="outlined"
+          v-model="form.student"
+          :items="students"
+          :rules="[rules.required]"
+          @update:search="(search) => fetchStudents(search)"
         ></v-autocomplete>
         <v-text-field
           v-if="readonly"
@@ -55,18 +55,18 @@
           :readonly="readonly"
         ></v-text-field>
         <v-autocomplete
-            v-else
-            class="form-input mentor"
-            clearable
-            label="Наставник*"
-            :item-title="truncatedName"
-            item-value="id"
-            density="compact"
-            variant="outlined"
-            v-model="form.mentor"
-            :items="mentors"
-            :rules="[rules.required]"
-            @update:search="(search) => fetchMentors(search)"
+          v-else
+          class="form-input mentor"
+          clearable
+          label="Наставник*"
+          :item-title="truncatedName"
+          item-value="id"
+          density="compact"
+          variant="outlined"
+          v-model="form.mentor"
+          :items="mentors"
+          :rules="[rules.required]"
+          @update:search="(search) => fetchMentors(search)"
         ></v-autocomplete>
         <v-text-field
           v-if="readonly"
