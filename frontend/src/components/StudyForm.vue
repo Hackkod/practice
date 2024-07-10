@@ -123,6 +123,9 @@
         ></v-textarea>
       </div>
     </div>
+    <div class="download-btn" v-if="readonly">
+      <v-btn @click="downloadFile()" block>Скачать документ</v-btn>
+    </div>
   </modal-overlay>
 </template>
 
@@ -144,6 +147,8 @@ export default {
         name: "",
         student: null,
         mentor: null,
+        student_full: null,
+        mentor_full: null,
         type: null,
         start_date: null,
         end_date: null,
@@ -201,6 +206,7 @@ export default {
           this.form = { ...data };
           this.form.student = data.student_full ? data.student_full.id : null;
           this.form.mentor = data.mentor_full ? data.mentor_full.id : null;
+          console.log(this.form);
         })
         .catch(() => {
           alert("Ошибка при загрузке данных студента");
@@ -264,6 +270,28 @@ export default {
     close() {
       this.$emit("close");
     },
+    downloadFile() {
+      const fileName = this.form.student_full.surname + ".docx";
+      fetch("/api/anket_app/download/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.form),
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => console.error("Error downloading the file:", error));
+    },
   },
 };
 </script>
@@ -278,5 +306,9 @@ export default {
   display: flex;
   flex-direction: row;
   grid-gap: 30px;
+}
+
+.download-btn {
+  width: 100%;
 }
 </style>
