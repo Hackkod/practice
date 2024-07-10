@@ -146,14 +146,14 @@
           :rules="[rules.notEmptyArr]"
         >
           <template #selection="{ item, index }">
-            <v-chip v-if="index < 1">
+            <v-chip v-if="index < 1" style="max-width: 78px">
               <span>{{ item.title }}</span>
             </v-chip>
             <span
               v-if="index === 1"
               class="text-grey text-caption align-self-center"
             >
-              (+{{ form.hard_skills_id.length - 1 }} others)
+              (+{{ form.hard_skills_id.length - 1 }})
             </span>
           </template>
           <template #append>
@@ -166,10 +166,7 @@
               >
             </span>
             <span class="append-icon">
-              <v-icon
-                color="grey"
-                @click.prevent="removeHardSkill"
-                size="large"
+              <v-icon color="grey" @click.prevent="removeHardSkill" size="large"
                 >mdi-delete</v-icon
               >
             </span>
@@ -359,7 +356,8 @@ export default {
 }
 
 .form-input {
-  min-width: 225px;
+  min-width: 250px;
+  max-width: 250px;
   max-height: 86px;
 }
 
