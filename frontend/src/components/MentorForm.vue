@@ -157,9 +157,22 @@
             </span>
           </template>
           <template #append>
-           <span class="append-icon">
-             <v-icon color="#96989f" @click.prevent="openAddHardSkillForm" size="large">mdi-plus</v-icon>
-           </span>
+            <span class="append-icon">
+              <v-icon
+                color="grey"
+                @click.prevent="openAddHardSkillForm"
+                size="large"
+                >mdi-plus</v-icon
+              >
+            </span>
+            <span class="append-icon">
+              <v-icon
+                color="grey"
+                @click.prevent="removeHardSkill"
+                size="large"
+                >mdi-delete</v-icon
+              >
+            </span>
           </template>
         </v-select>
       </div>
@@ -316,6 +329,17 @@ export default {
     },
     closeAddHardSkillForm() {
       this.showAddHardSkillForm = false;
+    },
+    async removeHardSkill() {
+      try {
+        for (const id of this.form.hard_skills_id) {
+          await axios.delete(`hard_skill_app/hard_skills/${id}/`);
+        }
+        await this.fetchHardSkillIds();
+        this.form.hard_skills_id = [];
+      } catch (e) {
+        alert("Ошибка при удалении хард скиллов");
+      }
     },
   },
 };
