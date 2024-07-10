@@ -48,8 +48,8 @@ export default {
         selectedType: "",
       },
       typeOptions: [
-        { value: "AGREEMENT", label: "Agreement" },
-        { value: "STAFF", label: "Staff" },
+        { value: "Договор", label: "Договор" },
+        { value: "Штаб", label: "Штаб" },
       ],
     };
   },
