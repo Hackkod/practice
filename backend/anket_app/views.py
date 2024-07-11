@@ -20,7 +20,8 @@ class StudentAnketViewSet(viewsets.ModelViewSet):
     pagination_class = StudentMentorPagination
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = StudentAnketFilter
     search_fields = [
@@ -37,6 +38,16 @@ class StudentAnketViewSet(viewsets.ModelViewSet):
         'end_study_year',
         'course',
     ]
+    ordering_fields = [
+        'surname',
+        'name',
+        'patronymic',
+        'establishment',
+        'start_study_year',
+        'end_study_year',
+        'course',
+    ]
+    ordering = ['id']
 
     def perform_create(self, serializer):
         self.validate_study_years(serializer.validated_data)
@@ -78,7 +89,8 @@ class MentorAnketViewSet(viewsets.ModelViewSet):
     pagination_class = StudentMentorPagination
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = MentorAnketFilter
     search_fields = [
@@ -92,3 +104,12 @@ class MentorAnketViewSet(viewsets.ModelViewSet):
         'hard_skills_id__skill_name',
         'job_position'
     ]
+    ordering_fields = [
+        'surname',
+        'name',
+        'patronymic',
+        'gender',
+        'birth_date',
+        'job_position',
+    ]
+    ordering = ['id']

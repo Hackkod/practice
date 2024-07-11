@@ -9,7 +9,13 @@
       @open-form="createWork"
       @update-filters="updateFilters"
     />
-    <WorkList :works="works" @update-works="fetchWorks" />
+    <WorkList
+      :works="works"
+      @update-works="fetchWorks"
+      @update-sort="updateSort"
+      :sort-key="sortKey"
+      :sort-asc="sortAsc"
+    />
     <WorkForm v-if="showForm" @close="closeForm" @save="saveWork" />
     <PaginatorTable
       :total-pages="totalPages"
@@ -47,6 +53,8 @@ export default {
         endDate: "",
         selectedType: "",
       },
+      sortKey: "",
+      sortAsc: true,
       typeOptions: [
         { value: "Договор", label: "Договор" },
         { value: "Штаб", label: "Штаб" },
@@ -82,6 +90,7 @@ export default {
             start_date: startDate,
             end_date: endDate,
             type: selectedType,
+            ordering: this.sortAsc ? this.sortKey : `-${this.sortKey}`,
           },
         });
         this.works = response.data.results;
@@ -89,6 +98,12 @@ export default {
       } catch (e) {
         alert("Ошибка при получении списка работ");
       }
+    },
+    updateSort(sortKey, sortAsc) {
+      this.sortKey = sortKey;
+      this.sortAsc = sortAsc;
+      this.currentPage = 1;
+      this.fetchWorks();
     },
     setActiveTab(index) {
       this.activeTab = index;

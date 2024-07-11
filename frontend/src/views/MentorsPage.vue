@@ -29,6 +29,9 @@
           @view-mentor="viewMentor"
           @update-mentors="fetchMentors"
           @edit-mentor="editMentor"
+          @update-sort="updateSort"
+          :sort-key="sortKey"
+          :sort-asc="sortAsc"
         />
       </template>
     </div>
@@ -81,6 +84,8 @@ export default {
         searchQuery: "",
         selectedHardSkill: null,
       },
+      sortKey: "",
+      sortAsc: true,
     };
   },
   created() {
@@ -145,6 +150,7 @@ export default {
         let params = {
           page: this.currentPage,
           search: searchQuery,
+          ordering: this.sortAsc ? this.sortKey : `-${this.sortKey}`,
         };
 
         if (selectedHardSkill) {
@@ -159,6 +165,12 @@ export default {
       } catch (e) {
         alert("Ошибка");
       }
+    },
+    updateSort(sortKey, sortAsc) {
+      this.sortKey = sortKey;
+      this.sortAsc = sortAsc;
+      this.currentPage = 1;
+      this.fetchMentors();
     },
     async fetchHardSkills() {
       try {

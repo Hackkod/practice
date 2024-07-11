@@ -25,7 +25,8 @@ class WorkViewSet(viewsets.ModelViewSet):
     pagination_class = WorkStudyPagination
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = WorkFilter
     search_fields = [
@@ -42,6 +43,19 @@ class WorkViewSet(viewsets.ModelViewSet):
         'mentor__name',
         'mentor__patronymic'
     ]
+    ordering_fields = [
+        'name',
+        'student__surname',
+        'student__name',
+        'student__patronymic',
+        'mentor__surname',
+        'mentor__name',
+        'mentor__patronymic',
+        'type',
+        'start_date',
+        'end_date',
+    ]
+    ordering = ['id']
 
 
 class StudyViewSet(viewsets.ModelViewSet):
@@ -50,7 +64,8 @@ class StudyViewSet(viewsets.ModelViewSet):
     pagination_class = WorkStudyPagination
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = StudyFilter
     search_fields = [
@@ -66,6 +81,19 @@ class StudyViewSet(viewsets.ModelViewSet):
         'mentor__name',
         'mentor__patronymic'
     ]
+    ordering_fields = [
+        'name',
+        'student__surname',
+        'student__name',
+        'student__patronymic',
+        'mentor__surname',
+        'mentor__name',
+        'mentor__patronymic',
+        'type',
+        'start_date',
+        'end_date',
+    ]
+    ordering = ['id']
 
 
 class DownloadFileView(APIView):
