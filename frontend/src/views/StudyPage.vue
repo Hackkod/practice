@@ -9,7 +9,13 @@
       @open-form="createStudy"
       @update-filters="updateFilters"
     />
-    <studyList :studies="studies" @update-studies="fetchStudies" />
+    <studyList
+      :studies="studies"
+      @update-studies="fetchStudies"
+      @update-sort="updateSort"
+      :sort-key="sortKey"
+      :sort-asc="sortAsc"
+    />
     <studyForm v-if="showForm" @close="closeForm" @save="saveStudy" />
     <PaginatorTable
       :total-pages="totalPages"
@@ -47,6 +53,8 @@ export default {
         endDate: "",
         selectedType: "",
       },
+      sortKey: "",
+      sortAsc: true,
       typeOptions: [
         { value: "Практика", label: "Практика" },
         { value: "Стажировка", label: "Стажировка" },
@@ -82,6 +90,7 @@ export default {
             start_date: startDate,
             end_date: endDate,
             type: selectedType,
+            ordering: this.sortAsc ? this.sortKey : `-${this.sortKey}`,
           },
         });
         this.studies = response.data.results;
@@ -89,6 +98,12 @@ export default {
       } catch (e) {
         alert("Ошибка при получении списка обучений");
       }
+    },
+    updateSort(sortKey, sortAsc) {
+      this.sortKey = sortKey;
+      this.sortAsc = sortAsc;
+      this.currentPage = 1;
+      this.fetchStudies();
     },
     setActiveTab(index) {
       this.activeTab = index;

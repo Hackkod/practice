@@ -29,6 +29,9 @@
           @view-student="viewStudent"
           @update-students="fetchStudents"
           @edit-student="editStudent"
+          @update-sort="updateSort"
+          :sort-key="sortKey"
+          :sort-asc="sortAsc"
         />
       </template>
     </div>
@@ -83,6 +86,8 @@ export default {
         selectedHardSkill: null,
         selectedCourse: null,
       },
+      sortKey: "",
+      sortAsc: true,
     };
   },
   created() {
@@ -148,12 +153,12 @@ export default {
           page: this.currentPage,
           search: searchQuery,
           course: selectedCourse,
+          ordering: this.sortAsc ? this.sortKey : `-${this.sortKey}`,
         };
 
         if (selectedHardSkill) {
           params.hard_skills_id = selectedHardSkill;
         }
-
         const response = await axios.get(url, {
           params,
         });
@@ -162,6 +167,12 @@ export default {
       } catch (e) {
         alert("Ошибка");
       }
+    },
+    updateSort(sortKey, sortAsc) {
+      this.sortKey = sortKey;
+      this.sortAsc = sortAsc;
+      this.currentPage = 1;
+      this.fetchStudents();
     },
     async fetchHardSkills() {
       try {
