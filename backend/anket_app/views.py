@@ -1,18 +1,11 @@
-from io import BytesIO
-from django.http import HttpResponse
-from docx import Document
 from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import ValidationError
 import datetime
-from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
 from .models import StudentAnket, MentorAnket
 from .serializers import StudentAnketSerializer, MentorAnketSerializer
 from .filters import StudentAnketFilter, MentorAnketFilter
-from utils.data_extraction import extract_data_study, extract_data_internship
-from utils.replace import replace_bookmarks
 
 
 class StudentMentorPagination(PageNumberPagination):
@@ -99,49 +92,3 @@ class MentorAnketViewSet(viewsets.ModelViewSet):
         'hard_skills_id__skill_name',
         'job_position'
     ]
-
-
-class DownloadFileView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        if request.data.get('type', '') == 'Практика':
-            extracted_data = extract_data_study(request)
-
-            template_path = 'utils/templates/study_template.docx'
-            document = Document(template_path)
-
-            replace_bookmarks(document, {
-                'establishment': extracted_data['establishment'],
-                'student': extracted_data['student'],
-                'mentor': extracted_data['mentor'],
-                'defaul': extracted_data['defaul'],
-                'course': str(extracted_data['course']),
-                'start': extracted_data['start_date'],
-                'end': extracted_data['end_date'],
-                'current': extracted_data['current']
-            })
-        else:
-            extracted_data = extract_data_internship(request)
-
-            template_path = 'utils/templates/internship_template.docx'
-            document = Document(template_path)
-
-            replace_bookmarks(document, {
-                'student': extracted_data['student'],
-                'mentor': extracted_data['mentor'],
-                'start': extracted_data['start_date'],
-                'end': extracted_data['end_date'],
-                'current': extracted_data['current']
-            })
-
-        file_stream = BytesIO()
-        document.save(file_stream)
-        file_stream.seek(0)
-
-        response = HttpResponse(
-            file_stream,
-            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        )
-        response['Content-Disposition'] = 'attachment; filename=praktika_info.docx'
-        return response
