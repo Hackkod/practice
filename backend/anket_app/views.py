@@ -108,7 +108,7 @@ class DownloadFileView(APIView):
         if request.data.get('type', '') == 'Практика':
             extracted_data = extract_data_study(request)
 
-            template_path = 'static/staticfiles/study_template.docx'
+            template_path = 'utils/templates/study_template.docx'
             document = Document(template_path)
 
             replace_bookmarks(document, {
@@ -124,7 +124,7 @@ class DownloadFileView(APIView):
         else:
             extracted_data = extract_data_internship(request)
 
-            template_path = 'static/staticfiles/internship_template.docx'
+            template_path = 'utils/templates/internship_template.docx'
             document = Document(template_path)
 
             replace_bookmarks(document, {
